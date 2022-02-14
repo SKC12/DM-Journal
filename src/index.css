@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: lightgray;
+  background-color: rgb(240, 240, 240);
 }
 
 .login {
