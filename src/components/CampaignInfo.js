@@ -1,38 +1,108 @@
-import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  doc,
+  setDoc,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { useNavigate } from "react-router-dom";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
 const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
 function CampaignInfo(props) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
-  const navigate = useNavigate();
+  //console.log(props);
+  const [name, setName] = useState(
+    props.campaign.name ? props.campaign.name : ""
+  );
+  const [description, setDescription] = useState(
+    props.campaign.description ? props.campaign.description : ""
+  );
+  const [isPrivate, setIsPrivate] = useState(
+    props.campaign.private ? props.campaign.private : false
+  );
+  const [errorMsg, setErrorMsg] = useState(false);
+
+  useEffect(() => {
+    setErrorMsg(false);
+  }, [name]);
 
   async function createCampaign(e) {
+    e.preventDefault();
+    const q = query(
+      collection(db, "users/" + props.user.uid + "/campaigns"),
+      where("name", "==", name)
+    );
+    const docs = await getDocs(q);
+    if (docs.docs.length === 0) {
+      let campaign = {
+        name: name,
+        description: description,
+        private: isPrivate,
+      };
+      //console.log(campaign);
+      await setDoc(
+        doc(db, "users/" + props.user.uid + "/campaigns", campaign.name),
+        campaign
+      );
+      console.log("Document written");
+      window.location.reload();
+    } else {
+      setErrorMsg(true);
+    }
+
+    //console.log(props.user);
+  }
+
+  async function editCampaign(e) {
     e.preventDefault();
     let campaign = {
       name: name,
       description: description,
       private: isPrivate,
     };
-    console.log(campaign);
-    const campaignRef = await addDoc(
-      collection(db, "users/" + props.user.uid + "/campaigns"),
+    await setDoc(
+      doc(db, "users/" + props.user.uid + "/campaigns", campaign.name),
       campaign
     );
-    console.log("Document written with ID: ", campaignRef.id);
+    console.log("Document written");
     window.location.reload();
-    //console.log(props.user);
   }
+
+  async function deleteCampaign(e) {
+    e.preventDefault();
+    await deleteDoc(doc(db, "users/" + props.user.uid + "/campaigns", name));
+
+    // const q = query(
+    //   collection(db, "users/" + props.user.uid + "/campaigns"),
+    //   where("name", "==", name)
+    // );
+    // const docs = await getDocs(q);
+    // docs.forEach((doc) => {
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+    // console.log(docs);
+
+    window.location.reload();
+  }
+
+  let errorMessage = () => {
+    return errorMsg ? (
+      <p className="text-red-500 text-sm pt-1 pl-5">
+        Campaign names must be unique
+      </p>
+    ) : (
+      <p></p>
+    );
+  };
 
   //console.log(props.campaign);
   function populate(campaign) {
-    if (campaign === undefined) {
+    if (campaign === "") {
       return;
     } else {
       return (
@@ -42,12 +112,14 @@ function CampaignInfo(props) {
               <label className={LABEL_STYLE} htmlFor="info-campaign-name">
                 Campaign name{" "}
               </label>
+
               <input
                 className={`${INPUT_STYLE} w-96`}
                 id="info-campaign-name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></input>
+              {errorMessage()}
             </div>
 
             <div className="flex-col items-center pb-6 pr-6">
@@ -82,12 +154,29 @@ function CampaignInfo(props) {
             </div>
 
             <div className="flex justify-center">
-              <button
-                className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                onClick={(e) => createCampaign(e)}
-              >
-                {campaign === "new" ? "Create Campaign" : "Edit Campaign"}
-              </button>
+              {campaign === "new" ? (
+                <button
+                  className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                  onClick={(e) => createCampaign(e)}
+                >
+                  Create Campaign
+                </button>
+              ) : (
+                <>
+                  <button
+                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    onClick={(e) => editCampaign(e)}
+                  >
+                    Edit Campaign
+                  </button>
+                  <button
+                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    onClick={(e) => deleteCampaign(e)}
+                  >
+                    Delete Campaign
+                  </button>
+                </>
+              )}
             </div>
           </form>
         </div>

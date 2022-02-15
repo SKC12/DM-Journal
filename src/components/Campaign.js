@@ -8,7 +8,7 @@ import CampaignInfo from "./CampaignInfo";
 function Campaign() {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
-  const [currentCampaign, setCurrentCampaign] = useState();
+  const [currentCampaign, setCurrentCampaign] = useState("");
   const navigate = useNavigate();
 
   async function loadCampaigns() {
@@ -38,7 +38,11 @@ function Campaign() {
 
   let populateCampaigns = campaigns.map((camp, index) => {
     return (
-      <li className="cursor-pointer pl-2 pb-2" key={index}>
+      <li
+        className="cursor-pointer pl-2 pb-2"
+        key={index}
+        onClick={() => setCurrentCampaign(camp)}
+      >
         {camp.name}
       </li>
     );
@@ -58,7 +62,11 @@ function Campaign() {
           </li>
         </ul>
       </div>
-      <CampaignInfo campaign={currentCampaign} user={user} />
+      <CampaignInfo
+        campaign={currentCampaign}
+        user={user}
+        key={currentCampaign.name}
+      />
     </div>
   );
 }
