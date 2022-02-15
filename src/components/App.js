@@ -13,6 +13,7 @@ import Dashboard from "./Dashboard";
 import Header from "./Header";
 import Main from "./Main";
 import Campaign from "./Campaign";
+import Journal from "./Journal";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route exact path="/campaign" element={<Campaign />} />
+          <Route exact path="/journal" element={<Journal />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />
