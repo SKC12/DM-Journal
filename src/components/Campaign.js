@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import CampaignInfo from "./CampaignInfo";
 
@@ -11,19 +11,6 @@ function Campaign() {
   const [currentCampaign, setCurrentCampaign] = useState("");
   const navigate = useNavigate();
 
-  async function loadCampaigns() {
-    //console.log(user);
-    let campArray = [];
-    const query = await getDocs(
-      collection(db, "users/" + user.uid + "/campaigns")
-    );
-    query.forEach((doc) => {
-      campArray.push(doc.data());
-    });
-    //console.log(campArray);
-    setCampaigns(campArray);
-  }
-
   //   useEffect(() => {
   //     loadCampaigns();
 
@@ -31,9 +18,24 @@ function Campaign() {
   //   }, []);
 
   useEffect(() => {
+    async function loadCampaigns() {
+      //console.log(user);
+      let campArray = [];
+      const query = await getDocs(
+        collection(db, "users/" + user.uid + "/campaigns")
+      );
+      query.forEach((doc) => {
+        campArray.push(doc.data());
+      });
+      //console.log(campArray);
+      setCampaigns(campArray);
+    }
+
+    if (error) return;
     if (loading) return;
     if (!user) navigate("/login");
     if (user) loadCampaigns();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   let populateCampaigns = campaigns.map((camp, index) => {

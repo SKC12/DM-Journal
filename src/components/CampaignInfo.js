@@ -114,9 +114,11 @@ function CampaignInfo(props) {
               </label>
 
               <input
-                className={`${INPUT_STYLE} w-96`}
+                className={`${INPUT_STYLE} w-96 disabled:bg-gray-300 disabled:border-gray-300`}
                 id="info-campaign-name"
                 value={name}
+                maxLength="50"
+                disabled={campaign !== "new"}
                 onChange={(e) => setName(e.target.value)}
               ></input>
               {errorMessage()}
@@ -130,8 +132,9 @@ function CampaignInfo(props) {
                 Campaign description{" "}
               </label>
               <textarea
-                className={`${INPUT_STYLE} w-full h-60 resize-none`}
+                className={`${INPUT_STYLE} indent-6 w-full h-60 resize-none`}
                 id="info-campaign-description"
+                maxLength="1500"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>

@@ -9,12 +9,14 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { nanoid } from "nanoid";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
 const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
 function JournalInfo(props) {
+  //console.log(props);
   const [name, setName] = useState(
     props.session.name ? props.session.name : ""
   );
@@ -33,12 +35,130 @@ function JournalInfo(props) {
   const [partyLevel, setPartyLevel] = useState(
     props.session.partyLevel ? props.session.partyLevel : 1
   );
+  const [errorMsg, setErrorMsg] = useState(false);
 
-  function createSession() {}
+  const uid = props.session.uid;
 
-  function editSession() {}
+  useEffect(() => {
+    setErrorMsg(false);
+  }, [name]);
 
-  function deleteSession() {}
+  async function createSession(e) {
+    e.preventDefault();
+    const q = query(
+      collection(
+        db,
+        "users/" +
+          props.user.uid +
+          "/campaigns/" +
+          props.campaign.name +
+          "/sessions"
+      ),
+      where("name", "==", name)
+    );
+    const docs = await getDocs(q);
+    if (docs.docs.length === 0) {
+      let session = {
+        name: name,
+        color: color,
+        date: date,
+        ingameTime: ingameTime,
+        partyLevel: partyLevel,
+        description: description,
+        uid: nanoid(),
+      };
+      //console.log(campaign);
+      await setDoc(
+        doc(
+          db,
+          "users/" +
+            props.user.uid +
+            "/campaigns/" +
+            props.campaign.name +
+            "/sessions",
+          session.uid
+        ),
+        session
+      );
+      console.log("Document written");
+      props.setSessions(props.sessions.concat(session));
+    } else {
+      setErrorMsg(true);
+    }
+  }
+
+  async function editSession(e) {
+    e.preventDefault();
+    let session = {
+      name: name,
+      color: color,
+      date: date,
+      ingameTime: ingameTime,
+      partyLevel: partyLevel,
+      description: description,
+      uid: uid,
+    };
+    try {
+      await setDoc(
+        doc(
+          db,
+          "users/" +
+            props.user.uid +
+            "/campaigns/" +
+            props.campaign.name +
+            "/sessions",
+          uid
+        ),
+        session
+      );
+      console.log("Document written");
+      let newArr = props.sessions.map((entry) => {
+        return entry.uid === uid ? session : entry;
+      });
+      newArr.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      props.setSessions(newArr);
+      //TODO: ERROR
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function deleteSession(e) {
+    e.preventDefault();
+    try {
+      await deleteDoc(
+        doc(
+          db,
+          "users/" +
+            props.user.uid +
+            "/campaigns/" +
+            props.campaign.name +
+            "/sessions",
+          uid
+        )
+      );
+      props.setSessions(
+        props.sessions.filter((entry) => {
+          return entry.name !== name;
+        })
+      );
+      //TODO: ERROR
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  let errorMessage = () => {
+    return errorMsg ? (
+      <p className="text-red-500 text-sm pt-1 pl-5">
+        Session names must be unique
+      </p>
+    ) : (
+      <p></p>
+    );
+  };
 
   function populate(entry) {
     if (entry === "" || props.campaign === "") {
@@ -46,9 +166,9 @@ function JournalInfo(props) {
     } else {
       return (
         <div>
-          <form className="pl-24 pt-12 max-w-4xl">
+          <form className="pl-20 pt-12 max-w-4xl">
             <div className="flex">
-              <div className="flex-col items-center pb-6">
+              <div className="flex-col items-center">
                 <label className={LABEL_STYLE} htmlFor="info-session-name">
                   Session title{" "}
                 </label>
@@ -57,11 +177,12 @@ function JournalInfo(props) {
                   className={`${INPUT_STYLE} w-96 mr-8`}
                   id="info-session-name"
                   value={name}
+                  maxLength="50"
                   onChange={(e) => setName(e.target.value)}
                 ></input>
               </div>
 
-              <div className="flex-col items-center pb-6">
+              <div className="flex-col items-center">
                 <label className={LABEL_STYLE} htmlFor="info-session-color">
                   Color{" "}
                 </label>
@@ -76,7 +197,9 @@ function JournalInfo(props) {
               </div>
             </div>
 
-            <div className="flex">
+            {errorMessage()}
+
+            <div className="flex pt-6">
               <div className="flex-col items-center pb-6">
                 <label className={LABEL_STYLE} htmlFor="info-session-date">
                   Session date{" "}
@@ -102,6 +225,8 @@ function JournalInfo(props) {
                     className={`${INPUT_STYLE} w-16 mr-2`}
                     id="info-session-time"
                     value={ingameTime}
+                    min="0"
+                    max="9999"
                     onChange={(e) => setIngameTime(e.target.value)}
                   ></input>
                   days
@@ -118,6 +243,8 @@ function JournalInfo(props) {
                   className={`${INPUT_STYLE} w-16`}
                   id="info-session-level"
                   value={partyLevel}
+                  min="0"
+                  max="99"
                   onChange={(e) => setPartyLevel(e.target.value)}
                 ></input>
               </div>
@@ -131,6 +258,7 @@ function JournalInfo(props) {
                 className={`${INPUT_STYLE} w-full h-60 resize-none`}
                 id="info-session-description"
                 value={description}
+                maxLength="3000"
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>

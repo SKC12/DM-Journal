@@ -1,0 +1,770 @@
+[
+  {
+    "name": "Here we go again",
+    "sessionCount": 1,
+    "sessionDate": "29/08/2019",
+    "ingameDays": "April 10, Year 1",
+    "description": "Blue, Professor, Largartão(?), Bode e Feijão se juntam à companhia em Beryl.\n\nRecebem o serviço de investigar o que está acontecendo em Opal.\n\nRecebem o serviço de resgatar Floom, invadem o esconderijo da Thieve\u0027s Guild. O esconderijo havia sido atacado por Zhents que levaram Floom por engano, quando o verdadeiro alvo é o jover lorde Neverember.",
+    "keywords": "Opal"
+  },
+  {
+    "name": "Knee deep in trouble!",
+    "sessionCount": 2,
+    "sessionDate": "05/09/2019",
+    "ingameDays": "April 10, Year 1",
+    "description": "Blue, Professor, Zero e Ohio seguem em busca de zoom, no esgoto de Opal.\n\nInvadem esconderijo dos Zhents, derrotam a maioria dos inimigos e encontram zoom.",
+    "keywords": "Opal, Sewers, Zhent"
+  },
+  {
+    "name": "Lif the friendly barkeep",
+    "sessionCount": 3,
+    "sessionDate": "10/09/2019",
+    "ingameDays": "April 11, Year 1",
+    "description": "Blue, Professor, Zero e Ohio terminam de explorar o esconderijo dos Zhent e resgatam floom.\n\nLevel 2\n\nVitor os leva a Trollskull Manor e lhes entrega as chaves.\n\nShopping time.\n\nMomento profundo de integração interrompido por Lif, o espírito da taverna. ",
+    "keywords": "Shop, Trollskull Manor"
+  },
+  {
+    "name": "Everybody wants a piece of me",
+    "sessionCount": 4,
+    "sessionDate": "19/09/2019",
+    "ingameDays": "April 12 - 13, Year 1",
+    "description": "Limpeza na Manor.\n\nCapitão faz sua entrada triunfal pelo telhado da Manor. Saem para comprar supplies para concertar o telhado. Discussão entre Capitão e Lif.\n\nVitor chega com Gregori e Gregori pede ajuda para encontrar Ilyana em troca de informações sobre a pedra. Na saída são abordados pela polícia secreta também atrás de Ilyana.\n\nVão para a Casa de Seda tentar conseguir informações com amigas de Ilyana, Blue recebe um bilhete que fala para encontra Radu nas docas.\n\nNo caminho são atacados por por agentes da Thief\u0027s Guild.\n\nRadu propõe que marquem um encontro com Lady Marack para entregar o livro, que ele resolverá o problema. Conta que Ilyana esta na casa de banho.\n\nBriga na casa de banho, levam Ilyana para Manor. Grigori conta que a Thief\u0027s Guild tinha a pedra mas foi roubada. Companhia pondera sobre como proceder.",
+    "keywords": "Grigori, Ilyana, Opal"
+  },
+  {
+    "name": "Dude where is my Lady",
+    "sessionCount": 5,
+    "sessionDate": "26/09/2019",
+    "ingameDays": "April 13 -15, Year 1",
+    "description": "Recuperam o livro preto na casa de seda. Decidem que querem entregar o livro pessoalmente para Lady Marack.\n\nMarcam encontro, somente a guarda aparece. Falam que só entregam para Lady Marack. Marcam outro encontro.\n\nDurante o encontro, Lady Marack é sequestrada. São interrogados.\n\nVisita do fiscal da Carpenter\u0027s Guild, respondem à assalto na livraria.",
+    "keywords": "Opal, Lady Marack, Radu, Livraria"
+  },
+  {
+    "name": "Back to the sewers",
+    "sessionCount": 6,
+    "sessionDate": "03/10/2019",
+    "ingameDays": "April 15, Year 1",
+    "description": "Voltam ao esgoto tentar descobrir mais coisas.\n\nLar dos Zhents está cheio de morto-vivos, atraídos por uma placa mágica. Destroem o artefato quando o encontram.\n\nDecidem investigar as casas com ligação ao esgoto, uma é ligada a uma estalagem halfling e outra a uma casa de família halfing, os Peabodys.\n\nDesfarçados de policiais, revistam a casa dos Peabodys mas não encontram nada. Decidem esperar o halfling da casa chegar do trabalho.",
+    "keywords": "Opal, Sewers, Door"
+  },
+  {
+    "name": "Fireball!",
+    "sessionCount": 7,
+    "sessionDate": "10/10/2019",
+    "ingameDays": "April 16 - 17, Year 1",
+    "description": "LEVEL 3\n\nEnquanto esperam a chegada do halfling Peabody, ouvem uma explosão próxima do local. Encontram vários mortos, descobrem que uma pessoa machucado pegou algo de um gnomo morto e a causa da explosão foi um Nimblewright.\n\nProcuram Zardoz Zord, responsável por trazer os Nimblewritght de Lantan. Descobrem que o Nimblewright procurado foi comprado pelos Gralhund.\n\nVoltam para interrogar/intimidar o halfling Peabody mas aparentemente ele não tem conhecimento da situação.\n\nInvestigando a Gralhund Manor, descobrem que ela está sendo ataque. Invadem a mansão.",
+    "keywords": "Opal, Fireball, Zord, Gralhund"
+  },
+  {
+    "name": "A red day",
+    "sessionCount": 8,
+    "sessionDate": "17/10/2019",
+    "ingameDays": "April 17, Year 1",
+    "description": "Invasão da mansão.  Ohio e Professor morrem.",
+    "keywords": "Opal, Gralhund, Death"
+  },
+  {
+    "name": "Backup Arrives",
+    "sessionCount": 9,
+    "sessionDate": "24/10/2019",
+    "ingameDays": "April 18, Year 1",
+    "description": "Adeus ao Professor e ao Ohio. Má Notícia e Joe chegam à Opal.\n\nDecidem investigar os líderes Zent descritos por Yalah Gralhund. Istrid coopera e lhes dá uma pista, Fenerus Stormcastle.",
+    "keywords": "Opal, Istrid, Joe"
+  },
+  {
+    "name": "Again with the fucking sewers man",
+    "sessionCount": 10,
+    "sessionDate": "30/10/2019",
+    "ingameDays": "April 19, Year 1",
+    "description": "Decidem tentar invadir a mansão dos Gralhund novamente, sem sucesso.\n\nVão atrás de Fenerus. Vítor indica sua casa, descobrem que foi revistada pela Thieve\u0027s Guild. Invadem o esconderijo mais próximo e capturam o líder da célula. Descobrem a pedra?",
+    "keywords": "Opal, Fenerus, Stone of Golorr"
+  },
+  {
+    "name": "Call the police!",
+    "sessionCount": 11,
+    "sessionDate": "07/11/2019",
+    "ingameDays": "April 19-20, Year 1",
+    "description": "Levam o líder da célula para a cadeia. Conseguem entrevistar Fenerus, que não coopera. Tentam conseguir uma redução de pena sem sucesso.\n\nBuscam Tashlyn e tentam trabalhar em conjunto para uma terceira tentativa de invasão à casa Gralhund.",
+    "keywords": "Opal, Fenerus, Tashlyn"
+  },
+  {
+    "name": "There is always another one",
+    "sessionCount": 12,
+    "sessionDate": "13/11/2019",
+    "ingameDays": "April 20-22, Year 1",
+    "description": "Reunião com Zhents não dá certo.\n\nPedem ajuda ao Vitor para liberar Fenerus. Fenerus lhes dá a localização do resto da Pedra em troca da liberdade.\n\nPedras são roubadas por Drows antes de poderem recuperá-las. Seguem os Drow até o porto.\n\nLEVEL 4",
+    "keywords": "Opal, Fenerus, Drow"
+  },
+  {
+    "name": "Under the sea",
+    "sessionCount": 13,
+    "sessionDate": "21/11/2019",
+    "ingameDays": "April 23, Year 1",
+    "description": "Investigam a torre antimágica e descobrem as espada voadoras.\n\nEncontram so mendigos bandidos nas docas.\n\nPerguntam sobre a tartaruga submarina no templo de Gond e são encaminhados para uma inventora nas docas. Ela possui um submarino diferente, e os empresta em troca de metade do que encontrarem de tesouro no fundo do mar.\n\nEncontram um jovem dragão de bronze no fundo do mar, que os leva até o submarino arraia dos drow.",
+    "keywords": "Opal, Drow, Submarine, Dragon"
+  },
+  {
+    "name": "By Lolth, so rude!",
+    "sessionCount": 14,
+    "sessionDate": "28/11/2019",
+    "ingameDays": "April 24, Year 1",
+    "description": "Encomendam capacetes para respirar debaixa da água do templo de Gond.\n\nScoutam o navio Drow, mas ativam um alarme e são obrigados a fugir.\n\nSe preparam para invadir o navio no dia da parada gay.",
+    "keywords": "Opal, Drow, Submarine"
+  },
+  {
+    "name": "The heist",
+    "sessionCount": 15,
+    "sessionDate": "03/12/2019",
+    "ingameDays": "April 24-27, Year 1",
+    "description": "Assault on the Drow ship. Hard fight, but manage to retrive the eyes of the Stone of Golorr.",
+    "keywords": "Opal, Drow, Submarine, Heist"
+  },
+  {
+    "name": "Your beardy face",
+    "sessionCount": 16,
+    "sessionDate": "11/12/2019",
+    "ingameDays": "April 27, Year 1",
+    "description": "Retornam à mansão. Ativam a Stone of Golorr e descobrem o local do Vault.\n\nCom Beholder Eyestalks, luz do sol e uma performance de Your beardy face, entram no Vault, onde encontram o anão Aurinax, livros e uma cacetada de gold.",
+    "keywords": "Opal, Vault, Stone of Golorr"
+  },
+  {
+    "name": "Run, People, Run.",
+    "sessionCount": 17,
+    "sessionDate": "26/12/2019",
+    "ingameDays": "April 27, Year 1",
+    "description": "Carregam o gold do vault e se preparam para sair. \nLimper aparece.\nDurante a fuga, são salvos pelo Capitão,, Sorry e Sapo.\nChegam no barco e zarpam.\nFIM DO TUTORIAL\nLEVEL 5 ",
+    "keywords": "Opal, Vault, Limper"
+  },
+  {
+    "name": "An unfamiliar face",
+    "sessionCount": 18,
+    "sessionDate": "02/01/2020",
+    "ingameDays": "April 27 - May 13, Year 1",
+    "description": "Depois de sair de Opal, nossos heróis embarcam em uma nova jornada.\n\nDescobrem que o motivo original porque a companhia foi contratada é um efeito mágico que está afetando o passar das almas para o próximo mundo.\n\nEncontram um \"misterioso\" necromante ao nordeste de Oar, que os indica uma possível fonte do problema, um poderoso artefato chamado Soulmonger, localizado em na exótica ilha de Chult.",
+    "keywords": "Necromancer, Soulmonger, Chult"
+  },
+  {
+    "name": "The land of the big lizards",
+    "sessionCount": 19,
+    "sessionDate": "08/01/2020",
+    "ingameDays": "May 13 - June 1, Year 1",
+    "description": "Chegam em Port Nyanzaro, exploram a cidade, observam as corridas e passam a noite no Inn. Contratam Eku como guia.",
+    "keywords": "Chult, Nyanzaro"
+  },
+  {
+    "name": "Into the jungle",
+    "sessionCount": 20,
+    "sessionDate": "16/01/2020",
+    "ingameDays": "May 13 - May 17, Year 1",
+    "description": "Encontram os Merchant Princes, aceitam recuperar o Shield Guardian. \n\nSeguem de canoa para dentro da mata. Encontro com Stirges e Menga Plants.\n\nChegam no Camp Righteous e descobrem que o camp foi atacado por morto-vivos. Eku conta a lenda dos homes e crocodilos e se preparam para entrar no templo.",
+    "keywords": "Chult, Nyanzaro"
+  },
+  {
+    "name": "Legends of the hidden temple",
+    "sessionCount": 21,
+    "sessionDate": "30/01/2020",
+    "ingameDays": "May 17 - May 24, Year 1",
+    "description": "Exploram o templo em Camp Righteous.\n\nSeguem para Camp Vengeance. Decidem acompanhar a patrulha na região dos mortos-vivos.\n\nRetornam para Camp Righteous e entram mata adentro.",
+    "keywords": "Chult, Camp Vengeance"
+  },
+  {
+    "name": "Fresh blood",
+    "sessionCount": 22,
+    "sessionDate": "06/02/2020",
+    "ingameDays": "May 24 - May 28, Year 1",
+    "description": "Começam a explorar a mata.\n\nEncontram um bando de Yellow Musk Creeper Zombies e os recrutas tem o seu primeiro teste de batalha. 2 recrutas não sobrevivem.\n\nO restante segue mata adentro.",
+    "keywords": "Chult"
+  },
+  {
+    "name": "Meet the grungs",
+    "sessionCount": 23,
+    "sessionDate": "12/02/2020",
+    "ingameDays": "May 28 - May 31, Year 1",
+    "description": "Encontram grupo de Ghouls n\u0027 Ghasts, matam um Ghast e espantam o resto.\n\nUm T-Rex aparece durante a noite, conseguem fugir.\n\nEncontram a cidade dos Grungs. Entram amigavelmente e descobrem o plano de Kroak. Durante a noite são recrutados para enganar Kroak.",
+    "keywords": "Chult, Grung"
+  },
+  {
+    "name": "The great NangNang",
+    "sessionCount": 24,
+    "sessionDate": "18/02/2020",
+    "ingameDays": "May 31 - June 3, Year 1",
+    "description": "Enganam Kroak com sucesso. Recebem informações sobre a área.\n\nApós ataque de Ankylossauros Zombies, Eku decide contar o que sabe sobre a Naga de Orolunga.",
+    "keywords": "Chult, Grung"
+  },
+  {
+    "name": "Trading with the natives",
+    "sessionCount": 25,
+    "sessionDate": "26/02/2020",
+    "ingameDays": "June 3 - June 12, Year 1",
+    "description": "Encontram uma parte da floresta escura com teias de aranha e decidem desviar.\n\nEncontram wraiths durante a noite.\n\nRetornam com os soldados ao Camp Vengeance e seguem norte à procura do Shield Guardian. \n\nEncontram Vorn e descobrem que ele é objeto de adoração das tribos locais.\n\nEncontram os goblins locais que estavam com o amuleto de comando e trocam por um Helmet of Water Breathing.",
+    "keywords": "Chult, Vorn"
+  },
+  {
+    "name": "Eating the serpert",
+    "sessionCount": 26,
+    "sessionDate": "05/03/2020",
+    "ingameDays": "June 12 - June 30",
+    "description": "Seguem em direção a Orolunga. Com a ajuda de Chwingas, sobem ao topo da torre e encontram a Guardian Naga Saja N\u0027Baza. Recebem informações sobre o passado de Chult e Ras Nsi.\n\nSeguem em direção a M\u0027bala. Encontram uma Forvalaka durante a viagem.\n\nChegam em M\u0027bala e encontram Nanny Pu\u0027pu.",
+    "keywords": "Chult, Orolunga"
+  },
+  {
+    "name": "The Innocent Granny",
+    "sessionCount": 27,
+    "sessionDate": "11/03/2020",
+    "ingameDays": "June 30 - July 6",
+    "description": "Luta com Nanny Pu\u0027pu.\n\nLEVEL 6\n\nSeguem em direção à grande pedra flutuante.\n\nEncontram um ninho de Dimetrodon. Roubam um ovo.",
+    "keywords": "Chult, Nanny Pu\u0027pu, Egg"
+  },
+  {
+    "name": "Valindra Shadowmantle",
+    "sessionCount": 28,
+    "sessionDate": "19/03/2020",
+    "ingameDays": "July 6 - July 20",
+    "description": "Seguem em direção à grande pedra flutuante.\n\nLá encontram Valindra, uma elfa não muito suspeita comandando as forças de Thay. Ela os informa que também estão atrás do Soulmonger.\n\nSeguem em direção ao restos do navio. Durante uma noite, derrotam um T-Rex e um Z-T-Rex.",
+    "keywords": "Chult, Valindra, Heart of Ubtao"
+  },
+  {
+    "name": "Wrecked Godess",
+    "sessionCount": 29,
+    "sessionDate": "27/03/2020",
+    "ingameDays": "July 20 - August 5, Year 1",
+    "description": "Blue recebe uma mensagem durante a noite.\n\nSeguem em direção ao \"naufrágio\". Encontram Thasselandra e os outros membros do grupo nos destroços, cercados por Ghouls no chão. Despacham os Ghouls, mas quando estão tentando ajudar o grupo são atacados por Zombie Girallons.",
+    "keywords": "Chult, Star Godess"
+  },
+  {
+    "name": "At Omu at last",
+    "sessionCount": 30,
+    "sessionDate": "02/04/2020",
+    "ingameDays": "August 5 - August 20, Year 1",
+    "description": "Decidem seguir em direção à Omu com os sobreviventes do naufrágio. \n\nNo caminho, avistam um tapete voador na direção de Omu.\n\nFinalmente chegam em Omu. Indo em direção à escadaria, encontram e despacham um grupo de Yuan-Ti.\n\n",
+    "keywords": "Chult, Omu, Zorbos"
+  },
+  {
+    "name": "Damn the milkpeople",
+    "sessionCount": 31,
+    "sessionDate": "09/04/2020",
+    "ingameDays": "August 20 - 21, Year 1",
+    "description": "Interrogam Yuan-Ti capturado.\n\nEntram em Omu. São atacados por novos Yuan-Ti na entrada.\n\nRegatam Imbok de ser sacrificado no vulcão.\n\nEncontram o acampamento destruído dos magos de Thay e salvam Orvex.\n\n",
+    "keywords": "Chult, Omu, Yuan-Ti"
+  },
+  {
+    "name": "O templo da medonça",
+    "sessionCount": 32,
+    "sessionDate": "16/04/2020",
+    "ingameDays": "August 21, Year 1",
+    "description": "Depois da luta com medonças e gladiadores de barro, recuperam o cubo do templo de Shagambi.",
+    "keywords": "Chult, Omu, Shagambi"
+  },
+  {
+    "name": "Beware the frog monster!",
+    "sessionCount": 33,
+    "sessionDate": "25/04/2020",
+    "ingameDays": "August 22, Year 1",
+    "description": "LEVEL 7\n\nDesbravam os templos de Kubazan e I\u0027Jin.\n\nEncontram restos do acampamento da companhia do banner amarelo.",
+    "keywords": "Chult, Omu, Kubazan, I\u0027Jin"
+  },
+  {
+    "name": "Someone got here first!",
+    "sessionCount": 34,
+    "sessionDate": "30/04/2020",
+    "ingameDays": "August 22-23, Year 1",
+    "description": "Encontram o cubo de Wongo.\n\nEncontram o King of Feathers e descobrem seu ninho.\n\nEncontram o templo de Papazotl, mas o cubo já havia sido recuperado.\n\nEncontram o cubo de Nangnang.",
+    "keywords": "Chult, Omu, Wongo, Papazotl, Nangnang"
+  },
+  {
+    "name": "New friendships",
+    "sessionCount": 35,
+    "sessionDate": "07/05/2020",
+    "ingameDays": "August 23, Year 1",
+    "description": "Encontram Valter e Kevin Cristian fugindo de Yuan-Tis.\n\nEncontram o cubo de Obo\u0027laka. Restoram o mago Voj petrificado. O restauram à vida e roubam seu spellbook. Pedem que os levem ao restante dos magos de Thay.",
+    "keywords": "Chult, Omu, Obo\u0027laka"
+  },
+  {
+    "name": "Snake boots for everyone",
+    "sessionCount": 36,
+    "sessionDate": "13/05/2020",
+    "ingameDays": "August 23, Year 1",
+    "description": "São atacados por um grande patrulha de Yuan-Ti. Voj foge com a Component Pouch de Blue. ",
+    "keywords": "Chult, Omu"
+  },
+  {
+    "name": "Para dentro do ninho das cobras",
+    "sessionCount": 37,
+    "sessionDate": "26/05/2020",
+    "ingameDays": "August 24, Year 1",
+    "description": "Descobrem que os últimos cubos foram recuperados pelos Yuan-Ti e pelos magos de Thay.\n\nVão atrás dos magos de Thay, derrotando todos menos o líder, que teletransporta. Recuperam dois cubos, restando apenas um.\n\nDescobrem a passagem secreta que chega ao palácio dos Yuan-Ti.",
+    "keywords": "Chult, Omu"
+  },
+  {
+    "name": "Charred Snakes",
+    "sessionCount": 38,
+    "sessionDate": "11/06/2020",
+    "ingameDays": "August 24-25, Year 1",
+    "description": "Invadem o templo dos Yuan-Ti, decimando metade do local e capturando o Yuan-Ti Yahru. Resgatam mais um bando de reféns e descansam para retornar no outro dia.",
+    "keywords": "Chult, Omu, Yuan-Ti"
+  },
+  {
+    "name": "Ras Nsi",
+    "sessionCount": 39,
+    "sessionDate": "18/06/2020",
+    "ingameDays": "August 25, Year 1",
+    "description": "Yahru informa o grupo sobre uma facção dentro do templo contra o domínio de Ras Nsi, liderada por Fenthaza. Os propõe uma alternativa, serem levados para a presença de Ras Nsi como reféns e os atacarem de surpresa.\n\nO grupo aceita a proposta e põe o plano em prática. Derrotam Ras Nsi e seus aliados e acham sua sala secreta do tesouro, onde decidem descansar.",
+    "keywords": "Chult, Omu, Yuan-Ti, Ras Nsi"
+  },
+  {
+    "name": "Souls don\u0027t die",
+    "sessionCount": 40,
+    "sessionDate": "25/06/202",
+    "ingameDays": "August 25-26, Year 1",
+    "description": "Grupo deixa o templo de Yuan-Ti e se preparam para um último desafio antes de seguir em busca do Soulmonger, desafiar King of Feathers.\n\nLEVEL 8\n\nO plano do duelo entre T-Rexs não é completamente efetivo e, durante o caos da batalha, o grupo perde Vonindrod. Apesar da perda, derrotam King of Feathers e encontram o tesouro de um antigo grupo de aventureiros.",
+    "keywords": "Chult, Omu, King of Feathers"
+  },
+  {
+    "name": "Into the tomb",
+    "sessionCount": 41,
+    "sessionDate": "09/07/2020",
+    "ingameDays": "August 26-27, Year 1",
+    "description": "O grupo descobre a entrada verdadeira da tumba e consegue acesso ao seu interior.\n\nA maioria da entourage se despede da party, decidindo ficar no anfiteatro. Eku e Orvex os seguem tumba adentro.\n\nComeçam a exploração da tumba.\n\nEliminam o Demônio das Sombras.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Get out of my head!",
+    "sessionCount": 42,
+    "sessionDate": "28/07/2020",
+    "ingameDays": "August 27, Year 1",
+    "description": "Continua a exploração do primeiro nível tumba. Encontram os espíritos de Moa e Obo\u0027laka e guardam a arma habitada por Wongo.\n\nSeguem em direção ao segundo nível.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "OBEY ME",
+    "sessionCount": 43,
+    "sessionDate": "04/08/2020",
+    "ingameDays": "August 27, Year 1",
+    "description": "Começam a explorar o segundo nível da tumba. Encontram o espírito de Papazotl e o sarcófago de NangNang. Encontram outra Skeleton Key no segundo nível.\n\nDescendo pela garganta do demônio, encontram o sarcófago de I\u0027jin.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Offerings to the frog",
+    "sessionCount": 44,
+    "sessionDate": "13/08/2020",
+    "ingameDays": "August 27, Year 1",
+    "description": "Encontram o espirito de NangNang.\n\nSeguem explorando o 3º nível e encontram o artefato com o espírito de Kubazan.",
+    "keywords": "Chult, Omu, Tomb of the Nine Gods"
+  },
+  {
+    "name": "Night Terrors",
+    "sessionCount": 45,
+    "sessionDate": "20/08/2020",
+    "ingameDays": "August 27-28, Year 1",
+    "description": "Dormem dentro da tumba. \nDescobrem Tomb Dwarves arrastando os golems destruídos anteriormente.\nKevin não conseguem descansar.\nEncontram e exploram os corredores secretos da \"Staff\".\nContinuam explorando o 3º nível.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Withers",
+    "sessionCount": 46,
+    "sessionDate": "02/09/2020",
+    "ingameDays": "August 29, Year 1",
+    "description": "Encontram Withers, o responsável pela tumba.\nO encontro termina em combate, e depois de eliminá-lo, revistam sua sala.\nResolvem a sala de I\u0027Jin.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Tick, Tock",
+    "sessionCount": 47,
+    "sessionDate": "07/09/2020",
+    "ingameDays": "August 29, Year 1",
+    "description": "Seguem a exploração da tumba no 4º nível.\nResolvem a sala de Unkh e encontram o relógio.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Gargoyle incident",
+    "sessionCount": 48,
+    "sessionDate": "15/09/2020",
+    "ingameDays": "August 30, Year 1",
+    "description": "Decidem dormir novamente.  Eku avista alguma acoisa, mas desta vez, a noite passa sem problemas.\n\nLEVEL 9\n\nKevin expulsa Wongo e aceita Kubazan.\n\nEncontram a sala do dos pintores e o local de descanso de Napaka. \n\nDescobrem o significado do incidente com os gárgolas.\n\n",
+    "keywords": "Chult, Omu, Tomb of Nine Gods."
+  },
+  {
+    "name": "Precious air",
+    "sessionCount": 49,
+    "sessionDate": "01/10/2020",
+    "ingameDays": "August 31, Year 1",
+    "description": "Blue passa passa pelos desafios para entrar na sala da medonça, mas acorda o exército de barro quando tenta abrir o sarcófago. Após limpar a sala, tenta retornar ao grupo, mas é transformado em uma serpente voadora.\n\nApós o retornarem a sua forma verdadeira, entrar na sala da coroa de ouro. Conseguem retirá-la da sala sem ficarem presos, mas são atacados pelos Bodaks acordados após o furto.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Into dust",
+    "sessionCount": 50,
+    "sessionDate": "08/10/2020",
+    "ingameDays": "August 31, Year 1",
+    "description": "Invadem a workshop dos Tomb Dwarves e encontram Starfallen.\n\nSeguem ao 5º nível.\n\nEncontram o corredor de Napaka. Acham a sala secreta e o rubi gigante. Destroem o constructo com o cetro. Sacrificam o rubi gigante e outras gemas para resolver o puzzle do gárgola gigante.\n\nSeguem até a sala de controle.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Cogs in the machine",
+    "sessionCount": 51,
+    "sessionDate": "22/10/2020",
+    "ingameDays": "August 31 - September 1st, Year 1",
+    "description": "Investigam a sala de controle. Entram em contato G\u0027lyh\u0027rul, descobrem como funcinam os botões e ficam presos na sala.\n\nConseguem sair, e enfrentam Shambling Mounds vindos da sala central.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "The Party, The Lich and the Wardrobe",
+    "sessionCount": 52,
+    "sessionDate": "29/10/2020",
+    "ingameDays": "September 1, Year 1",
+    "description": "Tentam, sem sucesso, accesar a pequena sala na engrenagem central.\n\nEntram na engrenagem com os 5 guarda-roupas e derrotam as criaturas de cada um.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Death is in the eye of the Beholder.",
+    "sessionCount": 53,
+    "sessionDate": "12/11/2020",
+    "ingameDays": "September 1, Year 1",
+    "description": "Blue investiga a sala do Golden Mastodon, ativando a estátua. Demônios aparecem e ele decide fugir.\n\nCom Rio, investigam o restante do quinto andar e encontram a entrada para o sexto.\n\nVoltam ao terceiro pavimento e encontram os olhos de vidro restantes, junto com um paladino de Bahamut.\n\nAbrem a porta com todos os olhos de vidro e enfrentam o Beholder.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Nothing but smoke",
+    "sessionCount": 54,
+    "sessionDate": "25/11/2020",
+    "ingameDays": "September 1-2, Year 1",
+    "description": "LEVEL 10\n\nTerminam de explorar o quinto nível.\n\nDescobrem a fonte do gás tóxico e o último membro da companhia do banner amarelo.\n\nExplorar o mecanismo do sistema solar, lutam com o yugoloth e encontram o ouro.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Opening the skeleton gate",
+    "sessionCount": 55,
+    "sessionDate": "02/12/2020",
+    "ingameDays": "September 2, Year 1",
+    "description": "Descem ao sexto nível e encontram o clone de Blue.\n\nCompletam os cinco testes que abrem a porta das chaves esqueleto.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Soul Sisters",
+    "sessionCount": 56,
+    "sessionDate": "10/12/2020",
+    "ingameDays": "September 2-3, Year 1",
+    "description": "Lutam com as Sew Sisters, sem misericórdia.\n\nTentam novamente passar pelo teste do mastodonte, sem sucesso.\n\nSe preparam para enfrentar o Atropal.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "The Soulmonger",
+    "sessionCount": 57,
+    "sessionDate": "17/12/2020",
+    "ingameDays": "September 3, Year 1",
+    "description": "Destroem imediatamente o Atropal.\n\nEncontram Shapeshifter. Usam a flecha e o enfrentam, jogando seu corpo na lava no final da luta.\n\nDestroem o Soulmonger e encontram a criatura que estava presa.\n\nSeguem pela névoa para tentar sair da tumba.",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Back into the light",
+    "sessionCount": 58,
+    "sessionDate": "21/12/2020",
+    "ingameDays": "September 3-4, Year 1",
+    "description": "Encontram a biblioteca e os antigos anais da companhia. Se livram do bibliotecário e levam o máximo possível de livros.\n\nEncontram o portal para saída e conseguem abrí-lo.\n\nConseguem sair da tumba, intactos e encontram os companheiros que esperavam  fora dela.\n\n",
+    "keywords": "Chult, Omu, Tomb of Nine Gods"
+  },
+  {
+    "name": "Back into the jungle",
+    "sessionCount": 59,
+    "sessionDate": "06/01/2021",
+    "ingameDays": "September 4 - November 2, Year 1",
+    "description": "Selam a entrada da tumba.\n\nSeguem de volta para a floresta, na viagem de volta a Port Nyanzaru.\n\nNo caminho, a Dimetron Chorra choca.\n\nChegam na cidade e liberam os escravos. Entram em contato com a companhia, para buscá-los em Chult.\n\nBlue estuda magia arcana com Wakanga O\u0027Tamu.",
+    "keywords": "Chult, Omu, Port Nyanzaru"
+  },
+  {
+    "name": "Old Friends",
+    "sessionCount": 60,
+    "sessionDate": "13/01/2021",
+    "ingameDays": "November 2 - 4, Year 1",
+    "description": "Encontram a companhia e contam tudo que passou na selva. \n\nSeguem em direção a Bathia em busca de um engenheiro para o Airship.\n\nNo caminho, entram em contato com o misterioso necromante que os teletransporta para sua casa. Contam o que aconteceu e o misterioso necromante sai em busca da espada de Kas.\n\nO misterioso necromante encontra um misterioso guerreiro em uma misteriosa cidade do norte. ",
+    "keywords": "Travel"
+  },
+  {
+    "name": "Deep below",
+    "sessionCount": 61,
+    "sessionDate": "21/01/2021",
+    "ingameDays": "November 4-5, Year 1",
+    "description": "Necromante e guerreiro conversam com Kas.\n\nDecidem que precisam encontram uma maneira de viajar para outros mundos.\n\nO necromante volta para o grupo e lhes conta que conhece um grupo de Mind Flayers que talvez possam ajudá-los.\n\nO grupo é teletransportado para Skullport, onde começam sua jornada em Underdark.",
+    "keywords": "Underdark, Skullport"
+  },
+  {
+    "name": "The city of Glass Pool",
+    "sessionCount": 62,
+    "sessionDate": "11/02/2021",
+    "ingameDays": "November 5-November 20, Year 1",
+    "description": "Contratam Jo\u0027akin, um guia para levá-los até a cidade de Glass Pool.\n\nExploram os arredores da cidades. Encontram o portão que os leva até o local onde acreditam estar os Mind Flayers. Tentam, sem sucesso, abrir o portão furtivamente.",
+    "keywords": "Underdark, Skullport, Glass Pool"
+  },
+  {
+    "name": "The Ilithid",
+    "sessionCount": 63,
+    "sessionDate": "04/03/2021",
+    "ingameDays": "November 20, Year 1",
+    "description": "Encontram os Ilithids. Aceitam ajudá-los a impedir os Aboleths de Greath Shaboath em troca de auxílio para viajar a outros mundos. Precisam destruir as 5 torres centrais que, quando finalizadas, potencializariam os poderes dos Aboleth.\n\nEntram furtivamente em Great Shaboath e seguem direto. para as torres centrais. Quando abrem a torre de Transmutação...",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Into the towers",
+    "sessionCount": 64,
+    "sessionDate": "11/03/2021",
+    "ingameDays": "November 20, Year 1",
+    "description": "Exploram a torre de transmutação, eliminando um golem guardião e dois elementais da água. No terceiro nível, encontram um Aboleth.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Maybe later",
+    "sessionCount": 65,
+    "sessionDate": "18/03/2021",
+    "ingameDays": "November 20, Year 1",
+    "description": "Decidem não atacar o Aboleth dentro da torre de Transmutação.\n\nDecidem invadir a torre de Encantamento, eliminando os guardiões do 1º e 2º nível.\n\nExploram mais da cidade. Encontram um Aboleth levando escravos até a torre de Conjuração.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Tower of Summonings",
+    "sessionCount": 66,
+    "sessionDate": "25/03/2021",
+    "ingameDays": "November 20, Year 1",
+    "description": "Invadem a torre de conjuração, eliminando todos os defensores. \n\nNo topo da torre, encontram os dois escravos em situação precária.\n\nConseguem neutralizar a energia da torre, desativando-a.\n\nSaem de Great Shaboat para tentar novamente outro dia.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Memories",
+    "sessionCount": 67,
+    "sessionDate": "30/03/2021",
+    "ingameDays": "November 20 - 21, Year 1",
+    "description": "Voltam com os escravos até o local com os Mind Flayers.\n\nNão conseguem reanimá-los, mas, com a ajuda de um Ilhitid, conseguem acessar sua memórias e descobrir como foram capturados por Drows e levados até Great Shaboath, onde recebiam um tipo de poção que os deixava atordoados.\n\nSe preparam para invadir a cidade novamente no dia seguinte.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Tower of Necromancy",
+    "sessionCount": 68,
+    "sessionDate": "08/04/2021",
+    "ingameDays": "November 21, Year 1",
+    "description": "Em um novo ataque, encontram a cidade em um nível superior de alerta.\n\nEliminam as defesas nas torres e decidem atacar a torre de necromancia.\n\nCom certa dificuldade, conseguem eliminar o Aboleth da torre e desativá-la.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Fizban the Fabulous",
+    "sessionCount": 69,
+    "sessionDate": "15/04/2021",
+    "ingameDays": "November 22, Year 1",
+    "description": "Ao invés de atacar as torres, decidem invadir um dos locais onde prisioneiros estão localizados. Escolhem o local com conjuradores, pois eles podem auxiliá-los nos ataques às torres.\n\nEliminam os defensores do primeiro pavimento e encontram 13 prisioneiros, em um estado de estupor. Seguem para o segundo pavimento, onde encontram um sala com guerreiros que os atacam imediatamente. Porém, a agressividade desses guerreiros parece acabar quando eles chegam perto de Zero.\n\nTambém econtram Fizban, um velho excêntrico que estava sendo torturado.\n\nDecidem sair da cidade com os prisioneiros e voltar outro dia.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Tonight we plan!\u0027",
+    "sessionCount": 70,
+    "sessionDate": "22/04/2021",
+    "ingameDays": "November 22-24, Year 1",
+    "description": "Passam dois dias se recuperando dos ataques e eliminando os encantamentos que estavam afetando os prisioneiros resgatados.\n\nSe preparam para um novo ataque a Great Shaboath.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Treasure Time",
+    "sessionCount": 71,
+    "sessionDate": "29/04/2021",
+    "ingameDays": "November 24, Year 1",
+    "description": "Começam uma nova invasão de Great Shaboth, dessa vez com o auxílio de prisioneiros libertados e em conjunto com um ataque de Mind Flayers.\n\nDecidem primeiro explorar o lado sudoeste da cidade. Encontram um prédio com Drows e um prédio Aboleth que pode ser o lugar on Fizban mencionou que os Aboleths levaram seu cajado.\n\nInvadem o prédio Aboleth na esperança de tesoura, eliminam os guardas e sacam o que conseguem.\n\nSe preparam para seguir em direção as torres.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Tower of Enchantment, Take Two",
+    "sessionCount": 72,
+    "sessionDate": "06/05/2021",
+    "ingameDays": "November 24, Year 1",
+    "description": "Junto com os prisioneiros encontrados em Great Shaboath, invadem novamente a torre de encantamento, desta vez destruindo o Aboleth no topo e, com a ajuda dos prisioneiros, removem o poder magico da torre.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Tower of Abjuration",
+    "sessionCount": 73,
+    "sessionDate": "13/05/2021",
+    "ingameDays": "November 24, Year 1",
+    "description": "Invadem a segunda torre no mesmo dia, a última torre, a torre de abjuração.\n\nCom certa dificuldade conseguem eliminar o Aboleth e o poder magico da torre.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Yosver, my master!",
+    "sessionCount": 74,
+    "sessionDate": "25/05/2021",
+    "ingameDays": "November 24-25, Year 1",
+    "description": "Voltando de Great Shaboath, Blue encontra Yosver sendo levado por Mind Flayers.\n\nO grupo se concentra em como recuperar o gnomo. Tentam usar a Stone of Golorr como moeda de troca.\n\nSe reunem com os Ilithids, e descobrem que Yosver ajudava os Aboleths a fabricar as poções de controle mental, e por isso tem grande valor. Não conseguem trocar sua liberdade. Fizban se oferece como sacrifício, mas o grupo não aceita trocar um dos seus e voltam de mãos vazias. Decidem terminar o trabalho em Great Shaboath e depois ver o que conseguem.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Goodbye Great Shaboath, Part 1",
+    "sessionCount": 75,
+    "sessionDate": "03/06/2021",
+    "ingameDays": "November 25, Year 1",
+    "description": "Começa a invasão final de Great Shaboath. Eliminam os guards na entrada da torre central, o aboleth defendendo a torre e encontram um Ilithid em um laboratório arcano.\n\nApós eliminá-lo, investigam o laboratório e se preparam para a luta final.",
+    "keywords": "Underdark, Great Shaboath"
+  },
+  {
+    "name": "Goodbye Great Shaboath, Part 2",
+    "sessionCount": 76,
+    "sessionDate": "10/06/2021",
+    "ingameDays": "November 25, Year 1",
+    "description": "No último andar da torre encontram um grande aboleth.\n\nApós matá-lo, a o aboleth e a torre começam a explodir. Pegam o que conseguem na saída e fogem da torre.\n\nPegam mais alguns itens na saída e fogem da ilha que parece estar afundando.\n\nVoltam para os Mind Flayer e finalizam a troca combinada, os Mind Flayers fornecem um navegador e lhes informa que podem conseguir um leme em Arctis Tor, a fortaleza de Mab, a rainha do ar e da escuridão.\n\nBlue tem um último momento com Yosver e o grupo decide descansar na caverna dos Mind Flayers.\n\nLEVEL 12",
+    "keywords": "Underdark, Greath Shaboath"
+  },
+  {
+    "name": "Belated reunion",
+    "sessionCount": 77,
+    "sessionDate": "16/06/2021",
+    "ingameDays": "November 25-30, Year 1",
+    "description": "Acordam e descobrem que os Ilithids não estão mais nas cavernas. Joe segue os rastros e os encontra na saída do lago subterrâneo. O grupo se reune com os companheiros e reencontra Fizban e os magos que chegaram de Great Shaboath.\n\nO grupo decide fugir dos Mind Flayers enquanto Joe recupera Yosver sozinho. O plano tem sucesso, chamam Belketh o Necromancer e saem de Underdark.\n\nPassam alguns dias no chalé de Belketh, liberando os companheiros que não se juntariam ao grupo e se despedindo de Fizban.\n\nDecidem visitar a floresta de Joe, para ver se conseguem ajuda para chegar à fortaleza de Arctis Tor. ",
+    "keywords": "Underdark, Necromancer"
+  },
+  {
+    "name": "Family is complicated",
+    "sessionCount": 78,
+    "sessionDate": "01/07/2021",
+    "ingameDays": "November 30, Year 1",
+    "description": "Joe conversa com Maeral, a lider dos Wood Elves, que os aceita ajudar a chegar ao topo das montanhas da espinha do mundo, um lugar próximo de Arctis Tor.\n\nJoe convida os companheiros para uma reunião de família, onde encontram Yrathea e Ilrune.\n\nSeguem para Arctis Tor, onde Mab aceita criar uma reunião com os membros envolvidos deste conclave.",
+    "keywords": "Brokilon, Arctis Tor"
+  },
+  {
+    "name": "The Conclave",
+    "sessionCount": 79,
+    "sessionDate": "08/07/2021",
+    "ingameDays": "November 30, Year 1",
+    "description": "Exploram um pouco de Arctis Tor, com o auxílio de True Sight.\n\nAcompanham a reunião do conclave. ",
+    "keywords": "Arctis Tor"
+  },
+  {
+    "name": "A big step for humanoidkind",
+    "sessionCount": 80,
+    "sessionDate": "22/07/2021",
+    "ingameDays": "November 30, Year 1 - February 14, Year 2",
+    "description": "Queen Mab entrega o Nautiloid.\n\nVoltam para o plano material e encontram o resto da Companhia.\n\nDecidem que fica e quem segue na viajem, e finalizam as despedidadas.\n\nRumo ao desconhecido, chegam em um pegueno asteróide em Wayspace, Rock of Bral.",
+    "keywords": "Actis Tor, Spelljammer, Rock of Bral"
+  },
+  {
+    "name": "The Rock of Bral",
+    "sessionCount": 81,
+    "sessionDate": "29/07/2021",
+    "ingameDays": "February 14, Year 2",
+    "description": "Exploram a Rock of Bral.\n\nVão ao mercado de Low City, encontram Krunz da Krunz Kanonwerks, Teledir da Nautical Charts of Bral, Gaspar\u0027s Reclamations e seguem em direção à biblioteca.",
+    "keywords": "Rock of Bral"
+  },
+  {
+    "name": "The Library of the Spheres",
+    "sessionCount": 82,
+    "sessionDate": "05/08/2021",
+    "ingameDays": "February 14-24, Year 2",
+    "description": "Se afiliam à biblioteca. Pesquisam sobre o funcionamento de Spelljamming e das esferas em geral, além de outros assuntos pessoais.\n\nDecidem comprar Translator Worms com o Gaspar.\n\nSe colocam a disposição da Xenotermination, Ltd.",
+    "keywords": "Rock of Bral"
+  },
+  {
+    "name": "The Star Dragon",
+    "sessionCount": 83,
+    "sessionDate": "19/08/2021",
+    "ingameDays": "February 24-Abril 30",
+    "description": "Eliminam o Star Dragon e suas crias junto com a Xenotermination, Ltd.",
+    "keywords": "Rock of Bral, Star Dragon"
+  },
+  {
+    "name": "To Casaspace",
+    "sessionCount": 84,
+    "sessionDate": "26/08/2021",
+    "ingameDays": "April 30-June 8, Year 2",
+    "description": "Finalizam os preparativos em Rock of Bral e partem para o grande centro comercial de Casaspace. Levam junto passageiros para compensar o custo de viagem.\n\nExploram o satélite comercial em Casa, e vão para a Taverna do Telbador no satélite de entretenimento. Descobrem o símbolo de outra companhia, uma mão esqueletal.",
+    "keywords": "Casaspace"
+  },
+  {
+    "name": "The Brothel of Slaking Intellectual Lusts",
+    "sessionCount": 85,
+    "sessionDate": "31/08/2021",
+    "ingameDays": "June 8-9, Year 2",
+    "description": "Seguem explorando o satélite comercial em Casa.\n\nDescobrem o Brothel of Slaking Intellectual Lusts e o Civic Festhall.\n\nNo Civic Festhall, encontram o sensorium com memórias de um membro da companhia com o símbolo da mão, os direcionando a Mirror Prime.\n\nZero entrega sua experência de renascimento aos Sensates.\n\nBlue discute teorias da magia no bordel.",
+    "keywords": "Casaspace"
+  },
+  {
+    "name": "Mirror Prime",
+    "sessionCount": 86,
+    "sessionDate": "09/09/2021",
+    "ingameDays": "June 9-29, Year 2",
+    "description": "Seguem para Mirrorspace, em busca de informações sobre a outra vertente da companhia.\n\nChegam em Mirror Prime, e descobrem porque o planeta é considerado tão perigoso.\n\nEncontram o barco que aparente ter sido usado pela companhia antiga e rastros que os levam à um calabouço.",
+    "keywords": "Casaspace, Mirrorspace"
+  },
+  {
+    "name": "The Heart",
+    "sessionCount": 87,
+    "sessionDate": "16/09/2021",
+    "ingameDays": "June 29, Year 2",
+    "description": "Exploram o calabouço em Mirror Prime. Encontram várias aberrações e seguem até encontrar o que era o antigo líder da companhia da mão e um estranho coração gigante.\n\nEnfrentam o líder e destroem o coração, revertendo alguns efeitos de sua influência. Na saída, encontram vários remanescentes muito antigos que podem ser o tesouro que a outra companhia procurava.",
+    "keywords": "Mirrorspace"
+  },
+  {
+    "name": "Unknown Treasures",
+    "sessionCount": 88,
+    "sessionDate": "23/09/2021",
+    "ingameDays": "June 29-July 7, Year 2",
+    "description": "Passam um tempo investigando os itens encontrados no planeta.\n\nO líder da antiga companhia possui uma mão estranha, com uma aura nefasta.\n\nConseguem descobrir como funcionam vários dos itens encontrados.",
+    "keywords": "Mirrorspace"
+  },
+  {
+    "name": "Space Combat",
+    "sessionCount": 89,
+    "sessionDate": "06/10/2021",
+    "ingameDays": "July 7-August 25",
+    "description": "Saem de Mirrorspace e seguem para Caz-Adar, em busca de mais pistas.\n\nEncontram um grupo de guerreiros da justiça num asteróide. Decidem ajudá-los, e partem em busca de baderneiros.\n\nEscoltam um navio comercial e são atacados um navio misterioso. Depois de um apertado combate espacial, o navio acerta o Nautiloid e tenta uma invasão a bordo.",
+    "keywords": "Mirror, Caz-Adar"
+  },
+  {
+    "name": "Counter-Attack!",
+    "sessionCount": 90,
+    "sessionDate": "14/10/2021",
+    "ingameDays": "August 25, Year 2",
+    "description": "Repelem a invasão no Nautiloid e contra atacam, eliminando todos os inimigos do barco agressor, incluindo o Beholder que o comandava.\n\nTomam o tesouro que encontram, e levam o barco capturado até o asteróide dos guerreiros da justiça. \n\nDescobrem que as companhias passaram por aqui muito tempo atrás, mas não existe muita informação sobre elas.\n\nDecidem explorar um pouco mais de Caz-Adar.\n",
+    "keywords": "Caz-Adar"
+  },
+  {
+    "name": "The Zorb",
+    "sessionCount": 91,
+    "sessionDate": "27/10/2021",
+    "ingameDays": "August 25-January 12, Year 2-3",
+    "description": "Visitam Yanador, a lua onde foi formada a união dos elfos. Descobrem que as diversas facções élficas se uniram contra as adversidades, surpreendendo o grupo. Passam um tempo relaxando depois de meses de dificuldade.\n\nVisitam também os magos em Taltabor, onde Blue segue seu estudo de magia.\n\nDecidem seguir para Zipang, onde esperam encontram mais pistas sobre as companhias. No caminho, encontram um Zorb, que aparentemente estava os procurando. Depois de uma negociação estranha, confirmam suas suspeitas de que o próximo destino é Zipang, onde terminam essa entrada.",
+    "keywords": "Caz-Adar, Zipang, Zorb"
+  },
+  {
+    "name": "The land of Zipang",
+    "sessionCount": 92,
+    "sessionDate": "18/11/2021",
+    "ingameDays": "January 12, Year 3",
+    "description": "Na aproximação de Zipang, o navio apresenta problemas e entra em rota de colisão com o planeta.\n\nO grupo tenta evitar que os locais descubram o navio, mas no final não conseguem. Porém as autoridades que chegam no local são eliminadas por um novo elemento. Que se introduz como um grande admirador de Doragon-sama.\n\nLEVEL 13",
+    "keywords": "Zipang"
+  },
+  {
+    "name": "The Hero, the Sage and the Dragon.",
+    "sessionCount": 93,
+    "sessionDate": "02/12/2021",
+    "ingameDays": "January 12-13, Year 3",
+    "description": "Zero, Kevin e Blue são confundidos com lendas locais que vieram salvar a população do domínio tirano de invasores bárbaros. \n\nOs locais os recepcionam com um grande banquete, onde nossos heróis dão confiança ao grupo local que farão o trabalho.",
+    "keywords": "Zipang"
+  },
+  {
+    "name": "The Shinsengumi Massacre",
+    "sessionCount": 94,
+    "sessionDate": "9/12/2021",
+    "ingameDays": "January 13-14, Year 3",
+    "description": "Exploram o vilarejo onde estão os Shinsengumi.\n\nOs seguem por um dia, e decidem tentar raptar o lider durante a noite.\n\nO plano falha, massacram os Shinsengumi exceto pelo líder, que é capturado.",
+    "keywords": "Zipang"
+  },
+  {
+    "name": "Relaxing at the thermals",
+    "sessionCount": 95,
+    "sessionDate": "16/12/2021",
+    "ingameDays": "January 14-15, Year 3",
+    "description": "Interrogam o Shinsengumi capturado. Descobrem que eles vieram para essa região para investigar uma onsen famosa da região.\n\nDecidem investigar as termais e aproveitam para relaxar.\n\nEnquanto estão aproveitando as águas, o grupo que havia reservado o local aparece.",
+    "keywords": "Zipang"
+  },
+  {
+    "name": "Shikiyoku",
+    "sessionCount": 96,
+    "sessionDate": "12/01/2022",
+    "ingameDays": "January 15-18, Year 3",
+    "description": "Decidem atacar o grupo de surpresa.\n\nVencem a batalha sem muitas dificuldades. Eliminam o chefe e suas duas companheiras, e deixam o resto do grupo ir embora.\n\nJunto com as roupas do grupo, encontram um livro preto. Não conseguem decifrar o conteúdo do livro, mas de volta ao templo, com o auxílio dos locais, encontram o nome de outro bárbaro, Taida, que parece estar em uma cidade distante onde muitos \"sub-humanos\" vivem.",
+    "keywords": "Zipang"
+  }
+]
