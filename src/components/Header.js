@@ -69,7 +69,9 @@ function Header() {
         <li className={NAV_ITEM_STYLE} onClick={() => navigate("/journal")}>
           Journal
         </li>
-        <li className={NAV_ITEM_STYLE}>Stats</li>
+        <li className={NAV_ITEM_STYLE} onClick={() => navigate("/stats")}>
+          Stats
+        </li>
         <li className={NAV_ITEM_STYLE} onClick={() => navigate("/campaign")}>
           Campaign
         </li>

@@ -1,10 +1,10 @@
 import "../index.css";
-import SignIn from "./SignIn";
+//import SignIn from "./SignIn";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Switch,
+  //  Switch,
 } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -14,6 +14,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Campaign from "./Campaign";
 import Journal from "./Journal";
+import Stats from "./Stats";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/" element={<Main />} />
           <Route exact path="/campaign" element={<Campaign />} />
           <Route exact path="/journal" element={<Journal />} />
+          <Route exact path="/stats" element={<Stats />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />

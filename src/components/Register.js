@@ -21,8 +21,10 @@ function Register() {
   };
 
   useEffect(() => {
+    if (error) return;
     if (loading) return;
     if (user) navigate("/dashboard");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 
   return (
