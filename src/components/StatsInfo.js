@@ -1,9 +1,6 @@
-import StatsSessions from "./StatsSessions";
+import StatsLeveling from "./StatsLevelling";
 import StatsTime from "./StatsTime";
-
-// const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
-// const INPUT_STYLE =
-//   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
+import StatsIngameTime from "./StatsIngameTime";
 
 function StatsInfo(props) {
   let component = null;
@@ -11,16 +8,19 @@ function StatsInfo(props) {
     case "time":
       component = <StatsTime {...props} />;
       break;
-    case "sessions":
-      component = <StatsSessions {...props} />;
+    case "leveling":
+      component = <StatsLeveling {...props} />;
+      break;
+    case "ingameTime":
+      component = <StatsIngameTime {...props} />;
       break;
     default:
       component = null;
   }
 
   return (
-    <div className="pl-24 pt-12 overflow-hidden p-3 bg-gray-300 grow">
-      {component}
+    <div className="pl-24 pt-12 overflow-x-hidden overflow-y-auto p-3 bg-gray-300 grow">
+      {props.sessions.length > 0 ? component : null}
     </div>
   );
 }

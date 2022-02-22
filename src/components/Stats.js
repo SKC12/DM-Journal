@@ -70,6 +70,25 @@ function Stats() {
     }
   }
 
+  const renderStats = (
+    <div>
+      <ul className="pl-4 font-normal">
+        <li className="pb-2 cursor-pointer" onClick={() => setStat("time")}>
+          Time
+        </li>
+        <li className="pb-2 cursor-pointer" onClick={() => setStat("leveling")}>
+          Leveling
+        </li>
+        <li
+          className="pb-2 cursor-pointer"
+          onClick={() => setStat("ingameTime")}
+        >
+          Ingame Time
+        </li>
+      </ul>
+    </div>
+  );
+
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="shrink-0 p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
@@ -85,20 +104,9 @@ function Stats() {
           <option>--- Select a campaign ---</option>
           {populateSelectOptions}
         </select>
+
         <h2 className="select-none pb-4">Stats:</h2>
-        <div>
-          <ul className="pl-4 font-normal">
-            <li className="pb-2 cursor-pointer" onClick={() => setStat("time")}>
-              Time
-            </li>
-            <li
-              className="pb-2 cursor-pointer"
-              onClick={() => setStat("sessions")}
-            >
-              Sessions
-            </li>
-          </ul>
-        </div>
+        {currentCampaign !== "" ? renderStats : null}
       </div>
       <StatsInfo
         campaign={currentCampaign}
