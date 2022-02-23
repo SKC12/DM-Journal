@@ -15,16 +15,47 @@ import Main from "./Main";
 import Campaign from "./Campaign";
 import Journal from "./Journal";
 import Stats from "./Stats";
+import { useState } from "react";
 
 function App() {
+  const [currentUserID, setCurrentUserID] = useState("");
+  const [currentCampaignID, setCurrentCampaignID] = useState("");
   return (
     <div className="app">
       <Router>
-        <Header />
+        <Header
+          currentUserID={currentUserID}
+          setCurrentUserID={setCurrentUserID}
+          currentCampaignID={currentCampaignID}
+          setCurrentCampaignID={setCurrentCampaignID}
+        />
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route exact path="/campaign" element={<Campaign />} />
-          <Route exact path="/journal" element={<Journal />} />
+          <Route
+            exact
+            path="/journal/*"
+            element={
+              <Journal
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/journal/:user/:campaign"
+            element={
+              <Journal
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+              />
+            }
+          />
           <Route exact path="/stats" element={<Stats />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />

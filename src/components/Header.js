@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // import annalData from "../entries.json";
@@ -18,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 const NAV_ITEM_STYLE =
   "w-32 text-gray-600 hover:text-gray-700 cursor-pointer font-medium tracking-wide text-lg flex items-center justify-center";
 
-function Header() {
+function Header(props) {
+  const [idParameters, setIdParameters] = useState("");
   const navigate = useNavigate();
 
   // async function testFunction() {
@@ -62,17 +64,39 @@ function Header() {
   //   console.log(newAnnals);
   // }
 
+  useEffect(() => {
+    // console.log(props);
+    // console.log(props.currentCampaignID);
+    // let test = props.currentCampaignID;
+    // console.log(test);
+    setIdParameters(
+      props.currentUserID !== "" && props.currentCampaignId !== ""
+        ? `/${props.currentUserID}/${props.currentCampaignID}`
+        : ""
+    );
+    //console.log(idParameters);
+  }, [props]);
+
   return (
     <nav className="md:flex flex-row items-center justify-between px-9 h-[5vh] bg-gray-50">
       <span className="text-5xl text-gray-800 -mb-1"></span>
       <ul className="flex flex-row self-center h-12">
-        <li className={NAV_ITEM_STYLE} onClick={() => navigate("/journal")}>
+        <li
+          className={NAV_ITEM_STYLE}
+          onClick={() => navigate(`/journal${idParameters}`)}
+        >
           Journal
         </li>
-        <li className={NAV_ITEM_STYLE} onClick={() => navigate("/stats")}>
+        <li
+          className={NAV_ITEM_STYLE}
+          onClick={() => navigate(`/stats${idParameters}`)}
+        >
           Stats
         </li>
-        <li className={NAV_ITEM_STYLE} onClick={() => navigate("/campaign")}>
+        <li
+          className={NAV_ITEM_STYLE}
+          onClick={() => navigate(`/campaign${idParameters}`)}
+        >
           Campaign
         </li>
       </ul>

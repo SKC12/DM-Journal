@@ -1,26 +1,32 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import React, { useEffect, useState } from "react";
-//import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
 
-function Journal() {
+function Journal(props) {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
   const [currentCampaign, setCurrentCampaign] = useState("");
   const [sessions, setSessions] = useState([]);
   const [currentSession, setCurrentSession] = useState("");
+  const params = useParams();
+  const navigate = useNavigate();
 
-  const populateSelectOptions = campaigns.map((camp, index) => {
-    return (
-      <option key={index} value={camp.name}>
-        {camp.name}
-      </option>
-    );
-  });
+  //Populates the campaign selector
+  const populateSelectOptions = campaigns
+    ? campaigns.map((camp, index) => {
+        return (
+          <option key={index} value={camp.name}>
+            {camp.name}
+          </option>
+        );
+      })
+    : null;
 
+  //Populates the journal with individual session cards
   const populateJournal = sessions.map((entry, index) => {
     return (
       <JounalCard
@@ -29,57 +35,76 @@ function Journal() {
         sessionNumber={index + 1}
         onClickEvent={setCurrentSession}
       />
-      // <li
-      //   className="cursor-pointer pl-2 pb-2 text-gray-700"
-      //   key={index}
-      //   onClick={() => setCurrentSession(entry)}
-      // >
-      //   {entry.name}
-      // </li>
     );
   });
 
-  useEffect(() => {
-    async function loadSessions(camp) {
-      //console.log(user);
-      let sessionsArray = [];
-      const query = await getDocs(
-        collection(
-          db,
-          "users/" + user.uid + "/campaigns/" + camp.name + "/sessions"
-        )
-      );
-      query.forEach((doc) => {
-        sessionsArray.push(doc.data());
-      });
-      //console.log(campArray);
-      sessionsArray.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      setSessions(sessionsArray);
-    }
+  //Loads session array from Database
+  async function loadSessions(userID, camp) {
+    let sessionsArray = [];
+    const query = await getDocs(
+      collection(
+        db,
+        "users/" + userID + "/campaigns/" + camp.name + "/sessions"
+      )
+    );
+    query.forEach((doc) => {
+      sessionsArray.push(doc.data());
+    });
+    sessionsArray.sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
+    setSessions(sessionsArray);
+  }
 
-    if (user) loadSessions(currentCampaign);
+  useEffect(() => {
+    if (user) loadSessions(user.uid, currentCampaign);
   }, [currentCampaign, user]);
 
-  useEffect(() => {
-    async function loadCampaigns() {
-      let campArray = [];
-      const query = await getDocs(
-        collection(db, "users/" + user.uid + "/campaigns")
+  //Load campaigns array from database
+  async function loadCampaigns(userID) {
+    let campArray = [];
+    const query = await getDocs(
+      collection(db, "users/" + userID + "/campaigns")
+    );
+    query.forEach((doc) => {
+      campArray.push(doc.data());
+    });
+    return campArray;
+  }
+
+  function setInitialCampaign(campaignArray, userID, campaignName) {
+    //console.log(campaignArray);
+    //console.log(campaignName);
+    if (userID && campaignName) {
+      let camp = campaignArray.find(
+        (campaign) => campaign.name === campaignName
       );
-      query.forEach((doc) => {
-        campArray.push(doc.data());
-      });
-      //console.log(campArray);
-      setCampaigns(campArray);
+      //console.log(camp);
+      setCurrentCampaign(camp);
+    }
+  }
+
+  useEffect(() => {
+    async function setCampaignsState(userID) {
+      let camps = await loadCampaigns(userID);
+      //console.log(camps);
+      setCampaigns(camps);
+      setInitialCampaign(camps, params.user, params.campaign);
     }
 
     if (error) return;
     if (loading) return;
     if (!user) return;
-    if (user) loadCampaigns();
-  }, [user, loading, error]);
+    if (user) {
+      console.log(params.user);
+      if (params.user === undefined) {
+        props.setCurrentUserID(user.uid);
+      }
+      //console.log(props.currentUserID);
+      setCampaignsState(user.uid);
+      //console.log(campaigns);
+    }
+  }, [user, loading, error, props, params]);
 
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
@@ -87,7 +112,10 @@ function Journal() {
     });
     if (!!camp) {
       setCurrentCampaign(camp);
+      props.setCurrentCampaignID(camp.name);
+      navigate(`/journal/${user.uid}/${camp.name}`);
     }
+    console.log(params);
   }
 
   return (
