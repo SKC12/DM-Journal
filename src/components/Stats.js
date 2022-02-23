@@ -3,13 +3,21 @@ import { auth, db } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import StatsInfo from "./StatsInfo";
+import { useParams, useNavigate } from "react-router-dom";
 
-function Stats() {
+function Stats(props) {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
   const [currentCampaign, setCurrentCampaign] = useState("");
   const [sessions, setSessions] = useState([]);
   const [stat, setStat] = useState("");
+  const navigate = useNavigate();
+  const params = useParams();
+  const setCurrentTab = props.setCurrentTab;
+
+  useEffect(() => {
+    setCurrentTab("Stats");
+  }, [setCurrentTab]);
 
   const populateSelectOptions = campaigns.map((camp, index) => {
     return (
@@ -19,47 +27,86 @@ function Stats() {
     );
   });
 
-  useEffect(() => {
-    async function loadSessions(camp) {
-      //console.log(user);
-      let sessionsArray = [];
-      const query = await getDocs(
-        collection(
-          db,
-          "users/" + user.uid + "/campaigns/" + camp.name + "/sessions"
-        )
-      );
-      query.forEach((doc) => {
-        sessionsArray.push(doc.data());
-      });
-      //console.log(campArray);
-      sessionsArray.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      setSessions(sessionsArray);
-    }
+  //Loads session array from Database
+  async function loadSessions(userID, campName) {
+    let sessionsArray = [];
+    const query = await getDocs(
+      collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
+    );
+    query.forEach((doc) => {
+      sessionsArray.push(doc.data());
+    });
+    sessionsArray.sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
+    return sessionsArray;
+  }
 
-    if (user) loadSessions(currentCampaign);
+  //Load sessions on campaign change
+  useEffect(() => {
+    async function setSessionsState(userID, campaign) {
+      let sessions = await loadSessions(userID, campaign.name);
+      setSessions(sessions);
+    }
+    if (user) {
+      setSessionsState(user.uid, currentCampaign);
+    }
   }, [currentCampaign, user]);
 
-  useEffect(() => {
-    async function loadCampaigns() {
-      let campArray = [];
-      const query = await getDocs(
-        collection(db, "users/" + user.uid + "/campaigns")
+  //Load campaigns array from database
+  async function loadCampaigns(userID) {
+    let campArray = [];
+    const query = await getDocs(
+      collection(db, "users/" + userID + "/campaigns")
+    );
+    query.forEach((doc) => {
+      campArray.push(doc.data());
+    });
+    return campArray;
+  }
+
+  function setInitialCampaign(campaignArray, userID, campaignName) {
+    if (userID && campaignName) {
+      let camp = campaignArray.find(
+        (campaign) => campaign.name === campaignName
       );
-      query.forEach((doc) => {
-        campArray.push(doc.data());
-      });
-      //console.log(campArray);
+      setCurrentCampaign(camp);
+    }
+  }
+
+  useEffect(() => {
+    //Sets up state for logged users
+    async function setCampaignsState(userID) {
+      let camps = await loadCampaigns(userID);
+      setCampaigns(camps);
+      setInitialCampaign(camps, params.user, params.campaign);
+    }
+
+    //Loads session list from parameters, sets up state and "global" IDs for non-users.
+    async function anonymousLoading(userID, campaign) {
+      let campArray = await loadCampaigns(userID);
       setCampaigns(campArray);
+      let selectedCamp = campArray.find((camp) => camp.name === campaign);
+      setCurrentCampaign(selectedCamp);
+      let sessions = await loadSessions(userID, campaign);
+      setSessions(sessions);
+      props.setCurrentUserID(params.user);
+      props.setCurrentCampaignID(params.campaign);
     }
 
     if (error) return;
     if (loading) return;
-    if (!user) return;
-    if (user) loadCampaigns();
-  }, [user, loading, error]);
+    if (!user)
+      if (params.user && params.campaign) {
+        anonymousLoading(params.user, params.campaign);
+      }
+    if (user) {
+      if (params.user === undefined) {
+        props.setCurrentUserID(user.uid);
+      }
+      setCampaignsState(user.uid);
+    }
+  }, [user, loading, error, params, props]);
 
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
@@ -67,20 +114,34 @@ function Stats() {
     });
     if (!!camp) {
       setCurrentCampaign(camp);
+      props.setCurrentCampaignID(camp.name);
+      navigate(`/stats/${user.uid}/${camp.name}`);
     }
   }
 
   const renderStats = (
     <div>
       <ul className="pl-4 font-normal">
-        <li className="pb-2 cursor-pointer" onClick={() => setStat("time")}>
+        <li
+          className={`pb-2 cursor-pointer ${
+            stat === "time" ? "text-gray-400" : ""
+          }`}
+          onClick={() => setStat("time")}
+        >
           Time
         </li>
-        <li className="pb-2 cursor-pointer" onClick={() => setStat("leveling")}>
-          Leveling
+        <li
+          className={`pb-2 cursor-pointer ${
+            stat === "leveling" ? "text-gray-400" : ""
+          }`}
+          onClick={() => setStat("leveling")}
+        >
+          Levels
         </li>
         <li
-          className="pb-2 cursor-pointer"
+          className={`pb-2 cursor-pointer ${
+            stat === "ingameTime" ? "text-gray-400" : ""
+          }`}
           onClick={() => setStat("ingameTime")}
         >
           Ingame Time
@@ -89,21 +150,27 @@ function Stats() {
     </div>
   );
 
+  const CampaignSelector = (
+    <div>
+      <h2 id="journal-select-label" className="select-none pb-4">
+        Campaign:
+      </h2>
+      <select
+        className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
+        aria-label="journal-campaign-select"
+        value={currentCampaign.name}
+        onChange={handleSelectChange}
+      >
+        <option>--- Select a campaign ---</option>
+        {populateSelectOptions}
+      </select>
+    </div>
+  );
+
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="shrink-0 p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        <h2 id="journal-select-label" className="select-none pb-4">
-          Campaign:
-        </h2>
-        <select
-          className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
-          aria-label="journal-campaign-select"
-          value={currentCampaign.name}
-          onChange={handleSelectChange}
-        >
-          <option>--- Select a campaign ---</option>
-          {populateSelectOptions}
-        </select>
+        {user ? CampaignSelector : null}
 
         <h2 className="select-none pb-4">Stats:</h2>
         {currentCampaign !== "" ? renderStats : null}

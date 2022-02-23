@@ -20,10 +20,13 @@ import { useState } from "react";
 function App() {
   const [currentUserID, setCurrentUserID] = useState("");
   const [currentCampaignID, setCurrentCampaignID] = useState("");
+  const [currentTab, setCurrentTab] = useState("");
+
   return (
     <div className="app">
       <Router>
         <Header
+          currentTab={currentTab}
           currentUserID={currentUserID}
           setCurrentUserID={setCurrentUserID}
           currentCampaignID={currentCampaignID}
@@ -31,7 +34,11 @@ function App() {
         />
         <Routes>
           <Route exact path="/" element={<Main />} />
-          <Route exact path="/campaign" element={<Campaign />} />
+          <Route
+            exact
+            path="/campaign"
+            element={<Campaign setCurrentTab={setCurrentTab} />}
+          />
           <Route
             exact
             path="/journal/*"
@@ -41,6 +48,7 @@ function App() {
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
               />
             }
           />
@@ -53,10 +61,36 @@ function App() {
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
               />
             }
           />
-          <Route exact path="/stats" element={<Stats />} />
+          <Route
+            exact
+            path="/stats/*"
+            element={
+              <Stats
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/stats/:user/:campaign"
+            element={
+              <Stats
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
+              />
+            }
+          />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />

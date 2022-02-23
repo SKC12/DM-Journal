@@ -96,7 +96,6 @@ function StatsIngameTime(props) {
 
   //Returns the longest session
   function getMaxSessionTime(sessions) {
-    console.log(sessions);
     let max = 0;
     let current = {};
     for (let i = 0; i < sessions.length; i++) {

@@ -157,7 +157,7 @@ function StatsIngameTime(props) {
 
   return (
     <div className="pr-12 flex-col">
-      <h2 className={CAT_STYLE}>Leveling:</h2>
+      <h2 className={CAT_STYLE}>Levels:</h2>
       {lineChart}
 
       <div className="mb-4 overflow-auto"></div>

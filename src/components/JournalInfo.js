@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { nanoid } from "nanoid";
+import { useParams } from "react-router-dom";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
 const INPUT_STYLE =
@@ -36,6 +37,8 @@ function JournalInfo(props) {
     props.session.partyLevel ? props.session.partyLevel : 1
   );
   const [errorMsg, setErrorMsg] = useState(false);
+
+  const params = useParams();
 
   const uid = props.session.uid;
 
@@ -80,7 +83,7 @@ function JournalInfo(props) {
         ),
         session
       );
-      console.log("Document written");
+      //console.log("Document written");
       props.setSessions(props.sessions.concat(session));
     } else {
       setErrorMsg(true);
@@ -111,7 +114,7 @@ function JournalInfo(props) {
         ),
         session
       );
-      console.log("Document written");
+      //console.log("Document written");
       let newArr = props.sessions.map((entry) => {
         return entry.uid === uid ? session : entry;
       });
@@ -159,6 +162,43 @@ function JournalInfo(props) {
       <p></p>
     );
   };
+
+  const buttons = (entry) => (
+    <div className="flex justify-center">
+      {entry === "new" ? (
+        <button
+          className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+          onClick={(e) => createSession(e)}
+        >
+          Create Session
+        </button>
+      ) : (
+        <>
+          <button
+            className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            onClick={(e) => editSession(e)}
+          >
+            Edit Session
+          </button>
+          <button
+            className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            onClick={(e) => deleteSession(e)}
+          >
+            Delete Session
+          </button>
+        </>
+      )}
+    </div>
+  );
+
+  function isOwner() {
+    if (!props.user) {
+      return false;
+    } else if (props.user.uid === params.user) {
+      return true;
+    }
+    return false;
+  }
 
   function populate(entry) {
     if (entry === "" || props.campaign === "") {
@@ -262,32 +302,7 @@ function JournalInfo(props) {
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
-
-            <div className="flex justify-center">
-              {entry === "new" ? (
-                <button
-                  className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                  onClick={(e) => createSession(e)}
-                >
-                  Create Session
-                </button>
-              ) : (
-                <>
-                  <button
-                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                    onClick={(e) => editSession(e)}
-                  >
-                    Edit Session
-                  </button>
-                  <button
-                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                    onClick={(e) => deleteSession(e)}
-                  >
-                    Delete Session
-                  </button>
-                </>
-              )}
-            </div>
+            {isOwner() ? buttons(entry) : null}
           </form>
         </div>
       );

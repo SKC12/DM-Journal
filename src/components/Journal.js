@@ -14,6 +14,11 @@ function Journal(props) {
   const [currentSession, setCurrentSession] = useState("");
   const params = useParams();
   const navigate = useNavigate();
+  const setCurrentTab = props.setCurrentTab;
+
+  useEffect(() => {
+    setCurrentTab("Journal");
+  }, [setCurrentTab]);
 
   //Populates the campaign selector
   const populateSelectOptions = campaigns
@@ -30,6 +35,7 @@ function Journal(props) {
   const populateJournal = sessions.map((entry, index) => {
     return (
       <JounalCard
+        current={currentSession}
         session={entry}
         key={entry.name}
         sessionNumber={index + 1}
@@ -39,13 +45,10 @@ function Journal(props) {
   });
 
   //Loads session array from Database
-  async function loadSessions(userID, camp) {
+  async function loadSessions(userID, campName) {
     let sessionsArray = [];
     const query = await getDocs(
-      collection(
-        db,
-        "users/" + userID + "/campaigns/" + camp.name + "/sessions"
-      )
+      collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
     );
     query.forEach((doc) => {
       sessionsArray.push(doc.data());
@@ -53,11 +56,16 @@ function Journal(props) {
     sessionsArray.sort((a, b) => {
       return new Date(a.date) - new Date(b.date);
     });
-    setSessions(sessionsArray);
+    return sessionsArray;
   }
 
+  //Changes session list on campaign change
   useEffect(() => {
-    if (user) loadSessions(user.uid, currentCampaign);
+    async function setSessionsState(userID, campaign) {
+      let sessions = await loadSessions(userID, campaign.name);
+      setSessions(sessions);
+    }
+    if (user) setSessionsState(user.uid, currentCampaign);
   }, [currentCampaign, user]);
 
   //Load campaigns array from database
@@ -73,36 +81,50 @@ function Journal(props) {
   }
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
-    //console.log(campaignArray);
-    //console.log(campaignName);
     if (userID && campaignName) {
       let camp = campaignArray.find(
         (campaign) => campaign.name === campaignName
       );
-      //console.log(camp);
       setCurrentCampaign(camp);
+      return camp;
     }
   }
 
   useEffect(() => {
+    //Sets up state for logged users
     async function setCampaignsState(userID) {
       let camps = await loadCampaigns(userID);
-      //console.log(camps);
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
     }
 
+    //Loads session list from parameters, sets up state and "global" IDs.
+    async function anonymousLoading(userID, campaign) {
+      let campArray = await loadCampaigns(userID);
+      setCampaigns(campArray);
+      let selectedCamp = campArray.find((camp) => camp.name === campaign);
+      setCurrentCampaign(selectedCamp);
+      let sessions = await loadSessions(userID, campaign);
+      setSessions(sessions);
+      props.setCurrentUserID(params.user);
+      props.setCurrentCampaignID(params.campaign);
+    }
+
     if (error) return;
     if (loading) return;
-    if (!user) return;
-    if (user) {
-      console.log(params.user);
-      if (params.user === undefined) {
-        props.setCurrentUserID(user.uid);
+    if (!user)
+      if (params.user && params.campaign) {
+        anonymousLoading(params.user, params.campaign);
       }
-      //console.log(props.currentUserID);
-      setCampaignsState(user.uid);
-      //console.log(campaigns);
+    if (user) {
+      if (user.uid === params.user) {
+        anonymousLoading(params.user, params.campaign);
+      } else {
+        if (params.user === undefined) {
+          props.setCurrentUserID(user.uid);
+        }
+        setCampaignsState(user.uid);
+      }
     }
   }, [user, loading, error, props, params]);
 
@@ -115,31 +137,49 @@ function Journal(props) {
       props.setCurrentCampaignID(camp.name);
       navigate(`/journal/${user.uid}/${camp.name}`);
     }
-    console.log(params);
   }
+
+  function isOwner() {
+    if (!user) {
+      return false;
+    } else if (user.uid === params.user) {
+      return true;
+    }
+    return false;
+  }
+
+  const CampaignSelector = (
+    <div>
+      <h2 id="journal-select-label" className="select-none pb-4">
+        Campaign:
+      </h2>
+      <select
+        className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
+        aria-label="journal-campaign-select"
+        value={currentCampaign.name}
+        onChange={handleSelectChange}
+      >
+        <option>--- Select a campaign ---</option>
+        {populateSelectOptions}
+      </select>
+    </div>
+  );
 
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        <h2 id="journal-select-label" className="select-none pb-4">
-          Campaign:
-        </h2>
-        <select
-          className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
-          aria-label="journal-campaign-select"
-          value={currentCampaign.name}
-          onChange={handleSelectChange}
-        >
-          <option>--- Select a campaign ---</option>
-          {populateSelectOptions}
-        </select>
+        {user ? CampaignSelector : null}
+
         <h2 className="select-none pb-4">Sessions:</h2>
-        <div
-          className="text-blue-400 cursor-pointer pl-2 pb-2"
-          onClick={() => setCurrentSession("new")}
-        >
-          + New session
-        </div>
+        {isOwner() ? (
+          <div
+            className="text-blue-400 cursor-pointer pl-2 pb-2"
+            onClick={() => setCurrentSession("new")}
+          >
+            + New session
+          </div>
+        ) : null}
+
         <div className="bg-gray-300 overflow-y-auto rounded max-h-80">
           <ul className="font-normal">{populateJournal}</ul>
         </div>

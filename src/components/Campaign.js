@@ -5,17 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import CampaignInfo from "./CampaignInfo";
 
-function Campaign() {
+function Campaign(props) {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
   const [currentCampaign, setCurrentCampaign] = useState("");
   const navigate = useNavigate();
+  const setCurrentTab = props.setCurrentTab;
 
-  //   useEffect(() => {
-  //     loadCampaigns();
-
-  //     console.log(campaigns);
-  //   }, []);
+  useEffect(() => {
+    setCurrentTab("Campaign");
+  }, [setCurrentTab]);
 
   useEffect(() => {
     async function loadCampaigns() {
