@@ -70,7 +70,10 @@ function Header(props) {
       {/* <button onClick={() => testFunction()}>TEST</button> */}
       <button
         className="w-20 bg-white hover:bg-gray-50 border-2 border-gray-900 text-sm text-gray-900 py-1 px-3 rounded-lg font-medium tracking-wide leading-none"
-        onClick={() => navigate("/login")}
+        onClick={() => {
+          props.setCurrentTab("");
+          navigate("/login");
+        }}
       >
         {user ? "Logout" : "Login"}
       </button>

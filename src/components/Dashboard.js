@@ -28,12 +28,15 @@ function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading, error]);
   return (
-    <div className="dashboard">
-      <div className="dashboard__container">
+    <div className="flex items-center justify-center h-[95vh] w-full bg-gray-300">
+      <div className="flex flex-col text-center bg-gray-200 p-8">
         Logged in as
         <div>{name}</div>
         <div>{user?.email}</div>
-        <button className="dashboard__btn" onClick={logout}>
+        <button
+          className="p-2 text-lg my-3 border-0 text-white bg-gray-700"
+          onClick={logout}
+        >
           Logout
         </button>
       </div>

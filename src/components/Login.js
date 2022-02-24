@@ -16,31 +16,35 @@ function Login() {
     }
     if (user) navigate("/dashboard");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loading]);
+  }, [user, loading, error]);
+
   return (
-    <div className="login">
-      <div className="login__container">
+    <div className="flex items-center justify-center h-[95vh] w-full bg-gray-300">
+      <div className="flex flex-col text-center bg-gray-200 p-8">
         <input
           type="text"
-          className="login__textBox"
+          className="p-2 text-lg mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
         <input
           type="password"
-          className="login__textBox"
+          className="p-2 text-lg mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
         <button
-          className="login__btn"
+          className="p-2 text-lg mb-3 border-0 text-white bg-gray-700"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
           Login
         </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
+        <button
+          className="p-2 text-lg mb-3 border-0 text-white bg-blue-500"
+          onClick={signInWithGoogle}
+        >
           Login with Google
         </button>
         <div>

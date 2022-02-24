@@ -15,16 +15,19 @@ function Reset() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
   return (
-    <div className="reset">
-      <div className="reset__container">
+    <div className="flex items-center justify-center h-[95vh] w-full bg-gray-300">
+      <div className="flex flex-col text-center bg-gray-200 p-8">
         <input
           type="text"
-          className="reset__textBox"
+          className="p-2 text-lg mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
-        <button className="reset__btn" onClick={() => sendPasswordReset(email)}>
+        <button
+          className="p-2 text-lg mb-3 border-0 text-white bg-gray-700"
+          onClick={() => sendPasswordReset(email)}
+        >
           Send password reset email
         </button>
         <div>

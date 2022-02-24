@@ -27,6 +27,7 @@ function App() {
       <Router>
         <Header
           currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
           currentUserID={currentUserID}
           setCurrentUserID={setCurrentUserID}
           currentCampaignID={currentCampaignID}

@@ -28,41 +28,44 @@ function Register() {
   }, [user, loading]);
 
   return (
-    <div className="register">
-      <div className="register__container">
+    <div className="flex items-center justify-center h-[95vh] w-full bg-gray-300">
+      <div className="flex flex-col text-center bg-gray-200 p-8">
         <input
           type="text"
-          className="register__textBox"
+          className="p-2 text-lg mb-3"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Full Name"
         />
         <input
           type="text"
-          className="register__textBox"
+          className="p-2 text-lg mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
         <input
           type="password"
-          className="register__textBox"
+          className="p-2 text-lg mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
-        <button className="register__btn" onClick={register}>
+        <button
+          className="p-2 text-lg mb-3 border-0 text-white bg-gray-700"
+          onClick={register}
+        >
           Register
         </button>
         <button
-          className="register__btn register__google"
+          className="p-2 text-lg mb-3 border-0 text-white bg-blue-500"
           onClick={signInWithGoogle}
         >
           Register with Google
         </button>
 
         <div>
-          Already have an account? <Link to="/">Login</Link> now.
+          Already have an account? <Link to="/login">Login</Link> now.
         </div>
       </div>
     </div>
