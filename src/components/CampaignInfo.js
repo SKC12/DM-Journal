@@ -9,6 +9,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { confirmAlert } from "react-confirm-alert";
+import "../confirmCSS.css";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
 const INPUT_STYLE =
@@ -100,6 +102,43 @@ function CampaignInfo(props) {
     );
   };
 
+  const deleteAlert = (e) => {
+    e.preventDefault();
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui h-[150px] w-[350px] bg-gray-200 flex flex-col items-center">
+            <div className="h-[100px] grow flex flex-col text-center justify-around items-center">
+              <p className="">Are you sure you want to delete this campaign?</p>
+              <p className="">The process is irreversible.</p>
+            </div>
+
+            <div className="h-[40px] w-full flex justify-evenly">
+              <button
+                onClick={() => {
+                  console.log(e);
+                  //deleteCampaign(e);
+                  onClose();
+                }}
+                className="flex-1 bg-red-800"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={() => {
+                  onClose();
+                }}
+                className="flex-1 bg-gray-500"
+              >
+                Return
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
   //console.log(props.campaign);
   function populate(campaign) {
     if (campaign === "") {
@@ -174,7 +213,7 @@ function CampaignInfo(props) {
                   </button>
                   <button
                     className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                    onClick={(e) => deleteCampaign(e)}
+                    onClick={(e) => deleteAlert(e)}
                   >
                     Delete Campaign
                   </button>
