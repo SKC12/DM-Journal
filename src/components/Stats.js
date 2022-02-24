@@ -7,6 +7,7 @@ import {
   loadSessionsFromDatabase,
   loadCampaignsFromDatabase,
 } from "../helpers.js";
+import CampaignSelector from "./CampaignSelector";
 
 function Stats(props) {
   const [user, loading, error] = useAuthState(auth);
@@ -21,14 +22,6 @@ function Stats(props) {
   useEffect(() => {
     setCurrentTab("Stats");
   }, [setCurrentTab]);
-
-  const populateSelectOptions = campaigns.map((camp, index) => {
-    return (
-      <option key={index} value={camp.name}>
-        {camp.name}
-      </option>
-    );
-  });
 
   //Load sessions on campaign change
   useEffect(() => {
@@ -134,28 +127,14 @@ function Stats(props) {
     </div>
   );
 
-  const CampaignSelector = (
-    <div>
-      <h2 id="journal-select-label" className="select-none pb-4">
-        Campaign:
-      </h2>
-      <select
-        className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
-        aria-label="journal-campaign-select"
-        value={currentCampaign.name}
-        onChange={handleSelectChange}
-      >
-        <option>--- Select a campaign ---</option>
-        {populateSelectOptions}
-      </select>
-    </div>
-  );
-
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="shrink-0 p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        {user ? CampaignSelector : null}
-
+        <CampaignSelector
+          campaigns={campaigns}
+          currentCampaign={currentCampaign}
+          handleSelectChange={handleSelectChange}
+        />
         <h2 className="select-none pb-4">Stats:</h2>
         {currentCampaign !== "" ? (
           isPrivate(currentCampaign) ? (

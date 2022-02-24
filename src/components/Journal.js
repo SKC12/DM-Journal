@@ -8,6 +8,7 @@ import {
   loadSessionsFromDatabase,
   loadCampaignsFromDatabase,
 } from "../helpers.js";
+import CampaignSelector from "./CampaignSelector";
 
 function Journal(props) {
   const [user, loading, error] = useAuthState(auth);
@@ -22,17 +23,6 @@ function Journal(props) {
   useEffect(() => {
     setCurrentTab("Journal");
   }, [setCurrentTab]);
-
-  //Populates the campaign selector
-  const populateSelectOptions = campaigns
-    ? campaigns.map((camp, index) => {
-        return (
-          <option key={index} value={camp.name}>
-            {camp.name}
-          </option>
-        );
-      })
-    : null;
 
   //Populates the journal with individual session cards
   const populateJournal = sessions.map((entry, index) => {
@@ -132,27 +122,16 @@ function Journal(props) {
     }
   }
 
-  const CampaignSelector = (
-    <div>
-      <h2 id="journal-select-label" className="select-none pb-4">
-        Campaign:
-      </h2>
-      <select
-        className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
-        aria-label="journal-campaign-select"
-        value={currentCampaign.name}
-        onChange={handleSelectChange}
-      >
-        <option>--- Select a campaign ---</option>
-        {populateSelectOptions}
-      </select>
-    </div>
-  );
-
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        {user ? CampaignSelector : null}
+        {user ? (
+          <CampaignSelector
+            campaigns={campaigns}
+            currentCampaign={currentCampaign}
+            handleSelectChange={handleSelectChange}
+          />
+        ) : null}
 
         <h2 className="select-none pb-4">Sessions:</h2>
         {isOwner() ? (
