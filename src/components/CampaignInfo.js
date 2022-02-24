@@ -117,7 +117,7 @@ function CampaignInfo(props) {
               <button
                 onClick={() => {
                   console.log(e);
-                  //deleteCampaign(e);
+                  deleteCampaign(e);
                   onClose();
                 }}
                 className="flex-1 bg-red-800"
