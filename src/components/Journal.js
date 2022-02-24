@@ -148,6 +148,14 @@ function Journal(props) {
     return false;
   }
 
+  function isPrivate(campaign) {
+    if (!user || user.uid !== params.user) {
+      return campaign.private;
+    } else {
+      return false;
+    }
+  }
+
   const CampaignSelector = (
     <div>
       <h2 id="journal-select-label" className="select-none pb-4">
@@ -181,7 +189,11 @@ function Journal(props) {
         ) : null}
 
         <div className="bg-gray-300 overflow-y-auto rounded max-h-80">
-          <ul className="font-normal">{populateJournal}</ul>
+          {isPrivate(currentCampaign) ? (
+            <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
+          ) : (
+            <ul className="font-normal">{populateJournal}</ul>
+          )}
         </div>
       </div>
       <JournalInfo

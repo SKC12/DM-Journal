@@ -119,6 +119,14 @@ function Stats(props) {
     }
   }
 
+  function isPrivate(campaign) {
+    if (!user || user.uid !== params.user) {
+      return campaign.private;
+    } else {
+      return false;
+    }
+  }
+
   const renderStats = (
     <div>
       <ul className="pl-4 font-normal">
@@ -173,7 +181,13 @@ function Stats(props) {
         {user ? CampaignSelector : null}
 
         <h2 className="select-none pb-4">Stats:</h2>
-        {currentCampaign !== "" ? renderStats : null}
+        {currentCampaign !== "" ? (
+          isPrivate(currentCampaign) ? (
+            <ul className="text-gray-200 text-center">PRIVATE CAMPAIGN</ul>
+          ) : (
+            renderStats
+          )
+        ) : null}
       </div>
       <StatsInfo
         campaign={currentCampaign}
