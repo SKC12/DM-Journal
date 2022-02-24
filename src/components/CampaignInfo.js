@@ -4,6 +4,7 @@ import {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
   deleteCampaignFromFirebase,
+  containsInvalidCharacters,
 } from "../helpers";
 import "../confirmCSS.css";
 
@@ -12,7 +13,6 @@ const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
 function CampaignInfo(props) {
-  //console.log(props);
   const [name, setName] = useState(
     props.campaign.name ? props.campaign.name : ""
   );
@@ -31,24 +31,29 @@ function CampaignInfo(props) {
 
   async function createCampaign(e) {
     e.preventDefault();
+    console.log(name);
+    console.log(!containsInvalidCharacters(name));
+    //Checks for invalid characters
+    if (!containsInvalidCharacters(name)) {
+      //Queries if campaign already exists
+      const docs = await searchFirebaseForCampaignName(props.user.uid, name);
+      if (docs.docs.length === 0) {
+        let campaign = {
+          name: name,
+          description: description,
+          private: isPrivate,
+        };
 
-    //Queries if campaign already exists
-    const docs = await searchFirebaseForCampaignName(props.user.uid, name);
-    if (docs.docs.length === 0) {
-      let campaign = {
-        name: name,
-        description: description,
-        private: isPrivate,
-      };
-
-      //If it doesn't exists, writes to DB
-      await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
-      window.location.reload();
+        //If it doesn't exists, writes to DB
+        await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
+        window.location.reload();
+      } else {
+        //If not, displays error msg
+        setErrorMsg(true);
+      }
     } else {
-      //If not, displays error msg
       setErrorMsg(true);
     }
-    //console.log(props.user);
   }
 
   async function editCampaign(e) {
@@ -59,7 +64,6 @@ function CampaignInfo(props) {
       private: isPrivate,
     };
     await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
-    //console.log("Document written");
     window.location.reload();
   }
 
@@ -72,7 +76,7 @@ function CampaignInfo(props) {
   let errorMessage = () => {
     return errorMsg ? (
       <p className="text-red-500 text-sm pt-1 pl-5">
-        Campaign names must be unique
+        Campaign names must be unique and cannot contain forward slashes "/"
       </p>
     ) : (
       <p></p>
@@ -94,7 +98,6 @@ function CampaignInfo(props) {
             <div className="h-[40px] w-full flex justify-evenly">
               <button
                 onClick={() => {
-                  console.log(e);
                   deleteCampaign(e);
                   onClose();
                 }}
@@ -117,7 +120,6 @@ function CampaignInfo(props) {
     });
   };
 
-  //console.log(props.campaign);
   function populate(campaign) {
     if (campaign === "") {
       return;

@@ -24,7 +24,7 @@ function StatsTime(props) {
           rectSize={14}
           value={heatMapData}
           legendCellSize={0}
-          width={differenceInDays(eDate, sDate) * 2.4}
+          width={differenceInDays(eDate, sDate) * 2.3 + 100}
           startDate={sDate}
           endDate={eDate}
           panelColors={{

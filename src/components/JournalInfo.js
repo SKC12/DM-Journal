@@ -62,7 +62,11 @@ function JournalInfo(props) {
         uid: nanoid(),
       };
 
-      await writeSessionToFirebase(props.user.id, props.campaign.name, session);
+      await writeSessionToFirebase(
+        props.user.uid,
+        props.campaign.name,
+        session
+      );
       let newSessions = sortSessionsByDate(props.sessions.concat(session));
       props.setSessions(newSessions);
     } else {
@@ -83,7 +87,11 @@ function JournalInfo(props) {
       uid: uid,
     };
     try {
-      await writeSessionToFirebase(props.user.id, props.campaign.name, session);
+      await writeSessionToFirebase(
+        props.user.uid,
+        props.campaign.name,
+        session
+      );
       let newArr = props.sessions.map((entry) => {
         return entry.uid === uid ? session : entry;
       });

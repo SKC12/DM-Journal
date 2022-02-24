@@ -44,7 +44,6 @@ async function searchFirebaseForCampaignName(userID, name) {
     where("name", "==", name)
   );
   const docs = await getDocs(q);
-  //console.log(docs);
   return docs;
 }
 
@@ -53,7 +52,6 @@ async function writeCampaignToFirebase(userID, campaignName, campaign) {
     doc(db, "users/" + userID + "/campaigns", campaignName),
     campaign
   );
-  //console.log("Document written");
 }
 
 async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
@@ -70,15 +68,20 @@ async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
 
 // Writes session to Firebase.
 async function writeSessionToFirebase(userID, campaignName, session) {
-  //console.log(campaign);
-  await setDoc(
-    doc(
-      db,
-      "users/" + userID + "/campaigns/" + campaignName + "/sessions",
-      session.uid
-    ),
-    session
-  );
+  console.log(userID, campaignName, session);
+  try {
+    await setDoc(
+      doc(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/sessions",
+        session.uid
+      ),
+      session
+    );
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
@@ -95,6 +98,10 @@ async function deleteCampaignFromFirebase(userID, name) {
   await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
 }
 
+function containsInvalidCharacters(string) {
+  return string.includes("/");
+}
+
 export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
@@ -105,4 +112,5 @@ export {
   sortSessionsByDate,
   deleteSessionFromFirebase,
   deleteCampaignFromFirebase,
+  containsInvalidCharacters,
 };

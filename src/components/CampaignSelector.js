@@ -1,5 +1,4 @@
 function CampaignSelector(props) {
-  console.log(props);
   const populateSelectOptions = props.campaigns
     ? props.campaigns.map((camp, index) => {
         return (
