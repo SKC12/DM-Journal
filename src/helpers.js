@@ -91,6 +91,10 @@ async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
   );
 }
 
+async function deleteCampaignFromFirebase(userID, name) {
+  await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
+}
+
 export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
@@ -100,4 +104,5 @@ export {
   writeSessionToFirebase,
   sortSessionsByDate,
   deleteSessionFromFirebase,
+  deleteCampaignFromFirebase,
 };

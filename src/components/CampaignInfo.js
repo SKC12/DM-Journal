@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
-import { db } from "../firebase";
 import { confirmAlert } from "react-confirm-alert";
 import {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
+  deleteCampaignFromFirebase,
 } from "../helpers";
 import "../confirmCSS.css";
 
@@ -64,11 +63,9 @@ function CampaignInfo(props) {
     window.location.reload();
   }
 
-  //TODO Fully deleted collection, only deleted document
   async function deleteCampaign(e) {
     e.preventDefault();
-    await deleteDoc(doc(db, "users/" + props.user.uid + "/campaigns", name));
-
+    await deleteCampaignFromFirebase(props.user.uid, name);
     window.location.reload();
   }
 
