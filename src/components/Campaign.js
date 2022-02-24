@@ -1,9 +1,9 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
 import CampaignInfo from "./CampaignInfo";
+import { loadCampaignsFromDatabase } from "../helpers.js";
 
 function Campaign(props) {
   const [user, loading, error] = useAuthState(auth);
@@ -17,23 +17,15 @@ function Campaign(props) {
   }, [setCurrentTab]);
 
   useEffect(() => {
-    async function loadCampaigns() {
-      //console.log(user);
-      let campArray = [];
-      const query = await getDocs(
-        collection(db, "users/" + user.uid + "/campaigns")
-      );
-      query.forEach((doc) => {
-        campArray.push(doc.data());
-      });
-      //console.log(campArray);
-      setCampaigns(campArray);
+    async function setCampaignsState(userID) {
+      let camps = await loadCampaignsFromDatabase(userID);
+      setCampaigns(camps);
     }
 
     if (error) return;
     if (loading) return;
     if (!user) navigate("/login");
-    if (user) loadCampaigns();
+    if (user) setCampaignsState(user.uid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading]);
 

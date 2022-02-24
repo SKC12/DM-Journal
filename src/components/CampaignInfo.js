@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  doc,
-  setDoc,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-} from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { confirmAlert } from "react-confirm-alert";
+import {
+  searchFirebaseForCampaignName,
+  writeCampaignToFirebase,
+} from "../helpers";
 import "../confirmCSS.css";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
@@ -29,34 +25,30 @@ function CampaignInfo(props) {
   );
   const [errorMsg, setErrorMsg] = useState(false);
 
+  //Error msg initially not displayed
   useEffect(() => {
     setErrorMsg(false);
   }, [name]);
 
   async function createCampaign(e) {
     e.preventDefault();
-    const q = query(
-      collection(db, "users/" + props.user.uid + "/campaigns"),
-      where("name", "==", name)
-    );
-    const docs = await getDocs(q);
+
+    //Queries if campaign already exists
+    const docs = await searchFirebaseForCampaignName(props.user.uid, name);
     if (docs.docs.length === 0) {
       let campaign = {
         name: name,
         description: description,
         private: isPrivate,
       };
-      //console.log(campaign);
-      await setDoc(
-        doc(db, "users/" + props.user.uid + "/campaigns", campaign.name),
-        campaign
-      );
-      console.log("Document written");
+
+      //If it doesn't exists, writes to DB
+      await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
       window.location.reload();
     } else {
+      //If not, displays error msg
       setErrorMsg(true);
     }
-
     //console.log(props.user);
   }
 
@@ -67,27 +59,15 @@ function CampaignInfo(props) {
       description: description,
       private: isPrivate,
     };
-    await setDoc(
-      doc(db, "users/" + props.user.uid + "/campaigns", campaign.name),
-      campaign
-    );
-    console.log("Document written");
+    await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
+    //console.log("Document written");
     window.location.reload();
   }
 
+  //TODO Fully deleted collection, only deleted document
   async function deleteCampaign(e) {
     e.preventDefault();
     await deleteDoc(doc(db, "users/" + props.user.uid + "/campaigns", name));
-
-    // const q = query(
-    //   collection(db, "users/" + props.user.uid + "/campaigns"),
-    //   where("name", "==", name)
-    // );
-    // const docs = await getDocs(q);
-    // docs.forEach((doc) => {
-    //   console.log(doc.id, " => ", doc.data());
-    // });
-    // console.log(docs);
 
     window.location.reload();
   }
@@ -102,7 +82,8 @@ function CampaignInfo(props) {
     );
   };
 
-  const deleteAlert = (e) => {
+  //Alert for deletion confirmation
+  const campaignDeleteAlert = (e) => {
     e.preventDefault();
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -213,7 +194,7 @@ function CampaignInfo(props) {
                   </button>
                   <button
                     className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-                    onClick={(e) => deleteAlert(e)}
+                    onClick={(e) => campaignDeleteAlert(e)}
                   >
                     Delete Campaign
                   </button>

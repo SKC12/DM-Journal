@@ -1,10 +1,13 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
+import {
+  loadSessionsFromDatabase,
+  loadCampaignsFromDatabase,
+} from "../helpers.js";
 
 function Journal(props) {
   const [user, loading, error] = useAuthState(auth);
@@ -44,41 +47,14 @@ function Journal(props) {
     );
   });
 
-  //Loads session array from Database
-  async function loadSessions(userID, campName) {
-    let sessionsArray = [];
-    const query = await getDocs(
-      collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
-    );
-    query.forEach((doc) => {
-      sessionsArray.push(doc.data());
-    });
-    sessionsArray.sort((a, b) => {
-      return new Date(a.date) - new Date(b.date);
-    });
-    return sessionsArray;
-  }
-
   //Changes session list on campaign change
   useEffect(() => {
     async function setSessionsState(userID, campaign) {
-      let sessions = await loadSessions(userID, campaign.name);
+      let sessions = await loadSessionsFromDatabase(userID, campaign.name);
       setSessions(sessions);
     }
     if (user) setSessionsState(user.uid, currentCampaign);
   }, [currentCampaign, user]);
-
-  //Load campaigns array from database
-  async function loadCampaigns(userID) {
-    let campArray = [];
-    const query = await getDocs(
-      collection(db, "users/" + userID + "/campaigns")
-    );
-    query.forEach((doc) => {
-      campArray.push(doc.data());
-    });
-    return campArray;
-  }
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
     if (userID && campaignName) {
@@ -93,18 +69,18 @@ function Journal(props) {
   useEffect(() => {
     //Sets up state for logged users
     async function setCampaignsState(userID) {
-      let camps = await loadCampaigns(userID);
+      let camps = await loadCampaignsFromDatabase(userID);
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
     }
 
     //Loads session list from parameters, sets up state and "global" IDs.
     async function anonymousLoading(userID, campaign) {
-      let campArray = await loadCampaigns(userID);
+      let campArray = await loadCampaignsFromDatabase(userID);
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
       setCurrentCampaign(selectedCamp);
-      let sessions = await loadSessions(userID, campaign);
+      let sessions = await loadSessionsFromDatabase(userID, campaign);
       setSessions(sessions);
       props.setCurrentUserID(params.user);
       props.setCurrentCampaignID(params.campaign);

@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  doc,
-  setDoc,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../firebase";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
+import {
+  searchFirebaseForSessionName,
+  writeSessionToFirebase,
+  sortSessionsByDate,
+  deleteSessionFromFirebase,
+} from "../helpers.js";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
 const INPUT_STYLE =
@@ -46,20 +42,15 @@ function JournalInfo(props) {
     setErrorMsg(false);
   }, [name]);
 
+  //Adds session to Database
   async function createSession(e) {
     e.preventDefault();
-    const q = query(
-      collection(
-        db,
-        "users/" +
-          props.user.uid +
-          "/campaigns/" +
-          props.campaign.name +
-          "/sessions"
-      ),
-      where("name", "==", name)
+
+    const docs = await searchFirebaseForSessionName(
+      props.user.uid,
+      props.campaign.name,
+      name
     );
-    const docs = await getDocs(q);
     if (docs.docs.length === 0) {
       let session = {
         name: name,
@@ -70,26 +61,16 @@ function JournalInfo(props) {
         description: description,
         uid: nanoid(),
       };
-      //console.log(campaign);
-      await setDoc(
-        doc(
-          db,
-          "users/" +
-            props.user.uid +
-            "/campaigns/" +
-            props.campaign.name +
-            "/sessions",
-          session.uid
-        ),
-        session
-      );
-      //console.log("Document written");
-      props.setSessions(props.sessions.concat(session));
+
+      await writeSessionToFirebase(props.user.id, props.campaign.name, session);
+      let newSessions = sortSessionsByDate(props.sessions.concat(session));
+      props.setSessions(newSessions);
     } else {
       setErrorMsg(true);
     }
   }
 
+  //Edits session
   async function editSession(e) {
     e.preventDefault();
     let session = {
@@ -102,46 +83,24 @@ function JournalInfo(props) {
       uid: uid,
     };
     try {
-      await setDoc(
-        doc(
-          db,
-          "users/" +
-            props.user.uid +
-            "/campaigns/" +
-            props.campaign.name +
-            "/sessions",
-          uid
-        ),
-        session
-      );
-      //console.log("Document written");
+      await writeSessionToFirebase(props.user.id, props.campaign.name, session);
       let newArr = props.sessions.map((entry) => {
         return entry.uid === uid ? session : entry;
       });
-      newArr.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-      });
-      props.setSessions(newArr);
+      props.setSessions(sortSessionsByDate(newArr));
       //TODO: ERROR
     } catch (e) {
       console.log(e);
     }
   }
 
+  //Deletes session
   async function deleteSession(e) {
     e.preventDefault();
     try {
-      await deleteDoc(
-        doc(
-          db,
-          "users/" +
-            props.user.uid +
-            "/campaigns/" +
-            props.campaign.name +
-            "/sessions",
-          uid
-        )
-      );
+      await deleteSessionFromFirebase(props.user.uid, props.campaign.name, uid);
+
+      //Removes session from state
       props.setSessions(
         props.sessions.filter((entry) => {
           return entry.name !== name;
@@ -150,6 +109,7 @@ function JournalInfo(props) {
       //TODO: ERROR
     } catch (e) {
       console.log(e);
+      alert(e);
     }
   }
 
