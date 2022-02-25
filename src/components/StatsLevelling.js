@@ -5,6 +5,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Label,
 } from "recharts";
 const CAT_STYLE = "pb-4 pr-2 block text-gray-700 font-bold";
 
@@ -99,6 +100,18 @@ function StatsIngameTime(props) {
   const maxLvl = props.sessions[props.sessions.length - 1].partyLevel;
   const avgTTL = numberOfSessions / maxLvl;
 
+  //Custom tootip for the chart
+  const ChartCustomToolTip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-gray-100 px-4 py-2 border-gray-500 rounded-lg border">
+          <p>{`${label} - Level ${payload[0].payload.partyLevel}`} </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   //Session x level line chart
   const lineChart = (
     <div className="overflow-auto bg-gray-200">
@@ -118,7 +131,7 @@ function StatsIngameTime(props) {
           </linearGradient>
         </defs>
 
-        <CartesianGrid stroke="#ccc" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
 
         <XAxis
           style={{
@@ -138,7 +151,17 @@ function StatsIngameTime(props) {
           }}
           interval={0}
           type="category"
-        />
+        >
+          <Label
+            style={{
+              fontSize: "0.75rem",
+            }}
+            fill="#666"
+            strokeWidth={0.5}
+            value="Party level"
+            angle={270}
+          />
+        </YAxis>
         <Line
           type="monotone"
           dataKey="partyLevel"
@@ -150,6 +173,7 @@ function StatsIngameTime(props) {
           style={{
             fontSize: "0.65rem",
           }}
+          content={<ChartCustomToolTip />}
         />
       </LineChart>
     </div>

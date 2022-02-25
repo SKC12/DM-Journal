@@ -5,7 +5,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  Label,
 } from "recharts";
+
 const CAT_STYLE = "pb-4 pr-2 block text-gray-700 font-bold";
 
 function StatsIngameTime(props) {
@@ -46,8 +48,8 @@ function StatsIngameTime(props) {
       let accTime = array[index].accTime;
 
       let endIndex = array.findIndex((entry) => entry.color === colors[i + 1]);
-      //let percent = index / array.length;
-      let percent = accTime / maxTime;
+
+      let percent = accTime / maxTime || 0;
 
       arr.push({
         index: index,
@@ -56,7 +58,6 @@ function StatsIngameTime(props) {
       });
       if (endIndex > 0) {
         let endAccTime = array[endIndex].accTime;
-        //let endPencent = endIndex / array.length;
         let endPercent = endAccTime / maxTime;
         arr.push({
           index: endIndex,
@@ -113,11 +114,11 @@ function StatsIngameTime(props) {
   const maxSession = getMaxSessionTime(props.sessions);
 
   //Custom tootip for the chart
-  const CustomToolTip = ({ active, payload, label }) => {
+  const ChartCustomToolTip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-gray-100 p-2">
-          <p>{`${payload[0].payload.name}: Day ${label}`} </p>
+        <div className="bg-gray-100 px-4 py-2 border-gray-500 rounded-lg border">
+          <p>{`${payload[0].payload.name} - Day ${label}`} </p>
         </div>
       );
     }
@@ -145,7 +146,7 @@ function StatsIngameTime(props) {
           </linearGradient>
         </defs>
 
-        <CartesianGrid stroke="#ccc" scale="linear" />
+        <CartesianGrid stroke="#ccc" scale="linear" strokeDasharray="5 5" />
 
         <XAxis
           style={{
@@ -170,9 +171,19 @@ function StatsIngameTime(props) {
           interval={0}
           type="category"
           dataKey="partyLevel"
-        />
+        >
+          <Label
+            style={{
+              fontSize: "0.75rem",
+            }}
+            fill="#666"
+            strokeWidth={0.5}
+            value="Party level"
+            angle={270}
+          />
+        </YAxis>
         <Line
-          type="linear"
+          type="monotone"
           dataKey="partyLevel"
           strokeWidth={3}
           dot={{
@@ -185,7 +196,7 @@ function StatsIngameTime(props) {
           style={{
             fontSize: "0.65rem",
           }}
-          content={<CustomToolTip />}
+          content={<ChartCustomToolTip />}
         />
       </LineChart>
     </div>
