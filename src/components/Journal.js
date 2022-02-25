@@ -16,6 +16,7 @@ function Journal(props) {
   const [currentCampaign, setCurrentCampaign] = useState("");
   const [sessions, setSessions] = useState([]);
   const [currentSession, setCurrentSession] = useState("");
+  const [loadingSessions, setLoadingSessions] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const setCurrentTab = props.setCurrentTab;
@@ -40,7 +41,9 @@ function Journal(props) {
   //Changes session list on campaign change
   useEffect(() => {
     async function setSessionsState(userID, campaign) {
+      setLoadingSessions(true);
       let sessions = await loadSessionsFromDatabase(userID, campaign.name);
+      setLoadingSessions(false);
       setSessions(sessions);
     }
     if (user) setSessionsState(user.uid, currentCampaign);
@@ -146,6 +149,8 @@ function Journal(props) {
         <div className="bg-gray-300 overflow-y-auto rounded max-h-80">
           {isPrivate(currentCampaign) ? (
             <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
+          ) : loadingSessions ? (
+            <p className="text-gray-500 text-center">LOADING...</p>
           ) : (
             <ul className="font-normal">{populateJournal}</ul>
           )}
