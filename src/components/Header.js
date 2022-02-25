@@ -39,7 +39,7 @@ function Header(props) {
   return (
     <nav className="md:flex flex-row items-center justify-between px-9 h-[5vh] bg-gray-50">
       <span className="text-5xl text-gray-800 -mb-1"></span>
-      <ul className="flex flex-row self-center h-12">
+      <ul className="flex flex-row self-center h-[5vh]">
         <li
           className={`${NAV_ITEM_STYLE}  ${
             currentTab === "Journal" ? "bg-gray-300" : ""
