@@ -68,7 +68,6 @@ async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
 
 // Writes session to Firebase.
 async function writeSessionToFirebase(userID, campaignName, session) {
-  console.log(userID, campaignName, session);
   try {
     await setDoc(
       doc(

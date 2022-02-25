@@ -6,6 +6,7 @@ import {
   writeSessionToFirebase,
   sortSessionsByDate,
   deleteSessionFromFirebase,
+  containsInvalidCharacters,
 } from "../helpers.js";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
@@ -33,6 +34,7 @@ function JournalInfo(props) {
     props.session.partyLevel ? props.session.partyLevel : 1
   );
   const [errorMsg, setErrorMsg] = useState(false);
+  const [dateErrorMsg, setDateErrorMsg] = useState(false);
 
   const params = useParams();
 
@@ -42,36 +44,56 @@ function JournalInfo(props) {
     setErrorMsg(false);
   }, [name]);
 
+  useEffect(() => {
+    setDateErrorMsg(false);
+  }, [date]);
+
   //Adds session to Database
   async function createSession(e) {
     e.preventDefault();
 
-    const docs = await searchFirebaseForSessionName(
-      props.user.uid,
-      props.campaign.name,
-      name
-    );
-    if (docs.docs.length === 0) {
-      let session = {
-        name: name,
-        color: color,
-        date: date,
-        ingameTime: ingameTime,
-        partyLevel: partyLevel,
-        description: description,
-        uid: nanoid(),
-      };
+    let session = {
+      name: name,
+      color: color,
+      date: date,
+      ingameTime: ingameTime,
+      partyLevel: partyLevel,
+      description: description,
+      uid: nanoid(),
+    };
 
-      await writeSessionToFirebase(
+    if (isValidSession(session)) {
+      const docs = await searchFirebaseForSessionName(
         props.user.uid,
         props.campaign.name,
-        session
+        name
       );
-      let newSessions = sortSessionsByDate(props.sessions.concat(session));
-      props.setSessions(newSessions);
-    } else {
-      setErrorMsg(true);
+      if (docs.docs.length === 0) {
+        await writeSessionToFirebase(
+          props.user.uid,
+          props.campaign.name,
+          session
+        );
+        let newSessions = sortSessionsByDate(props.sessions.concat(session));
+        props.setSessions(newSessions);
+      } else {
+        setErrorMsg(true);
+      }
     }
+  }
+
+  function isValidSession(session) {
+    if (session.name === "" || containsInvalidCharacters(session.name)) {
+      setErrorMsg(true);
+      return false;
+    }
+    let date = new Date(session.date);
+    if (!(date instanceof Date && !isNaN(date.valueOf()))) {
+      setDateErrorMsg(true);
+      return false;
+    }
+
+    return true;
   }
 
   //Edits session
@@ -86,7 +108,7 @@ function JournalInfo(props) {
       description: description,
       uid: uid,
     };
-    try {
+    if (isValidSession(session)) {
       await writeSessionToFirebase(
         props.user.uid,
         props.campaign.name,
@@ -96,9 +118,6 @@ function JournalInfo(props) {
         return entry.uid === uid ? session : entry;
       });
       props.setSessions(sortSessionsByDate(newArr));
-      //TODO: ERROR
-    } catch (e) {
-      console.log(e);
     }
   }
 
@@ -121,14 +140,18 @@ function JournalInfo(props) {
     }
   }
 
-  let errorMessage = () => {
+  let titleErrorMessage = () => {
     return errorMsg ? (
-      <p className="text-red-500 text-sm pt-1 pl-5">
-        Session names must be unique
+      <p className="text-red-500 text-sm pt-1 pl-1">
+        Session names must be unique and cannot contain forward slashes ("/")
       </p>
-    ) : (
-      <p></p>
-    );
+    ) : null;
+  };
+
+  let dateErrorMessage = () => {
+    return dateErrorMsg ? (
+      <p className="text-red-500 text-sm pt-1 pl-1">Invalid session date</p>
+    ) : null;
   };
 
   const buttons = (entry) => (
@@ -205,10 +228,10 @@ function JournalInfo(props) {
               </div>
             </div>
 
-            {errorMessage()}
+            {titleErrorMessage()}
 
             <div className="flex pt-6">
-              <div className="flex-col items-center pb-6">
+              <div className="flex-col items-center ">
                 <label className={LABEL_STYLE} htmlFor="info-session-date">
                   Session date{" "}
                 </label>
@@ -222,7 +245,7 @@ function JournalInfo(props) {
                 ></input>
               </div>
 
-              <div className="flex-col items-center pb-6">
+              <div className="flex-col items-center ">
                 <label className={LABEL_STYLE} htmlFor="info-session-time">
                   Ingame duration{" "}
                 </label>
@@ -241,7 +264,7 @@ function JournalInfo(props) {
                 </span>
               </div>
 
-              <div className="flex-col items-center pb-6">
+              <div className="flex-col items-center ">
                 <label className={LABEL_STYLE} htmlFor="info-session-level">
                   Party level{" "}
                 </label>
@@ -257,8 +280,9 @@ function JournalInfo(props) {
                 ></input>
               </div>
             </div>
+            {dateErrorMessage()}
 
-            <div className="flex-col items-center pb-6 pr-6">
+            <div className="flex-col items-center py-6 pr-6">
               <label className={LABEL_STYLE} htmlFor="info-session-description">
                 Session description{" "}
               </label>
