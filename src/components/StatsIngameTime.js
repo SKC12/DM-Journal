@@ -99,7 +99,7 @@ function StatsIngameTime(props) {
     let max = 0;
     let current = {};
     for (let i = 0; i < sessions.length; i++) {
-      if (parseInt(sessions[i].ingameTime) > max) {
+      if (parseInt(sessions[i].ingameTime) >= max) {
         max = parseInt(sessions[i].ingameTime);
         current = sessions[i];
       }
