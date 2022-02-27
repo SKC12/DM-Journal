@@ -16,6 +16,7 @@ import Campaign from "./Campaign";
 import Journal from "./Journal";
 import Stats from "./Stats";
 import { useState } from "react";
+import ErrorPage from "./ErrorPage";
 
 function App() {
   const [currentUserID, setCurrentUserID] = useState("");
@@ -96,6 +97,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/reset" element={<Reset />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/error" element={<ErrorPage />} />
         </Routes>
       </Router>
     </div>

@@ -38,7 +38,11 @@ function Stats(props) {
   //Load sessions on campaign change
   useEffect(() => {
     async function setSessionsState(userID, campaign) {
-      let sessions = await loadSessionsFromDatabase(userID, campaign.name);
+      let sessions = await loadSessionsFromDatabase(
+        userID,
+        campaign.name,
+        navigate
+      );
       setSessions(sessions);
     }
     if (
@@ -51,7 +55,7 @@ function Stats(props) {
         }
       }
     }
-  }, [currentCampaign, user, prevCampaign, params.user]);
+  }, [currentCampaign, user, prevCampaign, params.user, navigate]);
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
     if (userID && campaignName) {
@@ -81,7 +85,7 @@ function Stats(props) {
     async function setCampaignsState(userID) {
       setCurrentIDsFromParameters(user, params.user, params.campaign);
 
-      let camps = await loadCampaignsFromDatabase(userID);
+      let camps = await loadCampaignsFromDatabase(userID, navigate);
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
     }
@@ -93,7 +97,7 @@ function Stats(props) {
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
       setCurrentCampaign(selectedCamp);
-      let sessions = await loadSessionsFromDatabase(userID, campaign);
+      let sessions = await loadSessionsFromDatabase(userID, campaign, navigate);
       setSessions(sessions);
       setCurrentUserID(params.user);
       setCurrentCampaignID(params.campaign);
@@ -124,6 +128,7 @@ function Stats(props) {
     setCurrentUserID,
     setCurrentCampaignID,
     setCurrentIDsFromParameters,
+    navigate,
   ]);
 
   function handleSelectChange(e) {

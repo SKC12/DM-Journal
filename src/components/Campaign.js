@@ -18,7 +18,7 @@ function Campaign(props) {
 
   useEffect(() => {
     async function setCampaignsState(userID) {
-      let camps = await loadCampaignsFromDatabase(userID);
+      let camps = await loadCampaignsFromDatabase(userID, navigate);
       setCampaigns(camps);
     }
 
@@ -26,8 +26,7 @@ function Campaign(props) {
     if (loading) return;
     if (!user) navigate("/login");
     if (user) setCampaignsState(user.uid);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, loading]);
+  }, [user, loading, error, navigate]);
 
   let populateCampaigns = campaigns.map((camp, index) => {
     return (

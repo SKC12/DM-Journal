@@ -10,19 +10,27 @@ import {
 } from "firebase/firestore";
 
 //Load campaigns array from database
-async function loadCampaignsFromDatabase(userID) {
+async function loadCampaignsFromDatabase(userID, navigate) {
   let campArray = [];
-  const query = await getDocs(collection(db, "users/" + userID + "/campaigns"));
-  query.forEach((doc) => {
-    campArray.push(doc.data());
-  });
-  console.log("LOADING CAMPAIGNS FROM DB");
+  try {
+    const query = await getDocs(
+      collection(db, "users/" + userID + "/campaigns")
+    );
+    query.forEach((doc) => {
+      campArray.push(doc.data());
+    });
+  } catch (e) {
+    console.log(e);
+    navigate("/error");
+  }
+
+  //console.log("LOADING CAMPAIGNS FROM DB");
 
   return campArray;
 }
 
 //Loads session array from Database, sorted by Date
-async function loadSessionsFromDatabase(userID, campName) {
+async function loadSessionsFromDatabase(userID, campName, navigate) {
   let sessionsArray = [];
   try {
     const query = await getDocs(
@@ -33,7 +41,7 @@ async function loadSessionsFromDatabase(userID, campName) {
     });
   } catch (e) {
     console.log(e);
-    alert(e);
+    navigate("/error");
   }
 
   sortSessionsByDate(sessionsArray);
@@ -48,31 +56,46 @@ function sortSessionsByDate(sessionsArray) {
 }
 
 async function searchFirebaseForCampaignName(userID, name) {
-  const q = query(
-    collection(db, "users/" + userID + "/campaigns"),
-    where("name", "==", name)
-  );
-  const docs = await getDocs(q);
-  return docs;
+  try {
+    const q = query(
+      collection(db, "users/" + userID + "/campaigns"),
+      where("name", "==", name)
+    );
+    const docs = await getDocs(q);
+    return docs;
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 async function writeCampaignToFirebase(userID, campaignName, campaign) {
-  await setDoc(
-    doc(db, "users/" + userID + "/campaigns", campaignName),
-    campaign
-  );
+  try {
+    await setDoc(
+      doc(db, "users/" + userID + "/campaigns", campaignName),
+      campaign
+    );
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
-  const q = query(
-    collection(
-      db,
-      "users/" + userID + "/campaigns/" + campaignName + "/sessions"
-    ),
-    where("name", "==", sessionName)
-  );
-  const docs = await getDocs(q);
-  return docs;
+  try {
+    const q = query(
+      collection(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/sessions"
+      ),
+      where("name", "==", sessionName)
+    );
+    const docs = await getDocs(q);
+    return docs;
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 // Writes session to Firebase.
@@ -93,17 +116,27 @@ async function writeSessionToFirebase(userID, campaignName, session) {
 }
 
 async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
-  await deleteDoc(
-    doc(
-      db,
-      "users/" + userID + "/campaigns/" + campaignName + "/sessions",
-      sessionID
-    )
-  );
+  try {
+    await deleteDoc(
+      doc(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/sessions",
+        sessionID
+      )
+    );
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 async function deleteCampaignFromFirebase(userID, name) {
-  await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
+  try {
+    await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
 }
 
 function containsInvalidCharacters(string) {

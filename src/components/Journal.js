@@ -57,7 +57,11 @@ function Journal(props) {
   useEffect(() => {
     async function setSessionsState(userID, campaign) {
       setLoadingSessions(true);
-      let sessions = await loadSessionsFromDatabase(userID, campaign.name);
+      let sessions = await loadSessionsFromDatabase(
+        userID,
+        campaign.name,
+        navigate
+      );
       setLoadingSessions(false);
       setSessions(sessions);
     }
@@ -71,7 +75,7 @@ function Journal(props) {
         }
       }
     }
-  }, [currentCampaign, user, prevCampaign, params.user]);
+  }, [currentCampaign, user, prevCampaign, params.user, navigate]);
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
     if (userID && campaignName) {
@@ -102,7 +106,7 @@ function Journal(props) {
     async function setCampaignsState(userID) {
       setCurrentIDsFromParameters(user, params.user, params.campaign);
 
-      let camps = await loadCampaignsFromDatabase(userID);
+      let camps = await loadCampaignsFromDatabase(userID, navigate);
 
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
@@ -112,12 +116,12 @@ function Journal(props) {
     async function anonymousLoading(userID, campaign) {
       //console.log("ANONYMOUS");
 
-      let campArray = await loadCampaignsFromDatabase(userID);
+      let campArray = await loadCampaignsFromDatabase(userID, navigate);
 
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
       setCurrentCampaign(selectedCamp);
-      let sessions = await loadSessionsFromDatabase(userID, campaign);
+      let sessions = await loadSessionsFromDatabase(userID, campaign, navigate);
 
       setSessions(sessions);
       setCurrentUserID(params.user);
@@ -148,6 +152,7 @@ function Journal(props) {
     setCurrentCampaignID,
     setCurrentUserID,
     setCurrentIDsFromParameters,
+    navigate,
   ]);
 
   function handleSelectChange(e) {
