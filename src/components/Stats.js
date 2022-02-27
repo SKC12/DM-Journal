@@ -199,6 +199,17 @@ function Stats(props) {
             currentCampaign={currentCampaign}
             handleSelectChange={handleSelectChange}
           />
+        ) : user ? (
+          <div
+            className="py-4 italic text-lg cursor-pointer"
+            onClick={() => {
+              props.setCurrentCampaignID("");
+              props.setCurrentUserID("");
+              navigate("/stats");
+            }}
+          >
+            Return
+          </div>
         ) : null}
         <h2 className="select-none pb-4">Stats:</h2>
         {currentCampaign !== "" ? (

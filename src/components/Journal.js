@@ -195,6 +195,17 @@ function Journal(props) {
             currentCampaign={currentCampaign}
             handleSelectChange={handleSelectChange}
           />
+        ) : user ? (
+          <div
+            className="py-4 italic text-lg cursor-pointer"
+            onClick={() => {
+              props.setCurrentCampaignID("");
+              props.setCurrentUserID("");
+              navigate("/journal");
+            }}
+          >
+            Return
+          </div>
         ) : null}
 
         <h2 className="select-none pb-4">Sessions:</h2>
