@@ -16,19 +16,28 @@ async function loadCampaignsFromDatabase(userID) {
   query.forEach((doc) => {
     campArray.push(doc.data());
   });
+  console.log("LOADING CAMPAIGNS FROM DB");
+
   return campArray;
 }
 
 //Loads session array from Database, sorted by Date
 async function loadSessionsFromDatabase(userID, campName) {
   let sessionsArray = [];
-  const query = await getDocs(
-    collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
-  );
-  query.forEach((doc) => {
-    sessionsArray.push(doc.data());
-  });
+  try {
+    const query = await getDocs(
+      collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
+    );
+    query.forEach((doc) => {
+      sessionsArray.push(doc.data());
+    });
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
+
   sortSessionsByDate(sessionsArray);
+  console.log("LOADING SESSIONS FROM DB");
   return sessionsArray;
 }
 

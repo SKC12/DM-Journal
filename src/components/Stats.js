@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import StatsInfo from "./StatsInfo";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -13,11 +13,23 @@ function Stats(props) {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
   const [currentCampaign, setCurrentCampaign] = useState("");
+  const prevCampaign = usePrevious(currentCampaign);
+
   const [sessions, setSessions] = useState([]);
   const [stat, setStat] = useState("");
   const navigate = useNavigate();
   const params = useParams();
   const setCurrentTab = props.setCurrentTab;
+  const setCurrentCampaignID = props.setCurrentCampaignID;
+  const setCurrentUserID = props.setCurrentUserID;
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   useEffect(() => {
     setCurrentTab("Stats");
@@ -29,10 +41,17 @@ function Stats(props) {
       let sessions = await loadSessionsFromDatabase(userID, campaign.name);
       setSessions(sessions);
     }
-    if (user) {
-      setSessionsState(user.uid, currentCampaign);
+    if (
+      prevCampaign !== undefined &&
+      prevCampaign.name !== currentCampaign.name
+    ) {
+      if (user) {
+        if (params.user && user.uid === params.user) {
+          setSessionsState(user.uid, currentCampaign);
+        }
+      }
     }
-  }, [currentCampaign, user]);
+  }, [currentCampaign, user, prevCampaign, params.user]);
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
     if (userID && campaignName) {
@@ -43,9 +62,25 @@ function Stats(props) {
     }
   }
 
+  const setCurrentIDsFromParameters = useCallback(
+    (currentUser, paramsUser, paramsCampaign) => {
+      if (paramsUser === undefined) {
+        setCurrentUserID(currentUser.uid);
+      } else if (paramsUser) {
+        setCurrentUserID(paramsUser);
+      }
+      if (paramsCampaign) {
+        setCurrentCampaignID(paramsCampaign);
+      }
+    },
+    [setCurrentCampaignID, setCurrentUserID]
+  );
+
   useEffect(() => {
     //Sets up state for logged users
     async function setCampaignsState(userID) {
+      setCurrentIDsFromParameters(user, params.user, params.campaign);
+
       let camps = await loadCampaignsFromDatabase(userID);
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
@@ -53,14 +88,15 @@ function Stats(props) {
 
     //Loads session list from parameters, sets up state and "global" IDs for non-users.
     async function anonymousLoading(userID, campaign) {
+      console.log("ANONYMOUS");
       let campArray = await loadCampaignsFromDatabase(userID);
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
       setCurrentCampaign(selectedCamp);
       let sessions = await loadSessionsFromDatabase(userID, campaign);
       setSessions(sessions);
-      props.setCurrentUserID(params.user);
-      props.setCurrentCampaignID(params.campaign);
+      setCurrentUserID(params.user);
+      setCurrentCampaignID(params.campaign);
     }
 
     if (error) return;
@@ -70,12 +106,25 @@ function Stats(props) {
         anonymousLoading(params.user, params.campaign);
       }
     if (user) {
-      if (params.user === undefined) {
-        props.setCurrentUserID(user.uid);
+      if (params.user && params.campaign && user.uid !== params.user) {
+        anonymousLoading(params.user, params.campaign);
+      } else {
+        if (params.user === undefined) {
+          setCurrentUserID(user.uid);
+        }
+        setCampaignsState(user.uid);
       }
-      setCampaignsState(user.uid);
     }
-  }, [user, loading, error, params, props]);
+  }, [
+    user,
+    loading,
+    error,
+    params.campaign,
+    params.user,
+    setCurrentUserID,
+    setCurrentCampaignID,
+    setCurrentIDsFromParameters,
+  ]);
 
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
@@ -94,6 +143,15 @@ function Stats(props) {
     } else {
       return false;
     }
+  }
+
+  function isOwner() {
+    if (!user) {
+      return false;
+    } else if (user.uid === params.user) {
+      return true;
+    }
+    return false;
   }
 
   const renderStats = (
@@ -130,11 +188,13 @@ function Stats(props) {
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="shrink-0 p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        <CampaignSelector
-          campaigns={campaigns}
-          currentCampaign={currentCampaign}
-          handleSelectChange={handleSelectChange}
-        />
+        {isOwner() ? (
+          <CampaignSelector
+            campaigns={campaigns}
+            currentCampaign={currentCampaign}
+            handleSelectChange={handleSelectChange}
+          />
+        ) : null}
         <h2 className="select-none pb-4">Stats:</h2>
         {currentCampaign !== "" ? (
           isPrivate(currentCampaign) ? (

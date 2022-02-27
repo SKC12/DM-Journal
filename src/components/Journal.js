@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
@@ -14,29 +14,44 @@ function Journal(props) {
   const [user, loading, error] = useAuthState(auth);
   const [campaigns, setCampaigns] = useState([]);
   const [currentCampaign, setCurrentCampaign] = useState("");
+  const prevCampaign = usePrevious(currentCampaign);
   const [sessions, setSessions] = useState([]);
   const [currentSession, setCurrentSession] = useState("");
   const [loadingSessions, setLoadingSessions] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const setCurrentTab = props.setCurrentTab;
+  const setCurrentCampaignID = props.setCurrentCampaignID;
+  const setCurrentUserID = props.setCurrentUserID;
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
   useEffect(() => {
     setCurrentTab("Journal");
   }, [setCurrentTab]);
 
   //Populates the journal with individual session cards
-  const populateJournal = sessions.map((entry, index) => {
-    return (
-      <JounalCard
-        current={currentSession}
-        session={entry}
-        key={entry.name}
-        sessionNumber={index + 1}
-        onClickEvent={setCurrentSession}
-      />
-    );
-  });
+  function populateJournal() {
+    let sessionJournalCards = sessions.map((entry, index) => {
+      return (
+        <JounalCard
+          current={currentSession}
+          session={entry}
+          key={entry.name}
+          sessionNumber={index + 1}
+          onClickEvent={setCurrentSession}
+        />
+      );
+    });
+
+    return sessionJournalCards;
+  }
 
   //Changes session list on campaign change
   useEffect(() => {
@@ -46,8 +61,17 @@ function Journal(props) {
       setLoadingSessions(false);
       setSessions(sessions);
     }
-    if (user) setSessionsState(user.uid, currentCampaign);
-  }, [currentCampaign, user]);
+    if (
+      prevCampaign !== undefined &&
+      prevCampaign.name !== currentCampaign.name
+    ) {
+      if (user) {
+        if (params.user && user.uid === params.user) {
+          setSessionsState(user.uid, currentCampaign);
+        }
+      }
+    }
+  }, [currentCampaign, user, prevCampaign, params.user]);
 
   function setInitialCampaign(campaignArray, userID, campaignName) {
     if (userID && campaignName) {
@@ -59,24 +83,45 @@ function Journal(props) {
     }
   }
 
+  const setCurrentIDsFromParameters = useCallback(
+    (currentUser, paramsUser, paramsCampaign) => {
+      if (paramsUser === undefined) {
+        setCurrentUserID(currentUser.uid);
+      } else if (paramsUser) {
+        setCurrentUserID(paramsUser);
+      }
+      if (paramsCampaign) {
+        setCurrentCampaignID(paramsCampaign);
+      }
+    },
+    [setCurrentCampaignID, setCurrentUserID]
+  );
+
   useEffect(() => {
     //Sets up state for logged users
     async function setCampaignsState(userID) {
+      setCurrentIDsFromParameters(user, params.user, params.campaign);
+
       let camps = await loadCampaignsFromDatabase(userID);
+
       setCampaigns(camps);
       setInitialCampaign(camps, params.user, params.campaign);
     }
 
     //Loads session list from parameters, sets up state and "global" IDs.
     async function anonymousLoading(userID, campaign) {
+      //console.log("ANONYMOUS");
+
       let campArray = await loadCampaignsFromDatabase(userID);
+
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
       setCurrentCampaign(selectedCamp);
       let sessions = await loadSessionsFromDatabase(userID, campaign);
+
       setSessions(sessions);
-      props.setCurrentUserID(params.user);
-      props.setCurrentCampaignID(params.campaign);
+      setCurrentUserID(params.user);
+      setCurrentCampaignID(params.campaign);
     }
 
     if (error) return;
@@ -86,16 +131,24 @@ function Journal(props) {
         anonymousLoading(params.user, params.campaign);
       }
     if (user) {
-      if (user.uid === params.user) {
+      //If there are url parameters, but the campaign belongs to another
+      if (params.user && params.campaign && user.uid !== params.user) {
+        console.log("DIFFERENT USER");
         anonymousLoading(params.user, params.campaign);
       } else {
-        if (params.user === undefined) {
-          props.setCurrentUserID(user.uid);
-        }
         setCampaignsState(user.uid);
       }
     }
-  }, [user, loading, error, props, params]);
+  }, [
+    user,
+    loading,
+    error,
+    params.campaign,
+    params.user,
+    setCurrentCampaignID,
+    setCurrentUserID,
+    setCurrentIDsFromParameters,
+  ]);
 
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
@@ -103,7 +156,7 @@ function Journal(props) {
     });
     if (!!camp) {
       setCurrentCampaign(camp);
-      props.setCurrentCampaignID(camp.name);
+      setCurrentCampaignID(camp.name);
       navigate(`/journal/${user.uid}/${camp.name}`);
     }
   }
@@ -128,7 +181,7 @@ function Journal(props) {
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
       <div className="p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
-        {user ? (
+        {isOwner() ? (
           <CampaignSelector
             campaigns={campaigns}
             currentCampaign={currentCampaign}
@@ -152,7 +205,7 @@ function Journal(props) {
           ) : loadingSessions ? (
             <p className="text-gray-500 text-center">LOADING...</p>
           ) : (
-            <ul className="font-normal">{populateJournal}</ul>
+            <ul className="font-normal">{populateJournal()}</ul>
           )}
         </div>
       </div>
