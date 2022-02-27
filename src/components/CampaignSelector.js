@@ -17,7 +17,9 @@ function CampaignSelector(props) {
       <select
         className="text-gray-700 text-sm px-2 py-0.5 mb-4 w-full rounded focus:text-gray-700 focus:border-gray-700 focus:outline-none"
         aria-label="journal-campaign-select"
-        value={props.currentCampaign.name}
+        value={
+          props.currentCampaign !== undefined ? props.currentCampaign.name : ""
+        }
         onChange={props.handleSelectChange}
       >
         <option>--- Select a campaign ---</option>

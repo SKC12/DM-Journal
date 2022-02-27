@@ -82,7 +82,7 @@ function Journal(props) {
       let camp = campaignArray.find(
         (campaign) => campaign.name === campaignName
       );
-      setCurrentCampaign(camp);
+      camp ? setCurrentCampaign(camp) : setCurrentCampaign("");
       return camp;
     }
   }
@@ -119,9 +119,11 @@ function Journal(props) {
 
       let campArray = await loadCampaignsFromDatabase(userID, navigate);
 
+      //console.log(campArray);
+
       setCampaigns(campArray);
       let selectedCamp = campArray.find((camp) => camp.name === campaign);
-      setCurrentCampaign(selectedCamp);
+      selectedCamp ? setCurrentCampaign(selectedCamp) : setCurrentCampaign("");
       let sessions = await loadSessionsFromDatabase(userID, campaign, navigate);
 
       setSessions(sessions);
