@@ -153,7 +153,7 @@ function Stats(props) {
   function isOwner() {
     if (!user) {
       return false;
-    } else if (user.uid === params.user) {
+    } else if (user.uid === props.currentUserID) {
       return true;
     }
     return false;

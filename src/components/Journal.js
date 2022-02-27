@@ -104,6 +104,7 @@ function Journal(props) {
   useEffect(() => {
     //Sets up state for logged users
     async function setCampaignsState(userID) {
+      //console.log("USER");
       setCurrentIDsFromParameters(user, params.user, params.campaign);
 
       let camps = await loadCampaignsFromDatabase(userID, navigate);
@@ -137,7 +138,7 @@ function Journal(props) {
     if (user) {
       //If there are url parameters, but the campaign belongs to another
       if (params.user && params.campaign && user.uid !== params.user) {
-        console.log("DIFFERENT USER");
+        //console.log("DIFFERENT USER");
         anonymousLoading(params.user, params.campaign);
       } else {
         setCampaignsState(user.uid);
@@ -169,7 +170,7 @@ function Journal(props) {
   function isOwner() {
     if (!user) {
       return false;
-    } else if (user.uid === params.user) {
+    } else if (user.uid === props.currentUserID) {
       return true;
     }
     return false;

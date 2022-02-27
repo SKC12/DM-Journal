@@ -43,9 +43,10 @@ async function loadSessionsFromDatabase(userID, campName, navigate) {
     console.log(e);
     navigate("/error");
   }
-
   sortSessionsByDate(sessionsArray);
-  console.log("LOADING SESSIONS FROM DB");
+
+  //console.log("LOADING SESSIONS FROM DB");
+
   return sessionsArray;
 }
 
@@ -132,6 +133,18 @@ async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
 
 async function deleteCampaignFromFirebase(userID, name) {
   try {
+    const q = query(
+      collection(db, "users/" + userID + "/campaigns/" + name + "/sessions")
+    );
+    const docs = await getDocs(q);
+
+    const deletions = [];
+    docs.forEach((doc) => {
+      deletions.push(deleteDoc(doc.ref));
+    });
+
+    Promise.all(deletions).then();
+
     await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
   } catch (e) {
     console.log(e);

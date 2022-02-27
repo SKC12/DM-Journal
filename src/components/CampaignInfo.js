@@ -31,8 +31,7 @@ function CampaignInfo(props) {
 
   async function createCampaign(e) {
     e.preventDefault();
-    console.log(name);
-    console.log(!containsInvalidCharacters(name));
+
     //Checks for invalid characters
     if (!containsInvalidCharacters(name)) {
       //Queries if campaign already exists
