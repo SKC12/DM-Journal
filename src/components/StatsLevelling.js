@@ -7,7 +7,7 @@ import {
   Tooltip,
   Label,
 } from "recharts";
-const CAT_STYLE = "pb-4 pr-2 block text-gray-700 font-bold";
+const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsIngameTime(props) {
   //Creates the gradient for the Line element, based on session color.
@@ -180,22 +180,22 @@ function StatsIngameTime(props) {
   );
 
   return (
-    <div className="pr-12 flex-col">
-      <h2 className={CAT_STYLE}>Levels:</h2>
+    <div className="md:pl-24 md:pt-12 md:pr-12 flex-col">
+      <h2 className={`${CAT_STYLE} pb-4`}>Levels:</h2>
       {lineChart}
 
       <div className="mb-4 overflow-auto"></div>
       <div>
-        <h2 className={CAT_STYLE}>Time to level</h2>
+        <h2 className={`${CAT_STYLE} pb-4`}>Time to level</h2>
         <div className="bg-gray-200 h-40 pl-4 mb-4 flex flex-col flex-wrap gap-2 overflow-x-auto">
           {individualLevelElements}
         </div>
 
-        <div className="flex">
+        <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Number of sessions:</h2>
           <p>{numberOfSessions}</p>
         </div>
-        <div className="flex">
+        <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Average time to level:</h2>
           <p>{avgTTL.toFixed(1)} sessions</p>
         </div>

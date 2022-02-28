@@ -287,7 +287,7 @@ function JournalInfo(props) {
                 Session description{" "}
               </label>
               <textarea
-                className={`${INPUT_STYLE} w-full h-60 resize-none`}
+                className={`${INPUT_STYLE} w-full h-32 md:h-60 resize-none`}
                 id="info-session-description"
                 value={description}
                 maxLength="3000"
@@ -301,11 +301,7 @@ function JournalInfo(props) {
     }
   }
 
-  return (
-    <div className="p-3 bg-gray-300 grow overflow-auto">
-      {populate(props.session)}
-    </div>
-  );
+  return <div className="p-3 bg-gray-300 grow ">{populate(props.session)}</div>;
 }
 
 export default JournalInfo;

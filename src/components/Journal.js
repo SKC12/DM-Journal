@@ -187,7 +187,7 @@ function Journal(props) {
   }
 
   return (
-    <div className="box-border flex h-[95vh] w-[100%]">
+    <div className="box-border flex md:h-[95vh] w-[100%]">
       <div
         className={`${
           props.sideBarHidden ? "hidden" : "block"

@@ -8,7 +8,7 @@ import {
   Label,
 } from "recharts";
 
-const CAT_STYLE = "pb-4 pr-2 block text-gray-700 font-bold";
+const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsIngameTime(props) {
   const ingameTimeData = prepData(props.sessions);
@@ -203,23 +203,23 @@ function StatsIngameTime(props) {
   );
 
   return (
-    <div className="pr-12 flex-col">
-      <h2 className={CAT_STYLE}>Time passed:</h2>
+    <div className="md:pl-24 md:pt-12 md:pr-12 flex-col">
+      <h2 className={`${CAT_STYLE} pb-4`}>Time passed:</h2>
       {lineChart}
 
       <div className="mb-4 overflow-auto"></div>
       <div>
-        <div className="flex">
+        <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Ingame time passed:</h2>
-          <p>{maxTime} days</p>
+          <p className="shrink-0">{maxTime} days</p>
         </div>
-        <div className="flex">
+        <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Average time passed per session:</h2>
-          <p>{avgTPS.toFixed(1)} days</p>
+          <p className="shrink-0">{avgTPS.toFixed(1)} days</p>
         </div>
-        <div className="flex">
+        <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Max time passed in session:</h2>
-          <p>
+          <p className="flex 1">
             {maxSession.ingameTime} days in "{maxSession.name}"
           </p>
         </div>

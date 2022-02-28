@@ -19,7 +19,7 @@ function StatsInfo(props) {
   }
 
   return (
-    <div className="pl-24 pt-12 overflow-x-hidden overflow-y-auto p-3 bg-gray-300 grow">
+    <div className="overflow-x-hidden overflow-y-auto p-3 bg-gray-300 grow ">
       {props.sessions.length > 0 ? component : null}
     </div>
   );
