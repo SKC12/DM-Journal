@@ -9,7 +9,7 @@ import {
   containsInvalidCharacters,
 } from "../helpers.js";
 
-const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
+const LABEL_STYLE = "w-52 block text-gray-700 font-bold py-2";
 const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
@@ -197,15 +197,15 @@ function JournalInfo(props) {
     } else {
       return (
         <div>
-          <form className="pl-20 pt-12 max-w-4xl">
-            <div className="flex">
+          <form className="md:pl-20 md:pt-12 md:max-w-4xl">
+            <div className="md:flex ">
               <div className="flex-col items-center">
                 <label className={LABEL_STYLE} htmlFor="info-session-name">
                   Session title{" "}
                 </label>
 
                 <input
-                  className={`${INPUT_STYLE} w-96 mr-8`}
+                  className={`${INPUT_STYLE} md:w-96 mr-8`}
                   id="info-session-name"
                   value={name}
                   maxLength="50"
@@ -230,7 +230,7 @@ function JournalInfo(props) {
 
             {titleErrorMessage()}
 
-            <div className="flex pt-6">
+            <div className="md:flex md:pt-6">
               <div className="flex-col items-center ">
                 <label className={LABEL_STYLE} htmlFor="info-session-date">
                   Session date{" "}
@@ -282,7 +282,7 @@ function JournalInfo(props) {
             </div>
             {dateErrorMessage()}
 
-            <div className="flex-col items-center py-6 pr-6">
+            <div className="flex-col items-center md:py-6 md:pr-6">
               <label className={LABEL_STYLE} htmlFor="info-session-description">
                 Session description{" "}
               </label>
@@ -301,7 +301,11 @@ function JournalInfo(props) {
     }
   }
 
-  return <div className="p-3 bg-gray-300 grow">{populate(props.session)}</div>;
+  return (
+    <div className="p-3 bg-gray-300 grow overflow-auto">
+      {populate(props.session)}
+    </div>
+  );
 }
 
 export default JournalInfo;

@@ -188,7 +188,11 @@ function Journal(props) {
 
   return (
     <div className="box-border flex h-[95vh] w-[100%]">
-      <div className="p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
+      <div
+        className={`${
+          props.sideBarHidden ? "hidden" : "block"
+        } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold`}
+      >
         {isOwner() ? (
           <CampaignSelector
             campaigns={campaigns}
@@ -218,7 +222,7 @@ function Journal(props) {
           </div>
         ) : null}
 
-        <div className="bg-gray-300 overflow-y-auto rounded max-h-80">
+        <div className="bg-gray-300 overflow-y-auto rounded max-h-[50vh]">
           {isPrivate(currentCampaign) ? (
             <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
           ) : loadingSessions ? (

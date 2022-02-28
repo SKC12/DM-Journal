@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 // import { db } from "../firebase";
 
 const NAV_ITEM_STYLE =
-  "w-32 text-gray-600 hover:text-gray-700 cursor-pointer font-medium tracking-wide text-lg flex items-center justify-center";
+  "md:text-xl  w-fit p-2 md:w-32   text-gray-500  hover:text-gray-900 cursor-pointer font-bold md:tracking-wide flex items-center justify-center";
 
 function Header(props) {
   const [user] = useAuthState(auth);
@@ -36,10 +36,30 @@ function Header(props) {
     );
   }, [props]);
 
+  function toggleSidebar() {
+    props.setSideBarHidden(!props.sideBarHidden);
+  }
+
   return (
-    <nav className="md:flex flex-row items-center justify-between px-9 h-[5vh] bg-gray-50">
-      <span className="text-5xl text-gray-800 -mb-1"></span>
-      <ul className="flex flex-row self-center h-[5vh]">
+    <nav className="flex flex-row items-center justify-between px-2 md:px-9 h-[7vh] md:h-[5vh] bg-gray-50">
+      <div className="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 text-gray-500 md:hidden cursor-pointer"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={toggleSidebar}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </div>
+      <ul className="flex flex-row self-center h-[7vh] md:h-[5vh]">
         <li
           className={`${NAV_ITEM_STYLE}  ${
             currentTab === "Journal" ? "bg-gray-300" : ""
@@ -69,7 +89,7 @@ function Header(props) {
       </ul>
       {/* <button onClick={() => testFunction()}>TEST</button> */}
       <button
-        className="w-20 bg-white hover:bg-gray-50 border-2 border-gray-900 text-sm text-gray-900 py-1 px-3 rounded-lg font-medium tracking-wide leading-none"
+        className="md:w-20 bg-gray-700 hover:text-white border-2 border-gray-900 text-xs md:text-sm text-gray-200 py-1 px-1 md:px-3 rounded-md md:rounded-lg font-medium leading-none"
         onClick={() => {
           props.setCurrentTab("");
           navigate("/login");

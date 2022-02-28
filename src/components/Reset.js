@@ -16,7 +16,7 @@ function Reset() {
   }, [user, loading]);
   return (
     <div className="flex items-center justify-center h-[95vh] w-full bg-gray-300">
-      <div className="flex flex-col text-center bg-gray-200 p-8">
+      <div className="flex flex-col text-center bg-gray-200 p-8 w-72 md:w-fit">
         <input
           type="text"
           className="p-2 text-lg mb-3"

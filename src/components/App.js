@@ -22,11 +22,14 @@ function App() {
   const [currentUserID, setCurrentUserID] = useState("");
   const [currentCampaignID, setCurrentCampaignID] = useState("");
   const [currentTab, setCurrentTab] = useState("");
+  const [sideBarHidden, setSideBarHidden] = useState("true");
 
   return (
     <div className="app">
       <Router>
         <Header
+          sideBarHidden={sideBarHidden}
+          setSideBarHidden={setSideBarHidden}
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           currentUserID={currentUserID}
@@ -39,13 +42,19 @@ function App() {
           <Route
             exact
             path="/campaign"
-            element={<Campaign setCurrentTab={setCurrentTab} />}
+            element={
+              <Campaign
+                sideBarHidden={sideBarHidden}
+                setCurrentTab={setCurrentTab}
+              />
+            }
           />
           <Route
             exact
             path="/journal/*"
             element={
               <Journal
+                sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
@@ -59,6 +68,7 @@ function App() {
             path="/journal/:user/:campaign"
             element={
               <Journal
+                sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
@@ -72,6 +82,7 @@ function App() {
             path="/stats/*"
             element={
               <Stats
+                sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
@@ -85,6 +96,7 @@ function App() {
             path="/stats/:user/:campaign"
             element={
               <Stats
+                sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
