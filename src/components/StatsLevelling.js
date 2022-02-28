@@ -73,7 +73,7 @@ function StatsIngameTime(props) {
     let levelsObject = {};
     array.forEach((entry) => {
       if (levelsObject[entry.partyLevel] === undefined) {
-        levelsObject[entry.partyLevel] = [];
+        levelsObject[entry.partyLevel] = [entry];
       } else {
         levelsObject[entry.partyLevel].push(entry);
       }
