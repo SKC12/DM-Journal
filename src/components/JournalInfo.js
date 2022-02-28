@@ -155,10 +155,10 @@ function JournalInfo(props) {
   };
 
   const buttons = (entry) => (
-    <div className="flex justify-center">
+    <div className="flex justify-center h-10 items-stretch">
       {entry === "new" ? (
         <button
-          className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+          className="px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
           onClick={(e) => createSession(e)}
         >
           Create Session
@@ -166,13 +166,13 @@ function JournalInfo(props) {
       ) : (
         <>
           <button
-            className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            className="mx-3 px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
             onClick={(e) => editSession(e)}
           >
             Edit Session
           </button>
           <button
-            className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            className="mx-3 px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
             onClick={(e) => deleteSession(e)}
           >
             Delete Session
@@ -282,7 +282,7 @@ function JournalInfo(props) {
             </div>
             {dateErrorMessage()}
 
-            <div className="flex-col items-center md:py-6 md:pr-6">
+            <div className="flex-col items-center pb-6 md:pt-6 md:pr-6">
               <label className={LABEL_STYLE} htmlFor="info-session-description">
                 Session description{" "}
               </label>

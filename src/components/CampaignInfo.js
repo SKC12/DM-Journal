@@ -8,7 +8,7 @@ import {
 } from "../helpers";
 import "../confirmCSS.css";
 
-const LABEL_STYLE = "w-52 block text-gray-700 font-bold pb-3";
+const LABEL_STYLE = "w-52 block text-gray-700 font-bold md:pb-3";
 const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
@@ -125,14 +125,14 @@ function CampaignInfo(props) {
     } else {
       return (
         <div>
-          <form className="pl-24 pt-12 max-w-4xl">
-            <div className="flex-col items-center pb-6">
+          <form className="md:pl-24 md:pt-12 md:max-w-4xl">
+            <div className="flex-col items-center md:pb-6">
               <label className={LABEL_STYLE} htmlFor="info-campaign-name">
                 Campaign name{" "}
               </label>
 
               <input
-                className={`${INPUT_STYLE} w-96 disabled:bg-gray-300 disabled:border-gray-300`}
+                className={`${INPUT_STYLE} md:w-96 disabled:bg-gray-300 disabled:border-gray-300`}
                 id="info-campaign-name"
                 value={name}
                 maxLength="50"
@@ -142,7 +142,7 @@ function CampaignInfo(props) {
               {errorMessage()}
             </div>
 
-            <div className="flex-col items-center pb-6 pr-6">
+            <div className="flex-col items-center md:pb-3 md:pr-6">
               <label
                 className={LABEL_STYLE}
                 htmlFor="info-campaign-description"
@@ -150,7 +150,7 @@ function CampaignInfo(props) {
                 Campaign description{" "}
               </label>
               <textarea
-                className={`${INPUT_STYLE} indent-6 w-full h-60 resize-none`}
+                className={`${INPUT_STYLE} my-3 indent-6 w-full h-60 resize-none`}
                 id="info-campaign-description"
                 maxLength="1500"
                 value={description}
@@ -174,7 +174,7 @@ function CampaignInfo(props) {
               />
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center h-10 items-stretch">
               {campaign === "new" ? (
                 <button
                   className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
@@ -185,16 +185,16 @@ function CampaignInfo(props) {
               ) : (
                 <>
                   <button
-                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    className="mx-2 px-2 w-20 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
                     onClick={(e) => editCampaign(e)}
                   >
-                    Edit Campaign
+                    Edit
                   </button>
                   <button
-                    className="mx-3 w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    className="mx-2 px-2 w-20 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
                     onClick={(e) => campaignDeleteAlert(e)}
                   >
-                    Delete Campaign
+                    Delete
                   </button>
                 </>
               )}

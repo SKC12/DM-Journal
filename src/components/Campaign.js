@@ -41,8 +41,12 @@ function Campaign(props) {
   });
 
   return (
-    <div className="box-border flex h-[95vh] w-[100%]">
-      <div className="p-3 w-[250px] bg-gray-700 text-gray-200 font-bold">
+    <div className="box-border flex md:h-[95vh] w-[100%]">
+      <div
+        className={`${
+          props.sideBarHidden ? "hidden" : "block"
+        } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50`}
+      >
         <h2 className="select-none pb-4">Campaigns:</h2>
         <ul className="font-normal">
           {populateCampaigns}
