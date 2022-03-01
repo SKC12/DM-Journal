@@ -106,9 +106,11 @@ export const useCampaignsState = (
       }
     }
     if (params.user && params.campaign) {
+      //console.log("LOADING BY PARAMS");
       loadCampaigns(params.user, navigate);
     } else {
       if (userID) {
+        //console.log("LOADING BY ID");
         loadCampaigns(userID, navigate);
       }
     }

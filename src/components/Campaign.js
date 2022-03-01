@@ -40,6 +40,21 @@ function Campaign(props) {
     );
   });
 
+  const sideBarContent = (
+    <div>
+      <h2 className="select-none pb-4">Campaigns:</h2>
+      <ul className="font-normal">
+        {populateCampaigns}
+        <li
+          className="text-blue-400 cursor-pointer pl-2"
+          onClick={() => setCurrentCampaign("new")}
+        >
+          + Create new campaign
+        </li>
+      </ul>
+    </div>
+  );
+
   return (
     <div className="box-border flex md:h-[95vh] w-[100%]">
       <div
@@ -47,16 +62,7 @@ function Campaign(props) {
           props.sideBarHidden ? "hidden" : "block"
         } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50`}
       >
-        <h2 className="select-none pb-4">Campaigns:</h2>
-        <ul className="font-normal">
-          {populateCampaigns}
-          <li
-            className="text-blue-400 cursor-pointer pl-2"
-            onClick={() => setCurrentCampaign("new")}
-          >
-            + Create new campaign
-          </li>
-        </ul>
+        {sideBarContent}
       </div>
       <CampaignInfo
         campaign={currentCampaign}
