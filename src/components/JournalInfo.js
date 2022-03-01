@@ -28,7 +28,7 @@ function JournalInfo(props) {
     props.session.description ? props.session.description : ""
   );
   const [color, setColor] = useState(
-    props.session.color ? props.session.color : "#b3b3b3"
+    props.session.color ? props.session.color : "#729fcf"
   );
   const [partyLevel, setPartyLevel] = useState(
     props.session.partyLevel ? props.session.partyLevel : 1
@@ -205,6 +205,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
+                  disabled={!isOwner()}
                   className={`${INPUT_STYLE} md:w-96 mr-8`}
                   id="info-session-name"
                   value={name}
@@ -219,6 +220,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
+                  disabled={!isOwner()}
                   type="color"
                   className={`${INPUT_STYLE} h-10`}
                   id="info-session-color"
@@ -237,6 +239,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
+                  disabled={!isOwner()}
                   type="date"
                   className={`${INPUT_STYLE}`}
                   id="info-session-date"
@@ -252,6 +255,7 @@ function JournalInfo(props) {
 
                 <span className="text-gray-700 font-bold">
                   <input
+                    disabled={!isOwner()}
                     type="number"
                     className={`${INPUT_STYLE} w-16 mr-2`}
                     id="info-session-time"
@@ -270,8 +274,9 @@ function JournalInfo(props) {
                 </label>
 
                 <input
+                  disabled={!isOwner()}
                   type="number"
-                  className={`${INPUT_STYLE} w-16`}
+                  className={`${INPUT_STYLE} w-16 $`}
                   id="info-session-level"
                   value={partyLevel}
                   min="0"
@@ -287,7 +292,8 @@ function JournalInfo(props) {
                 Session description{" "}
               </label>
               <textarea
-                className={`${INPUT_STYLE} w-full h-32 md:h-60 resize-none`}
+                disabled={!isOwner()}
+                className={`${INPUT_STYLE} w-full h-32 md:h-60 resize-none `}
                 id="info-session-description"
                 value={description}
                 maxLength="3000"
