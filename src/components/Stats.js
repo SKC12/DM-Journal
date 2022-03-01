@@ -1,27 +1,34 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import StatsInfo from "./StatsInfo";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  loadSessionsFromDatabase,
-  loadCampaignsFromDatabase,
-} from "../helpers.js";
+
 import CampaignSelector from "./CampaignSelector";
+import {
+  useCampaignsState,
+  useCurrentCampaignState,
+  useSessionState,
+} from "../customHooks";
 
 function Stats(props) {
-  const [user, loading, error] = useAuthState(auth);
-  const [campaigns, setCampaigns] = useState([]);
-  const [currentCampaign, setCurrentCampaign] = useState("");
-  const prevCampaign = usePrevious(currentCampaign);
-
-  const [sessions, setSessions] = useState([]);
-  const [stat, setStat] = useState("");
-  const navigate = useNavigate();
-  const params = useParams();
   const setCurrentTab = props.setCurrentTab;
   const setCurrentCampaignID = props.setCurrentCampaignID;
   const setCurrentUserID = props.setCurrentUserID;
+  const [user] = useAuthState(auth);
+  const [campaigns] = useCampaignsState(
+    user ? user.uid : "",
+    setCurrentUserID,
+    setCurrentCampaignID
+  );
+  const [currentCampaign, setCurrentCampaign] =
+    useCurrentCampaignState(campaigns);
+  const prevCampaign = usePrevious(currentCampaign);
+
+  const [sessions] = useSessionState(user, currentCampaign, prevCampaign);
+  const [stat, setStat] = useState("");
+  const navigate = useNavigate();
+  const params = useParams();
 
   function usePrevious(value) {
     const ref = useRef();
@@ -34,102 +41,6 @@ function Stats(props) {
   useEffect(() => {
     setCurrentTab("Stats");
   }, [setCurrentTab]);
-
-  //Load sessions on campaign change
-  useEffect(() => {
-    async function setSessionsState(userID, campaign) {
-      let sessions = await loadSessionsFromDatabase(
-        userID,
-        campaign.name,
-        navigate
-      );
-      setSessions(sessions);
-    }
-    if (
-      prevCampaign !== undefined &&
-      prevCampaign.name !== currentCampaign.name
-    ) {
-      if (user) {
-        if (params.user && user.uid === params.user) {
-          setSessionsState(user.uid, currentCampaign);
-        }
-      }
-    }
-  }, [currentCampaign, user, prevCampaign, params.user, navigate]);
-
-  function setInitialCampaign(campaignArray, userID, campaignName) {
-    if (userID && campaignName) {
-      let camp = campaignArray.find(
-        (campaign) => campaign.name === campaignName
-      );
-      camp ? setCurrentCampaign(camp) : setCurrentCampaign("");
-    }
-  }
-
-  const setCurrentIDsFromParameters = useCallback(
-    (currentUser, paramsUser, paramsCampaign) => {
-      if (paramsUser === undefined) {
-        setCurrentUserID(currentUser.uid);
-      } else if (paramsUser) {
-        setCurrentUserID(paramsUser);
-      }
-      if (paramsCampaign) {
-        setCurrentCampaignID(paramsCampaign);
-      }
-    },
-    [setCurrentCampaignID, setCurrentUserID]
-  );
-
-  useEffect(() => {
-    //Sets up state for logged users
-    async function setCampaignsState(userID) {
-      setCurrentIDsFromParameters(user, params.user, params.campaign);
-
-      let camps = await loadCampaignsFromDatabase(userID, navigate);
-      setCampaigns(camps);
-      setInitialCampaign(camps, params.user, params.campaign);
-    }
-
-    //Loads session list from parameters, sets up state and "global" IDs for non-users.
-    async function anonymousLoading(userID, campaign) {
-      //console.log("ANONYMOUS");
-      let campArray = await loadCampaignsFromDatabase(userID);
-      setCampaigns(campArray);
-      let selectedCamp = campArray.find((camp) => camp.name === campaign);
-      selectedCamp ? setCurrentCampaign(selectedCamp) : setCurrentCampaign("");
-      let sessions = await loadSessionsFromDatabase(userID, campaign, navigate);
-      setSessions(sessions);
-      setCurrentUserID(params.user);
-      setCurrentCampaignID(params.campaign);
-    }
-
-    if (error) return;
-    if (loading) return;
-    if (!user)
-      if (params.user && params.campaign) {
-        anonymousLoading(params.user, params.campaign);
-      }
-    if (user) {
-      if (params.user && params.campaign && user.uid !== params.user) {
-        anonymousLoading(params.user, params.campaign);
-      } else {
-        if (params.user === undefined) {
-          setCurrentUserID(user.uid);
-        }
-        setCampaignsState(user.uid);
-      }
-    }
-  }, [
-    user,
-    loading,
-    error,
-    params.campaign,
-    params.user,
-    setCurrentUserID,
-    setCurrentCampaignID,
-    setCurrentIDsFromParameters,
-    navigate,
-  ]);
 
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {

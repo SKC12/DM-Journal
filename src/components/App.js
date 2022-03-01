@@ -23,6 +23,8 @@ function App() {
   const [currentCampaignID, setCurrentCampaignID] = useState("");
   const [currentTab, setCurrentTab] = useState("");
   const [sideBarHidden, setSideBarHidden] = useState("true");
+  const [currentCampaign, setCurrentCampaign] = useState("");
+  const [campaigns, setCampaigns] = useState([]);
 
   return (
     <div className="app">
@@ -60,6 +62,10 @@ function App() {
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
+                campaigns={campaigns}
+                setCampaigns={setCampaigns}
+                currentCampaign={currentCampaign}
+                setCurrentCampaign={setCurrentCampaign}
               />
             }
           />
@@ -74,6 +80,10 @@ function App() {
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
+                campaigns={campaigns}
+                setCampaigns={setCampaigns}
+                currentCampaign={currentCampaign}
+                setCurrentCampaign={setCurrentCampaign}
               />
             }
           />
@@ -88,6 +98,10 @@ function App() {
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
+                campaigns={campaigns}
+                setCampaigns={setCampaigns}
+                currentCampaign={currentCampaign}
+                setCurrentCampaign={setCurrentCampaign}
               />
             }
           />
@@ -102,6 +116,10 @@ function App() {
                 currentCampaignID={currentCampaignID}
                 setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
+                campaigns={campaigns}
+                setCampaigns={setCampaigns}
+                currentCampaign={currentCampaign}
+                setCurrentCampaign={setCurrentCampaign}
               />
             }
           />
