@@ -74,7 +74,6 @@ function Journal(props) {
   }
 
   function isOwner() {
-    //console.log(user.uid, props.currentUserID);
     if (!user) {
       return false;
     } else if (user.uid === props.currentUserID) {
@@ -108,9 +107,8 @@ function Journal(props) {
           <div
             className="py-4 italic text-lg cursor-pointer"
             onClick={() => {
-              props.setCurrentCampaignID("");
-              props.setCurrentUserID("");
-              navigate("/journal");
+              navigate(`/journal/${user.uid}`);
+              window.location.reload();
             }}
           >
             Return

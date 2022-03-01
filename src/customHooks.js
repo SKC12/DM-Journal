@@ -14,7 +14,6 @@ export const useSessionState = (user, currentCampaign, prevCampaign) => {
   const loadSessions = useCallback(
     async (userID, campaign) => {
       if (campaign) {
-        //console.log("LOADING SESSIONS");
         setLoadingSessions(true);
         let sessions = await loadSessionsFromDatabase(
           userID,
@@ -30,22 +29,19 @@ export const useSessionState = (user, currentCampaign, prevCampaign) => {
 
   //Changes session list on campaign change
   useEffect(() => {
-    //console.log("CAMPAIGN CHANGE", prevCampaign, currentCampaign);
+    let sessionUser = "";
+    !user || user.uid !== params.user
+      ? (sessionUser = params.user)
+      : (sessionUser = user.uid);
+
     if (prevCampaign === undefined) {
-      loadSessions(params.user, currentCampaign);
+      loadSessions(sessionUser, currentCampaign);
     }
     if (
       prevCampaign !== undefined &&
       prevCampaign.name !== currentCampaign.name
     ) {
-      //console.log("STEP 1");
-      if (user) {
-        //console.log("STEP 2");
-
-        if (params.user && user.uid === params.user) {
-          loadSessions(user.uid, currentCampaign);
-        }
-      }
+      loadSessions(sessionUser, currentCampaign);
     }
   }, [currentCampaign, user, prevCampaign, params.user, loadSessions]);
 
@@ -84,9 +80,9 @@ export const useCampaignsState = (
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
 
+  //Sets IDs in the main App state
   const setCurrentIDsFromParameters = useCallback(
     (currentUserID, paramsUser, paramsCampaign) => {
-      //console.log("USER:", currentUser);
       if (paramsUser === undefined && currentUserID) {
         setCurrentUserID(currentUserID);
       } else if (paramsUser) {
@@ -101,33 +97,29 @@ export const useCampaignsState = (
 
   //Loads campaign list based on params or user.
   useEffect(() => {
+    //console.log("LOADING", hasLoaded, userID, params.user);
     async function loadCampaigns(userID, navigate) {
       if (!hasLoaded) {
-        //console.log("HERE", hasLoaded, userID);
         let campArray = await loadCampaignsFromDatabase(userID, navigate);
         setCampaigns(campArray);
         setHasLoaded(true);
       }
     }
-
     if (params.user && params.campaign) {
       loadCampaigns(params.user, navigate);
     } else {
       if (userID) {
-        console.log("2");
-
         loadCampaigns(userID, navigate);
       }
     }
-    //}
     setCurrentIDsFromParameters(userID, params.user, params.campaign);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     params.user,
     params.campaign,
     navigate,
     hasLoaded,
     setCurrentIDsFromParameters,
+    userID,
   ]);
 
   return [campaigns, setCampaigns];
