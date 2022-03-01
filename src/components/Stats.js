@@ -3,13 +3,12 @@ import { auth } from "../firebase";
 import React, { useEffect, useState, useRef } from "react";
 import StatsInfo from "./StatsInfo";
 import { useParams, useNavigate } from "react-router-dom";
-
-import CampaignSelector from "./CampaignSelector";
 import {
   useCampaignsState,
   useCurrentCampaignState,
   useSessionState,
 } from "../customHooks";
+import Sidebar from "./Sidebar";
 
 function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
@@ -61,15 +60,6 @@ function Stats(props) {
     }
   }
 
-  function isOwner() {
-    if (!user) {
-      return false;
-    } else if (user.uid === props.currentUserID) {
-      return true;
-    }
-    return false;
-  }
-
   const renderStats = (
     <div>
       <ul className="pl-4 font-normal">
@@ -79,7 +69,7 @@ function Stats(props) {
           }`}
           onClick={() => setStat("time")}
         >
-          Time
+          Sessions
         </li>
         <li
           className={`pb-2 cursor-pointer ${
@@ -101,40 +91,29 @@ function Stats(props) {
     </div>
   );
 
+  const sideBarContent = (
+    <div>
+      <h2 className="select-none pb-4">Stats:</h2>
+      {currentCampaign !== "" ? (
+        isPrivate(currentCampaign) ? (
+          <ul className="text-gray-200 text-center">PRIVATE CAMPAIGN</ul>
+        ) : (
+          renderStats
+        )
+      ) : null}
+    </div>
+  );
+
   return (
     <div className="box-border flex md:h-[95vh] w-[100%]">
-      <div
-        className={`${
-          props.sideBarHidden ? "hidden" : "block"
-        } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50`}
-      >
-        {isOwner() ? (
-          <CampaignSelector
-            campaigns={campaigns}
-            currentCampaign={currentCampaign}
-            handleSelectChange={handleSelectChange}
-          />
-        ) : user ? (
-          <div
-            className="py-4 italic text-lg cursor-pointer"
-            onClick={() => {
-              props.setCurrentCampaignID("");
-              props.setCurrentUserID("");
-              navigate("/stats");
-            }}
-          >
-            Return
-          </div>
-        ) : null}
-        <h2 className="select-none pb-4">Stats:</h2>
-        {currentCampaign !== "" ? (
-          isPrivate(currentCampaign) ? (
-            <ul className="text-gray-200 text-center">PRIVATE CAMPAIGN</ul>
-          ) : (
-            renderStats
-          )
-        ) : null}
-      </div>
+      <Sidebar
+        campaigns={campaigns}
+        currentCampaign={currentCampaign}
+        handleSelectChange={handleSelectChange}
+        content={sideBarContent}
+        user={user}
+        currentUserID={props.currentUserID}
+      />
       <StatsInfo
         campaign={currentCampaign}
         sessions={sessions}

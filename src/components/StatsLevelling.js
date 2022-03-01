@@ -186,7 +186,7 @@ function StatsIngameTime(props) {
 
       <div className="mb-4 overflow-auto"></div>
       <div>
-        <h2 className={`${CAT_STYLE} pb-4`}>Time to level</h2>
+        <h2 className={`${CAT_STYLE} pb-4`}>Time to level:</h2>
         <div className="bg-gray-200 h-40 pl-4 mb-4 flex flex-col flex-wrap gap-2 overflow-x-auto">
           {individualLevelElements}
         </div>

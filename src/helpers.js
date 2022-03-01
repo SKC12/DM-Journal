@@ -156,6 +156,15 @@ function containsInvalidCharacters(string) {
   return string.includes("/");
 }
 
+function isOwner(user, currentUserID) {
+  if (!user) {
+    return false;
+  } else if (user.uid === currentUserID) {
+    return true;
+  }
+  return false;
+}
+
 export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
@@ -167,4 +176,5 @@ export {
   deleteSessionFromFirebase,
   deleteCampaignFromFirebase,
   containsInvalidCharacters,
+  isOwner,
 };

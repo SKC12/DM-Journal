@@ -17,7 +17,7 @@ function StatsTime(props) {
 
   return (
     <div className="md:pl-24 md:pt-12 md:pr-12 flex-col">
-      <h2 className={CAT_STYLE}>Sessions:</h2>
+      <h2 className={`${CAT_STYLE} pb-4`}>Sessions:</h2>
       <div className="mb-4 overflow-auto">
         <HeatMap
           className="h-[140px] bg-gray-200"
