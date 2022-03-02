@@ -1,6 +1,11 @@
 import HeatMap from "@uiw/react-heat-map";
 import Tooltip from "@uiw/react-tooltip";
-import { differenceInDays, intervalToDuration, format } from "date-fns";
+import {
+  differenceInDays,
+  intervalToDuration,
+  formatDuration,
+  format,
+} from "date-fns";
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsTime(props) {
@@ -24,17 +29,7 @@ function StatsTime(props) {
       end: lDate,
     });
 
-    let years = interval.years;
-    let months = interval.months;
-    let days = interval.days;
-
-    let yearsString =
-      years > 0 ? years + (years === 1 ? " year, " : " years, ") : "";
-    let monthsString =
-      months > 0 ? months + (months === 1 ? " month, " : " months, ") : "";
-    let daysString = days + (days === 1 ? " day" : " days");
-
-    return yearsString + monthsString + daysString;
+    return formatDuration(interval, { delimiter: ", " });
   }
 
   return (
