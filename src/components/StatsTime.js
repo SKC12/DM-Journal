@@ -18,6 +18,20 @@ function StatsTime(props) {
   const eDate = new Date(heatMapData[heatMapData.length - 1].date);
   const campaignLength = differenceInDays(eDate, sDate);
 
+  function getFormatedStringFromDays(daysCount) {
+    let years = Math.floor(daysCount / 365);
+    let months = Math.floor((daysCount % 365) / 30);
+    let days = Math.floor((daysCount % 365) % 30);
+
+    let yearsString =
+      years > 0 ? years + (years === 1 ? " year, " : " years, ") : "";
+    let monthsString =
+      months > 0 ? months + (months === 1 ? " month, " : " months, ") : "";
+    let daysString = days + (days === 1 ? " day" : " days");
+
+    return yearsString + monthsString + daysString;
+  }
+
   return (
     <div className="md:pl-24 md:pt-12 md:pr-12 flex-col">
       <h2 className={`${CAT_STYLE} pb-4`}>Sessions:</h2>
@@ -65,7 +79,10 @@ function StatsTime(props) {
         </div>
         <div className="flex pb-4">
           <h2 className={CAT_STYLE}>Campaign Duration:</h2>
-          <p className="shrink-0">{campaignLength} days</p>
+          <p className="shrink-0">
+            {campaignLength} days (aprox.
+            {" " + getFormatedStringFromDays(campaignLength)})
+          </p>
         </div>
         <div className="flex pb-4 items-center">
           <h2 className={CAT_STYLE}>Average time between sessions:</h2>
