@@ -24,6 +24,7 @@ function StatsIngameTime(props) {
         accTime: accTime,
         color: array[i].color,
         name: array[i].name,
+        sessionNumber: i + 1,
       };
       newData.push(data);
       latestData = data;
@@ -35,6 +36,7 @@ function StatsIngameTime(props) {
         accTime: accTime,
         color: latestData.color,
         name: "Current time",
+        sessionNumber: "",
       });
     }
     return newData;
@@ -129,7 +131,13 @@ function StatsIngameTime(props) {
     if (active && payload && payload.length) {
       return (
         <div className="bg-gray-100 px-4 py-2 border-gray-500 rounded-lg border">
-          <p>{`${payload[0].payload.name} - Day ${label}`} </p>
+          <p>
+            {`${
+              payload[0].payload.sessionNumber
+                ? "#" + payload[0].payload.sessionNumber + ":"
+                : ""
+            } ${payload[0].payload.name} - Day ${label}`}{" "}
+          </p>
         </div>
       );
     }

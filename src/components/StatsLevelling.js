@@ -10,10 +10,19 @@ import {
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsIngameTime(props) {
+  const sessionsData = props.sessions.map((entry, index) => {
+    let sessionNumber = index + 1;
+    return {
+      name: entry.name,
+      color: entry.color,
+      partyLevel: entry.partyLevel,
+      sessionNumber: sessionNumber,
+    };
+  });
   //Creates the gradient for the Line element, based on session color.
   function createGradient() {
-    let colorsArray = getColors(props.sessions);
-    let percents = getPercents(colorsArray, props.sessions);
+    let colorsArray = getColors(sessionsData);
+    let percents = getPercents(colorsArray, sessionsData);
     return percents.map((entry, index) => {
       return (
         <stop key={index} offset={entry.percent} stopColor={entry.color}></stop>
@@ -65,7 +74,7 @@ function StatsIngameTime(props) {
 
   //Returns an Object where each key is a level with value equal to an array of session
   function getIndividualLevels() {
-    let levelsDictionary = splitLevels(props.sessions);
+    let levelsDictionary = splitLevels(sessionsData);
     return levelsDictionary;
   }
 
@@ -96,8 +105,8 @@ function StatsIngameTime(props) {
     }
   );
 
-  const numberOfSessions = props.sessions.length;
-  const maxLvl = props.sessions[props.sessions.length - 1].partyLevel;
+  const numberOfSessions = sessionsData.length;
+  const maxLvl = sessionsData[sessionsData.length - 1].partyLevel;
   const avgTTL = numberOfSessions / maxLvl;
 
   //Custom tootip for the chart
@@ -105,7 +114,9 @@ function StatsIngameTime(props) {
     if (active && payload && payload.length) {
       return (
         <div className="bg-gray-100 px-4 py-2 border-gray-500 rounded-lg border">
-          <p>{`${label} - Level ${payload[0].payload.partyLevel}`} </p>
+          <p>
+            {`#${payload[0].payload.sessionNumber}: ${label} - Level ${payload[0].payload.partyLevel}`}{" "}
+          </p>
         </div>
       );
     }
@@ -123,7 +134,7 @@ function StatsIngameTime(props) {
         }}
         width={numberOfSessions * 30 + 200}
         height={500}
-        data={props.sessions}
+        data={sessionsData}
       >
         <defs>
           <linearGradient id="levels" x1={0} y1={0} x2={1} y2={0}>
