@@ -14,6 +14,7 @@ function StatsIngameTime(props) {
   function createGradient() {
     let colorsArray = getColors(props.sessions);
     let percents = getPercents(colorsArray, props.sessions);
+    console.log(percents);
     return percents.map((entry, index) => {
       return (
         <stop key={index} offset={entry.percent} stopColor={entry.color}></stop>
@@ -35,7 +36,7 @@ function StatsIngameTime(props) {
         color: colors[i],
       });
       if (endIndex > 0) {
-        let endPencent = endIndex / array.length;
+        let endPencent = endIndex / (array.length - 1);
         arr.push({
           index: endIndex,
           percent: endPencent,

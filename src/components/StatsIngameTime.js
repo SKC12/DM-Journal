@@ -229,7 +229,7 @@ function StatsIngameTime(props) {
           <p className="shrink-0">{avgTPS.toFixed(1)} days</p>
         </div>
         <div className="flex pb-4 items-center">
-          <h2 className={CAT_STYLE}>Max time passed in session:</h2>
+          <h2 className={CAT_STYLE}>Max time passed in a session:</h2>
           <p className="flex 1">
             {maxSession.ingameTime} days in "{maxSession.name}"
           </p>
