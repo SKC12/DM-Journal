@@ -4,10 +4,13 @@ import { differenceInDays, format } from "date-fns";
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsTime(props) {
-  const heatMapData = props.sessions.map((entry) => {
+  const heatMapData = props.sessions.map((entry, index) => {
+    let sessionNumber = index + 1;
     return {
       date: entry.date.replaceAll("-", "/"),
       count: 1,
+      name: entry.name,
+      sessionNumber: sessionNumber,
     };
   });
   const numberOfSessions = props.sessions.length;
@@ -37,7 +40,9 @@ function StatsTime(props) {
               <Tooltip
                 key={props.key}
                 placement="top"
-                content={`${format(new Date(data.date), "MMMM dd, yyyy")}`}
+                content={`${format(new Date(data.date), "MMMM dd, yyyy")} - #${
+                  data.sessionNumber
+                } ${data.name} `}
               >
                 <rect {...props} />
               </Tooltip>
