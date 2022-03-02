@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+
 import {
   searchFirebaseForSessionName,
   writeSessionToFirebase,
@@ -140,6 +142,43 @@ function JournalInfo(props) {
     }
   }
 
+  //Alert for deletion confirmation
+  const sessionDeleteAlert = (e) => {
+    e.preventDefault();
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui h-[150px] w-[350px] bg-gray-200 flex flex-col items-center">
+            <div className="h-[100px] grow flex flex-col text-center justify-around items-center">
+              <p className="">Are you sure you want to delete this session?</p>
+              <p className="">The process is irreversible.</p>
+            </div>
+
+            <div className="h-[40px] w-full flex justify-evenly">
+              <button
+                onClick={() => {
+                  deleteSession(e);
+                  onClose();
+                }}
+                className="flex-1 bg-red-800"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={() => {
+                  onClose();
+                }}
+                className="flex-1 bg-gray-500"
+              >
+                Return
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
+  };
+
   let titleErrorMessage = () => {
     return errorMsg ? (
       <p className="text-red-500 text-sm pt-1 pl-1">
@@ -173,7 +212,7 @@ function JournalInfo(props) {
           </button>
           <button
             className="mx-3 px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
-            onClick={(e) => deleteSession(e)}
+            onClick={(e) => sessionDeleteAlert(e)}
           >
             Delete Session
           </button>
