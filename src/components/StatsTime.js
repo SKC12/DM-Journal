@@ -1,6 +1,6 @@
 import HeatMap from "@uiw/react-heat-map";
 import Tooltip from "@uiw/react-tooltip";
-import { differenceInDays, format } from "date-fns";
+import { differenceInDays, intervalToDuration, format } from "date-fns";
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsTime(props) {
@@ -18,10 +18,15 @@ function StatsTime(props) {
   const eDate = new Date(heatMapData[heatMapData.length - 1].date);
   const campaignLength = differenceInDays(eDate, sDate);
 
-  function getFormatedStringFromDays(daysCount) {
-    let years = Math.floor(daysCount / 365);
-    let months = Math.floor((daysCount % 365) / 30);
-    let days = Math.floor((daysCount % 365) % 30);
+  function getFormatedDiff(fDate, lDate) {
+    let interval = intervalToDuration({
+      start: fDate,
+      end: lDate,
+    });
+
+    let years = interval.years;
+    let months = interval.months;
+    let days = interval.days;
 
     let yearsString =
       years > 0 ? years + (years === 1 ? " year, " : " years, ") : "";
@@ -80,8 +85,7 @@ function StatsTime(props) {
         <div className="flex pb-4">
           <h2 className={CAT_STYLE}>Campaign Duration:</h2>
           <p className="">
-            {campaignLength} days (aprox.
-            {" " + getFormatedStringFromDays(campaignLength)})
+            {campaignLength} days ({getFormatedDiff(sDate, eDate)})
           </p>
         </div>
         <div className="flex pb-4 items-center">
