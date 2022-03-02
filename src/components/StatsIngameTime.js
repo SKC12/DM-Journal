@@ -17,13 +17,24 @@ function StatsIngameTime(props) {
   function prepData(array) {
     let accTime = 0;
     let newData = [];
+    let latestData = {};
     for (let i = 0; i < array.length; i++) {
-      accTime += parseInt(array[i].ingameTime);
-      newData.push({
+      let data = {
         partyLevel: parseInt(array[i].partyLevel),
         accTime: accTime,
         color: array[i].color,
         name: array[i].name,
+      };
+      newData.push(data);
+      latestData = data;
+      accTime += parseInt(array[i].ingameTime);
+    }
+    if (newData) {
+      newData.push({
+        partyLevel: latestData.partyLevel,
+        accTime: accTime,
+        color: latestData.color,
+        name: "Current time",
       });
     }
     return newData;

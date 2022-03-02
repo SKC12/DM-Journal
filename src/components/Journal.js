@@ -63,6 +63,7 @@ function Journal(props) {
     return sessionJournalCards;
   }
 
+  //Select change for sidebar campaign selector
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
       return camp.name === e.target.value;
