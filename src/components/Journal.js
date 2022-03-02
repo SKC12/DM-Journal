@@ -116,6 +116,7 @@ function Journal(props) {
         content={sideBarContent}
         user={user}
         currentUserID={props.currentUserID}
+        sideBarHidden={props.sideBarHidden}
       />
       <JournalInfo
         campaign={currentCampaign}

@@ -79,7 +79,7 @@ function StatsTime(props) {
         </div>
         <div className="flex pb-4">
           <h2 className={CAT_STYLE}>Campaign Duration:</h2>
-          <p className="shrink-0">
+          <p className="">
             {campaignLength} days (aprox.
             {" " + getFormatedStringFromDays(campaignLength)})
           </p>

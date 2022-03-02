@@ -113,6 +113,7 @@ function Stats(props) {
         content={sideBarContent}
         user={user}
         currentUserID={props.currentUserID}
+        sideBarHidden={props.sideBarHidden}
       />
       <StatsInfo
         campaign={currentCampaign}
