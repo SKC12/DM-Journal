@@ -17,7 +17,6 @@ const INPUT_STYLE =
   "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
 function JournalInfo(props) {
-  //console.log(props);
   const [name, setName] = useState(
     props.session.name ? props.session.name : ""
   );
@@ -31,10 +30,18 @@ function JournalInfo(props) {
     props.session.description ? props.session.description : ""
   );
   const [color, setColor] = useState(
-    props.session.color ? props.session.color : "#729fcf"
+    props.session.color
+      ? props.session.color
+      : props.sessions.length > 0
+      ? props.sessions[props.sessions.length - 1].color
+      : "#729fcf"
   );
   const [partyLevel, setPartyLevel] = useState(
-    props.session.partyLevel ? props.session.partyLevel : 1
+    props.session.partyLevel
+      ? props.session.partyLevel
+      : props.sessions.length > 0
+      ? props.sessions[props.sessions.length - 1].partyLevel
+      : 1
   );
   const [errorMsg, setErrorMsg] = useState(false);
   const [dateErrorMsg, setDateErrorMsg] = useState(false);
