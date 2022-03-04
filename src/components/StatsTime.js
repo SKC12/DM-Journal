@@ -5,6 +5,7 @@ import {
   intervalToDuration,
   formatDuration,
   format,
+  getDay,
 } from "date-fns";
 import "animate.css";
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
@@ -23,7 +24,9 @@ function StatsTime(props) {
   const sDate = new Date(heatMapData[0].date);
   const eDate = new Date(heatMapData[heatMapData.length - 1].date);
   const campaignLength = differenceInDays(eDate, sDate);
+  const sessionByWeekday = getDataSeparatedByWeekday(heatMapData);
 
+  //Returns an english string of a Date Interval
   function getFormatedDiff(fDate, lDate) {
     let interval = intervalToDuration({
       start: fDate,
@@ -32,6 +35,51 @@ function StatsTime(props) {
 
     return formatDuration(interval, { delimiter: ", " });
   }
+
+  function weekdayToString(weekday) {
+    switch (weekday) {
+      case 0:
+        return "Sunday";
+      case 1:
+        return "Monday";
+      case 2:
+        return "Tuesday";
+      case 3:
+        return "Wednesday";
+      case 4:
+        return "Thursday";
+      case 5:
+        return "Friday";
+      case 6:
+        return "Saturday";
+      default:
+        return "ERROR";
+    }
+  }
+
+  //Returns a dictionary where each key is weekday with value = number of session on that day.
+  function getDataSeparatedByWeekday(data) {
+    let dataObj = {};
+    for (let i = 0; i < data.length; i++) {
+      let weekday = weekdayToString(getDay(new Date(data[i].date)));
+      dataObj[weekday] = dataObj[weekday] + 1 || 1;
+    }
+    return dataObj;
+  }
+
+  //Generates the individual weekday elements
+  const weekdayElements = Object.keys(sessionByWeekday)
+    .sort((a, b) => {
+      return sessionByWeekday[b] - sessionByWeekday[a];
+    })
+    .map((entry, index) => {
+      return (
+        <div className="flex w-48 grow" key={index}>
+          <h2 className="pb-1 pr-2 block text-gray-700 font-bold">{entry}:</h2>
+          <p>{sessionByWeekday[entry]} sessions</p>
+        </div>
+      );
+    });
 
   return (
     <div className="animate__animated animate__fadeIn md:pl-24 md:pt-12 md:pr-12 flex-col">
@@ -69,6 +117,10 @@ function StatsTime(props) {
         <div className="flex pb-4">
           <h2 className={CAT_STYLE}>Number of sessions:</h2>
           <p className="shrink-0">{numberOfSessions}</p>
+        </div>
+        <div className="pb-4">
+          <h2 className={`${CAT_STYLE} pb-4`}>Session days:</h2>
+          <div className="pl-4 ">{weekdayElements}</div>
         </div>
         <div className="flex pb-4">
           <h2 className={CAT_STYLE}>First Session:</h2>
