@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 // import { db } from "../firebase";
 
 const NAV_ITEM_STYLE =
-  "md:text-xl  w-fit p-2 md:w-32   text-gray-500  hover:text-gray-900 cursor-pointer font-bold md:tracking-wide flex items-center justify-center";
+  "md:text-xl  w-fit p-2 md:w-32   text-gray-500  cursor-pointer font-bold md:tracking-wide flex items-center justify-center";
 
 function Header(props) {
   const [user] = useAuthState(auth);
@@ -61,16 +61,16 @@ function Header(props) {
       </div>
       <ul className="flex flex-row self-center h-[7vh] md:h-[5vh]">
         <li
-          className={`${NAV_ITEM_STYLE}  ${
-            currentTab === "Journal" ? "bg-gray-300" : ""
+          className={`header_nav-item ${NAV_ITEM_STYLE} ${
+            currentTab === "Journal" ? "header_selected bg-gray-300 " : ""
           }`}
           onClick={() => navigate(`/journal${idParameters}`)}
         >
           Journal
         </li>
         <li
-          className={`${NAV_ITEM_STYLE}  ${
-            currentTab === "Stats" ? "bg-gray-300" : ""
+          className={`header_nav-item ${NAV_ITEM_STYLE}  ${
+            currentTab === "Stats" ? "header_selected bg-gray-300" : ""
           }`}
           onClick={() => navigate(`/stats${idParameters}`)}
         >
@@ -78,8 +78,8 @@ function Header(props) {
         </li>
         {user ? (
           <li
-            className={`${NAV_ITEM_STYLE}  ${
-              currentTab === "Campaign" ? "bg-gray-300" : ""
+            className={`header_nav-item ${NAV_ITEM_STYLE}  ${
+              currentTab === "Campaign" ? "header_selected bg-gray-300" : ""
             }`}
             onClick={() => navigate(`/campaign`)}
           >
