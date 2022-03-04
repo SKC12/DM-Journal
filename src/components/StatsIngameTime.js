@@ -7,6 +7,7 @@ import {
   Tooltip,
   Label,
 } from "recharts";
+import "animate.css";
 
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
@@ -222,7 +223,7 @@ function StatsIngameTime(props) {
   );
 
   return (
-    <div className="md:pl-24 md:pt-12 md:pr-12 flex-col">
+    <div className="animate__animated animate__fadeIn md:pl-24 md:pt-12 md:pr-12 flex-col">
       <h2 className={`${CAT_STYLE} pb-4`}>Time passed:</h2>
       {lineChart}
 

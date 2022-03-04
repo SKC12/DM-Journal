@@ -7,6 +7,7 @@ import {
   containsInvalidCharacters,
 } from "../helpers";
 import "../confirmCSS.css";
+import "animate.css";
 
 const LABEL_STYLE = "w-52 block text-gray-700 font-bold md:pb-3";
 const INPUT_STYLE =
@@ -121,10 +122,10 @@ function CampaignInfo(props) {
 
   function populate(campaign) {
     if (campaign === "") {
-      return;
+      return null;
     } else {
       return (
-        <div>
+        <div className="animate__animated animate__fadeIn">
           <form className="md:pl-24 md:pt-12 md:max-w-4xl">
             <div className="flex-col items-center md:pb-6">
               <label className={LABEL_STYLE} htmlFor="info-campaign-name">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
+import "animate.css";
 
 import {
   searchFirebaseForSessionName,
@@ -232,10 +233,10 @@ function JournalInfo(props) {
 
   function populate(entry) {
     if (entry === "" || props.campaign === "") {
-      return;
+      return null;
     } else {
       return (
-        <div>
+        <div className="animate__animated animate__fadeIn">
           <form className="md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="md:flex ">
               <div className="flex-col items-center">
