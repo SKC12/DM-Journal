@@ -3,21 +3,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-// import annalData from "../entries.json";
-
-// import { nanoid } from "nanoid";
-
-// import {
-//   collection,
-//   doc,
-//   setDoc,
-//   query,
-//   where,
-//   getDocs,
-//   deleteDoc,
-// } from "firebase/firestore";
-// import { db } from "../firebase";
-
 const NAV_ITEM_STYLE =
   "md:text-xl  w-fit p-2 md:w-32   text-gray-500  cursor-pointer font-bold md:tracking-wide flex items-center justify-center";
 
@@ -61,16 +46,16 @@ function Header(props) {
       </div>
       <ul className="flex flex-row self-center h-[7vh] md:h-[5vh]">
         <li
-          className={`header_nav-item ${NAV_ITEM_STYLE} ${
-            currentTab === "Journal" ? "header_selected bg-gray-300 " : ""
+          className={`header__nav-item ${NAV_ITEM_STYLE} ${
+            currentTab === "Journal" ? "header__selected bg-gray-300 " : ""
           }`}
           onClick={() => navigate(`/journal${idParameters}`)}
         >
           Journal
         </li>
         <li
-          className={`header_nav-item ${NAV_ITEM_STYLE}  ${
-            currentTab === "Stats" ? "header_selected bg-gray-300" : ""
+          className={`header__nav-item ${NAV_ITEM_STYLE}  ${
+            currentTab === "Stats" ? "header__selected bg-gray-300" : ""
           }`}
           onClick={() => navigate(`/stats${idParameters}`)}
         >
@@ -78,8 +63,8 @@ function Header(props) {
         </li>
         {user ? (
           <li
-            className={`header_nav-item ${NAV_ITEM_STYLE}  ${
-              currentTab === "Campaign" ? "header_selected bg-gray-300" : ""
+            className={`header__nav-item ${NAV_ITEM_STYLE}  ${
+              currentTab === "Campaign" ? "header__selected bg-gray-300" : ""
             }`}
             onClick={() => navigate(`/campaign`)}
           >
