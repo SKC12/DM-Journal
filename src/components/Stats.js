@@ -64,7 +64,7 @@ function Stats(props) {
     <div>
       <ul className="pl-4 font-normal">
         <li
-          className={`pb-2 cursor-pointer ${
+          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
             stat === "time" ? "text-gray-400" : ""
           }`}
           onClick={() => setStat("time")}
@@ -72,7 +72,7 @@ function Stats(props) {
           Sessions
         </li>
         <li
-          className={`pb-2 cursor-pointer ${
+          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
             stat === "leveling" ? "text-gray-400" : ""
           }`}
           onClick={() => setStat("leveling")}
@@ -80,7 +80,7 @@ function Stats(props) {
           Levels
         </li>
         <li
-          className={`pb-2 cursor-pointer ${
+          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
             stat === "ingameTime" ? "text-gray-400" : ""
           }`}
           onClick={() => setStat("ingameTime")}
