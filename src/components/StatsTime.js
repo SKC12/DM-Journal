@@ -11,15 +11,19 @@ import "animate.css";
 const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsTime(props) {
+  const colorValuePairs = getColorValuePairs(props.sessions);
+
   const heatMapData = props.sessions.map((entry, index) => {
     let sessionNumber = index + 1;
+    let ColorValueObj = colorValuePairs.find((o) => o.color === entry.color);
     return {
       date: entry.date.replaceAll("-", "/"),
-      count: 1,
+      count: ColorValueObj.value,
       name: entry.name,
       sessionNumber: sessionNumber,
     };
   });
+
   const numberOfSessions = props.sessions.length;
   const sDate = new Date(heatMapData[0].date);
   const eDate = new Date(heatMapData[heatMapData.length - 1].date);
@@ -81,6 +85,28 @@ function StatsTime(props) {
       );
     });
 
+  function getColorValuePairs(data) {
+    let arr = [];
+    let value = 1;
+    for (let i = 0; i < data.length; i++) {
+      if (arr.filter((e) => e.color === data[i].color).length === 0) {
+        arr.push({ color: data[i].color, value: value });
+        value++;
+      }
+    }
+    return arr;
+  }
+
+  function getPanelColors(colorValuePairs) {
+    let obj = {
+      0: "#b8b8b8",
+    };
+    for (let i = 0; i < colorValuePairs.length; i++) {
+      obj[colorValuePairs[i].value + 1] = colorValuePairs[i].color;
+    }
+    return obj;
+  }
+
   return (
     <div className="animate__animated animate__fadeIn md:pl-24 md:pt-12 md:pr-12 flex-col">
       <h2 className={`${CAT_STYLE} pb-4`}>Sessions:</h2>
@@ -93,10 +119,7 @@ function StatsTime(props) {
           width={differenceInDays(eDate, sDate) * 2.3 + 100}
           startDate={sDate}
           endDate={eDate}
-          panelColors={{
-            0: "#b8b8b8",
-            1: "#2b7a1f",
-          }}
+          panelColors={getPanelColors(colorValuePairs)}
           rectRender={(props, data) => {
             if (!data.count) return <rect {...props} />;
             return (
@@ -105,7 +128,7 @@ function StatsTime(props) {
                 placement="top"
                 content={`${format(new Date(data.date), "MMMM dd, yyyy")} - #${
                   data.sessionNumber
-                } ${data.name} `}
+                } ${data.name}`}
               >
                 <rect {...props} />
               </Tooltip>
