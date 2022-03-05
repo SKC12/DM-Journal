@@ -43,6 +43,14 @@ function Journal(props) {
   }
 
   useEffect(() => {
+    if (sessions && sessions.length > 0) {
+      setCurrentSession(sessions[0]);
+    } else {
+      setCurrentSession("");
+    }
+  }, [sessions]);
+
+  useEffect(() => {
     setCurrentTab("Journal");
   }, [setCurrentTab]);
 

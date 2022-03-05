@@ -25,7 +25,7 @@ function Stats(props) {
   const prevCampaign = usePrevious(currentCampaign);
 
   const [sessions] = useSessionState(user, currentCampaign, prevCampaign);
-  const [stat, setStat] = useState("");
+  const [stat, setStat] = useState("time");
   const navigate = useNavigate();
   const params = useParams();
 

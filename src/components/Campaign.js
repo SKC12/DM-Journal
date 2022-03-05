@@ -17,6 +17,14 @@ function Campaign(props) {
   }, [setCurrentTab]);
 
   useEffect(() => {
+    if (campaigns && campaigns.length > 0) {
+      setCurrentCampaign(campaigns[0]);
+    } else {
+      setCurrentCampaign("");
+    }
+  }, [campaigns]);
+
+  useEffect(() => {
     async function setCampaignsState(userID) {
       let camps = await loadCampaignsFromDatabase(userID, navigate);
       setCampaigns(camps);
