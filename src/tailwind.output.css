@@ -1042,22 +1042,34 @@ Ensure the default browser behavior of the `hidden` attribute.
           filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.transition-colors {
+  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
 body {
   background-color: rgb(209 213 219);
 }
 
 .header__nav-item {
   background-image: linear-gradient(#f9fafb, #f9fafb 50%, #d1d5db 50%, #d1d5db);
-  background-size: 100% 200%;
+  background-size: 100% 210%;
   transition: background-position 0.3s;
 }
 
 .header__nav-item:hover {
-  background-position: 0 100%;
+  background-position: 0 99%;
 }
 
 .header__selected {
-  background-position: 0 100%;
+  background-position: 0 99%;
 }
 
 .hover\:bg-gray-500:hover {
@@ -1068,6 +1080,11 @@ body {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .focus\:border-gray-700:focus {

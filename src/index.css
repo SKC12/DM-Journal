@@ -8,13 +8,13 @@ body {
 
 .header__nav-item {
   background-image: linear-gradient(#f9fafb, #f9fafb 50%, #d1d5db 50%, #d1d5db);
-  background-size: 100% 200%;
+  background-size: 100% 210%;
   transition: background-position 0.3s;
 }
 .header__nav-item:hover {
-  background-position: 0 100%;
+  background-position: 0 99%;
 }
 
 .header__selected {
-  background-position: 0 100%;
+  background-position: 0 99%;
 }
