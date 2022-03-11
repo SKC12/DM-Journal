@@ -5,19 +5,18 @@ import {
   loadCampaignsFromDatabase,
 } from "./helpers.js";
 
-export const useSessionState = (user, currentCampaign, prevCampaign) => {
+export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
   const [loadingSessions, setLoadingSessions] = useState(false);
   const navigate = useNavigate();
-  const params = useParams();
 
   const loadSessions = useCallback(
-    async (userID, campaign) => {
-      if (campaign) {
+    async (userID, campaignName) => {
+      if (campaignName) {
         setLoadingSessions(true);
         let sessions = await loadSessionsFromDatabase(
           userID,
-          campaign.name,
+          campaignName,
           navigate
         );
         setLoadingSessions(false);
@@ -29,21 +28,17 @@ export const useSessionState = (user, currentCampaign, prevCampaign) => {
 
   //Changes session list on campaign change
   useEffect(() => {
-    let sessionUser = "";
-    !user || user.uid !== params.user
-      ? (sessionUser = params.user)
-      : (sessionUser = user.uid);
+    // !user || user.uid !== params.user
+    //   ? (sessionUser = params.user)
+    //   : (sessionUser = user.uid);
 
-    if (prevCampaign === undefined) {
-      loadSessions(sessionUser, currentCampaign);
+    // if (prevCampaign === undefined) {
+    //   loadSessions(sessionUser, currentCampaign);
+    // }
+    if (campaignName && userID) {
+      loadSessions(userID, campaignName);
     }
-    if (
-      prevCampaign !== undefined &&
-      prevCampaign.name !== currentCampaign.name
-    ) {
-      loadSessions(sessionUser, currentCampaign);
-    }
-  }, [currentCampaign, user, prevCampaign, params.user, loadSessions]);
+  }, [campaignName, userID, loadSessions]);
 
   return [sessions, setSessions, loadingSessions];
 };

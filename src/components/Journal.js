@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
@@ -24,20 +24,19 @@ function Journal(props) {
   const [campaigns] = useCampaignsState(paramsUser);
   const [currentCampaign, setCurrentCampaign] =
     useCurrentCampaignState(campaigns);
-  const prevCampaign = usePrevious(currentCampaign);
+  //const prevCampaign = usePrevious(currentCampaign);
   const [sessions, setSessions, loadingSessions] = useSessionState(
-    user,
-    currentCampaign,
-    prevCampaign
+    paramsUser,
+    currentCampaign.name
   );
 
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
+  // function usePrevious(value) {
+  //   const ref = useRef();
+  //   useEffect(() => {
+  //     ref.current = value;
+  //   });
+  //   return ref.current;
+  // }
 
   useEffect(() => {
     if (!paramsUser && user) {

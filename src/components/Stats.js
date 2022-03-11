@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import StatsInfo from "./StatsInfo";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -14,28 +14,27 @@ function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
   const setCurrentCampaignID = props.setCurrentCampaignID;
   const setCurrentUserID = props.setCurrentUserID;
-  const [user] = useAuthState(auth);
-  const [campaigns] = useCampaignsState(
-    user ? user.uid : "",
-    setCurrentUserID,
-    setCurrentCampaignID
-  );
-  const [currentCampaign, setCurrentCampaign] =
-    useCurrentCampaignState(campaigns);
-  const prevCampaign = usePrevious(currentCampaign);
-
-  const [sessions] = useSessionState(user, currentCampaign, prevCampaign);
-  const [stat, setStat] = useState("time");
   const navigate = useNavigate();
   const params = useParams();
+  const paramsUser = params.user ? params.user : params["*"];
+  const [user] = useAuthState(auth);
+  const [campaigns] = useCampaignsState(paramsUser);
+  const [currentCampaign, setCurrentCampaign] =
+    useCurrentCampaignState(campaigns);
 
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
+  const [sessions] = useSessionState(paramsUser, currentCampaign.name);
+  const [stat, setStat] = useState("time");
+
+  useEffect(() => {
+    if (!paramsUser && user) {
+      navigate("/stats/" + user.uid);
+    }
+  }, [paramsUser, user, navigate]);
+
+  useEffect(() => {
+    setCurrentCampaignID(params.campaign);
+    setCurrentUserID(paramsUser);
+  });
 
   useEffect(() => {
     setCurrentTab("Stats");
