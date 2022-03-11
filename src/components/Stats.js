@@ -48,6 +48,7 @@ function Stats(props) {
     setCurrentTab("Stats");
   }, [setCurrentTab]);
 
+  //Select change for sidebar campaign selector
   function handleSelectChange(e) {
     let camp = campaigns.find((camp) => {
       return camp.name === e.target.value;
