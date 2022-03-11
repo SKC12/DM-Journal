@@ -24,7 +24,7 @@ async function loadCampaignsFromDatabase(userID, navigate) {
     navigate("/error");
   }
 
-  console.log("LOADING CAMPAIGNS FROM DB");
+  //console.log("LOADING CAMPAIGNS FROM DB");
 
   return campArray;
 }
@@ -45,7 +45,7 @@ async function loadSessionsFromDatabase(userID, campName, navigate) {
   }
   sortSessionsByDate(sessionsArray);
 
-  console.log("LOADING SESSIONS FROM DB");
+  //console.log("LOADING SESSIONS FROM DB");
 
   return sessionsArray;
 }
@@ -157,7 +157,6 @@ function containsInvalidCharacters(string) {
 }
 
 function isOwner(user, currentUserID) {
-  //console.log("CURRENT USER ID", currentUserID);
   if (!user) {
     return false;
   } else if (!currentUserID || user.uid === currentUserID) {

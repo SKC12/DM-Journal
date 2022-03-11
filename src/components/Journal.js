@@ -17,13 +17,15 @@ function Journal(props) {
   const setCurrentUserID = props.setCurrentUserID;
   const setCurrentTab = props.setCurrentTab;
   const params = useParams();
-  const paramsUser = params.user ? params.user : params["*"];
+  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [currentSession, setCurrentSession] = useState("");
   const [campaigns] = useCampaignsState(paramsUser);
-  const [currentCampaign, setCurrentCampaign] =
-    useCurrentCampaignState(campaigns);
+  const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
+    campaigns,
+    params.campaign
+  );
   //const prevCampaign = usePrevious(currentCampaign);
   const [sessions, setSessions, loadingSessions] = useSessionState(
     paramsUser,
@@ -45,8 +47,12 @@ function Journal(props) {
   }, [paramsUser, user, navigate]);
 
   useEffect(() => {
-    setCurrentCampaignID(params.campaign);
-    setCurrentUserID(paramsUser);
+    if (params.campaign) {
+      setCurrentCampaignID(params.campaign);
+    }
+    if (paramsUser) {
+      setCurrentUserID(paramsUser);
+    }
   });
 
   useEffect(() => {
@@ -130,7 +136,7 @@ function Journal(props) {
         handleSelectChange={handleSelectChange}
         content={sideBarContent}
         user={user}
-        currentUserID={params.user}
+        currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
       <JournalInfo

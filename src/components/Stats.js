@@ -16,26 +16,34 @@ function Stats(props) {
   const setCurrentUserID = props.setCurrentUserID;
   const navigate = useNavigate();
   const params = useParams();
-  const paramsUser = params.user ? params.user : params["*"];
+  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const [user] = useAuthState(auth);
   const [campaigns] = useCampaignsState(paramsUser);
-  const [currentCampaign, setCurrentCampaign] =
-    useCurrentCampaignState(campaigns);
-
+  const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
+    campaigns,
+    params.campaign
+  );
   const [sessions] = useSessionState(paramsUser, currentCampaign.name);
   const [stat, setStat] = useState("time");
 
+  //Navigates to link containing User params
   useEffect(() => {
     if (!paramsUser && user) {
       navigate("/stats/" + user.uid);
     }
   }, [paramsUser, user, navigate]);
 
+  //Updates current IDs on parent main element
   useEffect(() => {
-    setCurrentCampaignID(params.campaign);
-    setCurrentUserID(paramsUser);
+    if (params.campaign) {
+      setCurrentCampaignID(params.campaign);
+    }
+    if (paramsUser) {
+      setCurrentUserID(paramsUser);
+    }
   });
 
+  //Updates currentTab on parent main element
   useEffect(() => {
     setCurrentTab("Stats");
   }, [setCurrentTab]);
