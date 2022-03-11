@@ -26,26 +26,19 @@ function Journal(props) {
     campaigns,
     params.campaign
   );
-  //const prevCampaign = usePrevious(currentCampaign);
   const [sessions, setSessions, loadingSessions] = useSessionState(
     paramsUser,
     currentCampaign.name
   );
 
-  // function usePrevious(value) {
-  //   const ref = useRef();
-  //   useEffect(() => {
-  //     ref.current = value;
-  //   });
-  //   return ref.current;
-  // }
-
+  //Navigates to link containing User params
   useEffect(() => {
     if (!paramsUser && user) {
       navigate("/journal/" + user.uid);
     }
   }, [paramsUser, user, navigate]);
 
+  //Updates current IDs on parent main element
   useEffect(() => {
     if (params.campaign) {
       setCurrentCampaignID(params.campaign);
@@ -55,6 +48,7 @@ function Journal(props) {
     }
   });
 
+  //Sets up initial session on sessions load
   useEffect(() => {
     if (sessions && sessions.length > 0) {
       setCurrentSession(sessions[0]);
@@ -63,6 +57,7 @@ function Journal(props) {
     }
   }, [sessions]);
 
+  //Updates currentTab on parent main element
   useEffect(() => {
     setCurrentTab("Journal");
   }, [setCurrentTab]);
