@@ -16,13 +16,12 @@ function Journal(props) {
   const setCurrentCampaignID = props.setCurrentCampaignID;
   const setCurrentUserID = props.setCurrentUserID;
   const setCurrentTab = props.setCurrentTab;
+  const params = useParams();
+  const paramsUser = params.user ? params.user : params["*"];
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [currentSession, setCurrentSession] = useState("");
-  const [campaigns] = useCampaignsState(
-    user ? user.uid : "",
-    setCurrentUserID,
-    setCurrentCampaignID
-  );
+  const [campaigns] = useCampaignsState(paramsUser);
   const [currentCampaign, setCurrentCampaign] =
     useCurrentCampaignState(campaigns);
   const prevCampaign = usePrevious(currentCampaign);
@@ -31,8 +30,6 @@ function Journal(props) {
     currentCampaign,
     prevCampaign
   );
-  const params = useParams();
-  const navigate = useNavigate();
 
   function usePrevious(value) {
     const ref = useRef();
@@ -41,6 +38,17 @@ function Journal(props) {
     });
     return ref.current;
   }
+
+  useEffect(() => {
+    if (!paramsUser && user) {
+      navigate("/journal/" + user.uid);
+    }
+  }, [paramsUser, user, navigate]);
+
+  useEffect(() => {
+    setCurrentCampaignID(params.campaign);
+    setCurrentUserID(paramsUser);
+  });
 
   useEffect(() => {
     if (sessions && sessions.length > 0) {
@@ -78,13 +86,13 @@ function Journal(props) {
     });
     if (!!camp) {
       setCurrentCampaign(camp);
-      setCurrentCampaignID(camp.name);
+      //setCurrentCampaignID(camp.name);
       navigate(`/journal/${user.uid}/${camp.name}`);
     }
   }
 
   function isPrivate(campaign) {
-    if (!user || user.uid !== params.user) {
+    if (!user || user.uid !== paramsUser) {
       return campaign.private;
     } else {
       return false;
@@ -94,7 +102,7 @@ function Journal(props) {
   const sideBarContent = (
     <div>
       <h2 className="select-none pb-4">Sessions:</h2>
-      {isOwner(user, props.currentUserID) ? (
+      {isOwner(user, paramsUser) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
           onClick={() => setCurrentSession("new")}
@@ -123,7 +131,7 @@ function Journal(props) {
         handleSelectChange={handleSelectChange}
         content={sideBarContent}
         user={user}
-        currentUserID={props.currentUserID}
+        currentUserID={params.user}
         sideBarHidden={props.sideBarHidden}
       />
       <JournalInfo

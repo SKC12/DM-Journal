@@ -70,59 +70,51 @@ export const useCurrentCampaignState = (campaigns) => {
   return [currentCampaign, setCurrentCampaign];
 };
 
-export const useCampaignsState = (
-  userID,
-  setCurrentUserID,
-  setCurrentCampaignID
-) => {
-  const [campaigns, setCampaigns] = useState([]);
-  const params = useParams();
-  const navigate = useNavigate();
-  const [hasLoaded, setHasLoaded] = useState(false);
+export const useCampaignsState = (userID) =>
+  //userID
+  // setCurrentUserID,
+  // setCurrentCampaignID
+  {
+    const [campaigns, setCampaigns] = useState([]);
+    const navigate = useNavigate();
+    const [hasLoaded, setHasLoaded] = useState(false);
 
-  //Sets IDs in the main App state
-  const setCurrentIDsFromParameters = useCallback(
-    (currentUserID, paramsUser, paramsCampaign) => {
-      if (paramsUser === undefined && currentUserID) {
-        setCurrentUserID(currentUserID);
-      } else if (paramsUser) {
-        setCurrentUserID(paramsUser);
-      }
-      if (paramsCampaign) {
-        setCurrentCampaignID(paramsCampaign);
-      }
-    },
-    [setCurrentCampaignID, setCurrentUserID]
-  );
+    //Sets IDs in the main App state
+    // const setCurrentIDsFromParameters = useCallback(
+    //   (currentUserID, paramsUser, paramsCampaign) => {
+    //     if (paramsUser === undefined && currentUserID) {
+    //       setCurrentUserID(currentUserID);
+    //     } else if (paramsUser) {
+    //       setCurrentUserID(paramsUser);
+    //     }
+    //     if (paramsCampaign) {
+    //       setCurrentCampaignID(paramsCampaign);
+    //     }
+    //   },
+    //   [setCurrentCampaignID, setCurrentUserID]
+    // );
 
-  //Loads campaign list based on params or user.
-  useEffect(() => {
-    //console.log("LOADING", hasLoaded, userID, params.user);
-    async function loadCampaigns(userID, navigate) {
-      if (!hasLoaded) {
-        let campArray = await loadCampaignsFromDatabase(userID, navigate);
-        setCampaigns(campArray);
-        setHasLoaded(true);
+    //Loads campaign list based on params or user.
+    useEffect(() => {
+      //console.log("LOADING", hasLoaded, userID, params.user);
+      async function loadCampaigns(userID, navigate) {
+        if (!hasLoaded) {
+          let campArray = await loadCampaignsFromDatabase(userID, navigate);
+          setCampaigns(campArray);
+          setHasLoaded(true);
+        }
       }
-    }
-    if (params.user && params.campaign) {
-      //console.log("LOADING BY PARAMS");
-      loadCampaigns(params.user, navigate);
-    } else {
       if (userID) {
-        //console.log("LOADING BY ID");
+        //console.log("LOADING BY PARAMS");
         loadCampaigns(userID, navigate);
+        // } else {
+        //   if (userID) {
+        //     //console.log("LOADING BY ID");
+        //     loadCampaigns(userID, navigate);
+        //   }
       }
-    }
-    setCurrentIDsFromParameters(userID, params.user, params.campaign);
-  }, [
-    params.user,
-    params.campaign,
-    navigate,
-    hasLoaded,
-    setCurrentIDsFromParameters,
-    userID,
-  ]);
+      //setCurrentIDsFromParameters(userID, params.user, params.campaign);
+    }, [navigate, hasLoaded, userID]);
 
-  return [campaigns, setCampaigns];
-};
+    return [campaigns, setCampaigns];
+  };
