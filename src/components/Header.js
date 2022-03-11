@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-
-const NAV_ITEM_STYLE =
-  "md:text-xl  w-fit p-2 md:w-32   text-gray-500  cursor-pointer font-bold md:tracking-wide flex items-center justify-center";
+import "../style/Header.css";
 
 function Header(props) {
   const [user] = useAuthState(auth);
@@ -26,11 +24,11 @@ function Header(props) {
   }
 
   return (
-    <nav className="flex flex-row items-center justify-between px-2 md:px-9 h-[7vh] md:h-[5vh] bg-gray-50">
+    <nav className="header__navbar">
       <div className="">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-gray-500 md:hidden cursor-pointer"
+          className="h-6 w-6 md:hidden cursor-pointer"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -44,18 +42,18 @@ function Header(props) {
           />
         </svg>
       </div>
-      <ul className="flex flex-row self-center h-[7vh] md:h-[5vh]">
+      <ul className="header__nav-item-container">
         <li
-          className={`header__nav-item ${NAV_ITEM_STYLE} ${
-            currentTab === "Journal" ? "header__selected bg-gray-300 " : ""
+          className={`header__nav-item ${
+            currentTab === "Journal" ? "header__selected" : ""
           }`}
           onClick={() => navigate(`/journal${idParameters}`)}
         >
           Journal
         </li>
         <li
-          className={`header__nav-item ${NAV_ITEM_STYLE}  ${
-            currentTab === "Stats" ? "header__selected bg-gray-300" : ""
+          className={`header__nav-item   ${
+            currentTab === "Stats" ? "header__selected" : ""
           }`}
           onClick={() => navigate(`/stats${idParameters}`)}
         >
@@ -63,8 +61,8 @@ function Header(props) {
         </li>
         {user ? (
           <li
-            className={`header__nav-item ${NAV_ITEM_STYLE}  ${
-              currentTab === "Campaign" ? "header__selected bg-gray-300" : ""
+            className={`header__nav-item ${
+              currentTab === "Campaign" ? "header__selected" : ""
             }`}
             onClick={() => navigate(`/campaign`)}
           >
@@ -74,7 +72,7 @@ function Header(props) {
       </ul>
       {/* <button onClick={() => testFunction()}>TEST</button> */}
       <button
-        className="md:w-20 bg-gray-700 hover:text-white border-2 border-gray-900 text-xs md:text-sm text-gray-200 py-1 px-1 md:px-3 rounded-md md:rounded-lg font-medium leading-none"
+        className="header__button"
         onClick={() => {
           props.setCurrentTab("");
           navigate("/login");

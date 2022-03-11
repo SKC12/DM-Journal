@@ -115,7 +115,9 @@ function Journal(props) {
         {isPrivate(currentCampaign) ? (
           <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
         ) : loadingSessions ? (
-          <p className="text-gray-500 text-center">LOADING...</p>
+          <p className="text-gray-500 h-12 flex items-center justify-center">
+            LOADING...
+          </p>
         ) : (
           <ul className="font-normal">{populateJournal()}</ul>
         )}

@@ -1,0 +1,77 @@
+@media (min-width: 768px) {
+  .JournalInfo__buttons {
+    width: 160px;
+    height: 40px;
+  }
+}
+
+.JournalInfo__delete-alert-container {
+  height: -150px;
+  width: -350px;
+  background-color: var(--main-bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.JournalInfo__delete-alert-text-container {
+  height: 100px;
+  flex-grow: 1;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.JournalInfo__delete-alert-button-container {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.JournalInfo__alert-text {
+  color: var(--error-text-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+.JournalInfo__buttons {
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 8px;
+  color: white;
+  background-color: var(--button-color);
+}
+.JournalInfo__buttons:hover {
+  background-color: var(--button-hover-color);
+}
+
+.JournalInfo__input-container {
+}
+
+.JournalInfo__label {
+  width: 208px;
+  display: block;
+  font-weight: 700;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.JournalInfo__input {
+  background-color: var(--light-bg-color);
+  min-height: 28px;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--text-color);
+  line-height: 1.25;
+}
+
+.JournalInfo__input:focus {
+  background-color: var(--very-light-bg-color);
+  border-color: var(--text-color);
+}

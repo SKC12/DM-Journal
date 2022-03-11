@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "animate.css";
+import "../style/JournalInfo.css";
 
 import {
   searchFirebaseForSessionName,
@@ -11,10 +12,6 @@ import {
   deleteSessionFromFirebase,
   containsInvalidCharacters,
 } from "../helpers.js";
-
-const LABEL_STYLE = "w-52 block text-gray-700 font-bold py-2";
-const INPUT_STYLE =
-  "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
 
 function JournalInfo(props) {
   const [name, setName] = useState(
@@ -156,13 +153,13 @@ function JournalInfo(props) {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="custom-ui h-[150px] w-[350px] bg-gray-200 flex flex-col items-center">
-            <div className="h-[100px] grow flex flex-col text-center justify-around items-center">
+          <div className="custom-ui JournalInfo__delete-alert-container">
+            <div className="JournalInfo__delete-alert-text-container">
               <p className="">Are you sure you want to delete this session?</p>
               <p className="">The process is irreversible.</p>
             </div>
 
-            <div className="h-[40px] w-full flex justify-evenly">
+            <div className="JournalInfo__delete-alert-button-container">
               <button
                 onClick={() => {
                   deleteSession(e);
@@ -189,7 +186,7 @@ function JournalInfo(props) {
 
   let titleErrorMessage = () => {
     return errorMsg ? (
-      <p className="text-red-500 text-sm pt-1 pl-1">
+      <p className="JournalInfo__alert-text">
         Session names must be unique and cannot contain forward slashes ("/")
       </p>
     ) : null;
@@ -197,15 +194,15 @@ function JournalInfo(props) {
 
   let dateErrorMessage = () => {
     return dateErrorMsg ? (
-      <p className="text-red-500 text-sm pt-1 pl-1">Invalid session date</p>
+      <p className="JournalInfo__alert-text">Invalid session date</p>
     ) : null;
   };
 
   const buttons = (entry) => (
-    <div className="flex justify-center h-10 items-stretch">
+    <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
         <button
-          className="px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+          className="JournalInfo__buttons"
           onClick={(e) => createSession(e)}
         >
           Create Session
@@ -213,13 +210,13 @@ function JournalInfo(props) {
       ) : (
         <>
           <button
-            className="mx-3 px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            className="JournalInfo__buttons"
             onClick={(e) => editSession(e)}
           >
             Edit Session
           </button>
           <button
-            className="mx-3 px-2 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+            className="JournalInfo__buttons"
             onClick={(e) => sessionDeleteAlert(e)}
           >
             Delete Session
@@ -246,14 +243,17 @@ function JournalInfo(props) {
         <div className="animate__animated animate__fadeIn">
           <form className="md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="md:flex ">
-              <div className="flex-col items-center">
-                <label className={LABEL_STYLE} htmlFor="info-session-name">
+              <div className="JournalInfo__input-container">
+                <label
+                  className="JournalInfo__label"
+                  htmlFor="info-session-name"
+                >
                   Session title{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
-                  className={`${INPUT_STYLE} md:w-96 mr-8`}
+                  className="JournalInfo__input md:w-96 mr-8"
                   id="info-session-name"
                   value={name}
                   maxLength="50"
@@ -261,15 +261,18 @@ function JournalInfo(props) {
                 ></input>
               </div>
 
-              <div className="flex-col items-center">
-                <label className={LABEL_STYLE} htmlFor="info-session-color">
+              <div className="JournalInfo__input-container">
+                <label
+                  className="JournalInfo__label"
+                  htmlFor="info-session-color"
+                >
                   Color{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="color"
-                  className={`${INPUT_STYLE} h-10`}
+                  className="JournalInfo__input w-12"
                   id="info-session-color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
@@ -280,31 +283,37 @@ function JournalInfo(props) {
             {titleErrorMessage()}
 
             <div className="md:flex md:pt-6">
-              <div className="flex-col items-center ">
-                <label className={LABEL_STYLE} htmlFor="info-session-date">
+              <div className="JournalInfo__input-container">
+                <label
+                  className="JournalInfo__label"
+                  htmlFor="info-session-date"
+                >
                   Session date{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="date"
-                  className={`${INPUT_STYLE}`}
+                  className="JournalInfo__input"
                   id="info-session-date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                 ></input>
               </div>
 
-              <div className="flex-col items-center ">
-                <label className={LABEL_STYLE} htmlFor="info-session-time">
+              <div className="JournalInfo__input-container">
+                <label
+                  className="JournalInfo__label"
+                  htmlFor="info-session-time"
+                >
                   Ingame duration{" "}
                 </label>
 
-                <span className="text-gray-700 font-bold">
+                <span>
                   <input
                     disabled={!isOwner()}
                     type="number"
-                    className={`${INPUT_STYLE} w-16 mr-2`}
+                    className={`JournalInfo__input w-16 mr-2`}
                     id="info-session-time"
                     value={ingameTime}
                     min="0"
@@ -315,15 +324,18 @@ function JournalInfo(props) {
                 </span>
               </div>
 
-              <div className="flex-col items-center ">
-                <label className={LABEL_STYLE} htmlFor="info-session-level">
+              <div className="JournalInfo__input-container">
+                <label
+                  className="JournalInfo__label"
+                  htmlFor="info-session-level"
+                >
                   Party level{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="number"
-                  className={`${INPUT_STYLE} w-16 $`}
+                  className="JournalInfo__input w-16"
                   id="info-session-level"
                   value={partyLevel}
                   min="0"
@@ -334,13 +346,16 @@ function JournalInfo(props) {
             </div>
             {dateErrorMessage()}
 
-            <div className="flex-col items-center pb-6 md:pt-6 md:pr-6">
-              <label className={LABEL_STYLE} htmlFor="info-session-description">
+            <div className="JournalInfo__input-container pb-6 md:pt-6 md:pr-6">
+              <label
+                className="JournalInfo__label"
+                htmlFor="info-session-description"
+              >
                 Session description{" "}
               </label>
               <textarea
                 disabled={!isOwner()}
-                className={`${INPUT_STYLE} w-full h-32 md:h-60 resize-none `}
+                className="JournalInfo__input w-full h-32 md:h-60 resize-none"
                 id="info-session-description"
                 value={description}
                 maxLength="3000"
@@ -354,7 +369,7 @@ function JournalInfo(props) {
     }
   }
 
-  return <div className="p-3 bg-gray-300 grow ">{populate(props.session)}</div>;
+  return <div className="p-3 grow ">{populate(props.session)}</div>;
 }
 
 export default JournalInfo;
