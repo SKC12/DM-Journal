@@ -45,11 +45,15 @@
 
 .StatsLevelling__levels {
   background-color: var(--light-bg-color);
+  width: fit-content;
+  max-width: calc(100% - 16px);
   padding: 8px;
+
   margin: 8px;
   display: grid;
   grid-template-rows: auto auto auto auto;
   grid-template-columns: min-content;
+  grid-auto-columns: min-content;
   gap: 12px;
   overflow: auto;
 }
