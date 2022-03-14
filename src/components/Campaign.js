@@ -40,7 +40,9 @@ function Campaign(props) {
   let populateCampaigns = campaigns.map((camp, index) => {
     return (
       <li
-        className="cursor-pointer pl-2 pb-2"
+        className={`cursor-pointer p-2 hover:text-gray-400 ${
+          currentCampaign.name === camp.name ? "text-gray-400" : ""
+        }`}
         key={index}
         onClick={() => setCurrentCampaign(camp)}
       >
@@ -55,7 +57,7 @@ function Campaign(props) {
       <ul className="font-normal">
         {populateCampaigns}
         <li
-          className="text-blue-400 cursor-pointer pl-2"
+          className="text-blue-400 cursor-pointer p-2"
           onClick={() => setCurrentCampaign("new")}
         >
           + Create new campaign

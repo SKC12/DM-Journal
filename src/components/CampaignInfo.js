@@ -8,10 +8,7 @@ import {
 } from "../helpers";
 import "../confirmCSS.css";
 import "animate.css";
-
-const LABEL_STYLE = "w-52 block text-gray-700 font-bold md:pb-3";
-const INPUT_STYLE =
-  "bg-gray-200 appearance-none border-2 border-gray-200 rounded p-1 text-gray-700 leading-tight focus:outline-none focus:bg-gray-100 focus:border-gray-700";
+import "../style/CampaignInfo.css";
 
 function CampaignInfo(props) {
   const [name, setName] = useState(
@@ -75,7 +72,7 @@ function CampaignInfo(props) {
 
   let errorMessage = () => {
     return errorMsg ? (
-      <p className="text-red-500 text-sm pt-1 pl-5">
+      <p className="CampaignInfo__alert-text">
         Campaign names must be unique and cannot contain forward slashes "/"
       </p>
     ) : (
@@ -126,14 +123,17 @@ function CampaignInfo(props) {
     } else {
       return (
         <div className="animate__animated animate__fadeIn">
-          <form className="md:pl-24 md:pt-12 md:max-w-4xl">
+          <form className="md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="flex-col items-center md:pb-6">
-              <label className={LABEL_STYLE} htmlFor="info-campaign-name">
+              <label
+                className="CampaignInfo__label"
+                htmlFor="info-campaign-name"
+              >
                 Campaign name{" "}
               </label>
 
               <input
-                className={`${INPUT_STYLE} md:w-96 disabled:bg-gray-300 disabled:border-gray-300`}
+                className="CampaignInfo__input md:w-96"
                 id="info-campaign-name"
                 value={name}
                 maxLength="50"
@@ -145,13 +145,13 @@ function CampaignInfo(props) {
 
             <div className="flex-col items-center md:pb-3 md:pr-6">
               <label
-                className={LABEL_STYLE}
+                className="CampaignInfo__label"
                 htmlFor="info-campaign-description"
               >
                 Campaign description{" "}
               </label>
               <textarea
-                className={`${INPUT_STYLE} my-3 indent-6 w-full h-60 resize-none`}
+                className={`CampaignInfo__input my-3 indent-6 w-full h-60 resize-none`}
                 id="info-campaign-description"
                 maxLength="1500"
                 value={description}
@@ -161,7 +161,7 @@ function CampaignInfo(props) {
 
             <div className="flex items-center pb-6">
               <label
-                className={`${LABEL_STYLE} pb-0 max-w-fit`}
+                className={`CampaignInfo__label pb-0 max-w-fit`}
                 htmlFor="info-campaign-private"
               >
                 Private?

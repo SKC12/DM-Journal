@@ -1,0 +1,28 @@
+.CampaignInfo__label {
+  width: 208px;
+  display: block;
+  font-weight: 700;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.CampaignInfo__input {
+  background-color: var(--light-bg-color);
+  min-height: 28px;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--text-color);
+  line-height: 1.25;
+}
+
+.CampaignInfo__input:disabled {
+  background-color: var(--main-bg-color);
+}
+
+.CampaignInfo__alert-text {
+  color: var(--error-text-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-top: 4px;
+  padding-left: 4px;
+}

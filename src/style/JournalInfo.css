@@ -51,9 +51,6 @@
   background-color: var(--button-hover-color);
 }
 
-.JournalInfo__input-container {
-}
-
 .JournalInfo__label {
   width: 208px;
   display: block;
