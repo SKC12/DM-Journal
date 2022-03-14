@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CampaignInfo from "./CampaignInfo";
 import { loadCampaignsFromDatabase } from "../helpers.js";
+import "../style/main.css";
 
 function Campaign(props) {
   const [user, loading, error] = useAuthState(auth);
@@ -64,7 +65,7 @@ function Campaign(props) {
   );
 
   return (
-    <div className="box-border flex md:h-[95vh] w-[100%]">
+    <div className="main__container">
       <div
         className={`${
           props.sideBarHidden ? "hidden" : "block"

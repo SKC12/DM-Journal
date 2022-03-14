@@ -8,7 +8,6 @@ import {
   getDay,
 } from "date-fns";
 import "animate.css";
-const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
 
 function StatsTime(props) {
   const colorValuePairs = getColorValuePairs(props.sessions);
@@ -78,8 +77,8 @@ function StatsTime(props) {
     })
     .map((entry, index) => {
       return (
-        <div className="flex w-48 grow" key={index}>
-          <h2 className="pb-1 pr-2 block text-gray-700 font-bold">{entry}:</h2>
+        <div className="StatsInfo__weekdays-day" key={index}>
+          <h2 className="font-bold">{entry}:</h2>
           <p>{sessionByWeekday[entry]} sessions</p>
         </div>
       );
@@ -108,9 +107,9 @@ function StatsTime(props) {
   }
 
   return (
-    <div className="animate__animated animate__fadeIn md:pl-24 md:pt-12 md:pr-12 flex-col">
-      <h2 className={`${CAT_STYLE} pb-4`}>Sessions:</h2>
-      <div className="mb-4 overflow-auto">
+    <div className="StatsInfo__element-container animate__animated animate__fadeIn">
+      <h2 className="StatsInfo__label">Sessions:</h2>
+      <div className="StatsInfo__graph-container">
         <HeatMap
           className="h-[140px] bg-gray-200"
           rectSize={14}
@@ -137,30 +136,30 @@ function StatsTime(props) {
         />
       </div>
       <div>
-        <div className="flex pb-4">
-          <h2 className={CAT_STYLE}>Number of sessions:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Number of sessions:</h2>
           <p className="shrink-0">{numberOfSessions}</p>
         </div>
-        <div className="pb-4">
-          <h2 className={`${CAT_STYLE} pb-4`}>Session days:</h2>
-          <div className="pl-4 ">{weekdayElements}</div>
+        <div>
+          <h2 className="StatsInfo__label">Session days:</h2>
+          <div className="StatsTime__weekdays">{weekdayElements}</div>
         </div>
-        <div className="flex pb-4">
-          <h2 className={CAT_STYLE}>First Session:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">First Session:</h2>
           <p className="shrink-0">{format(sDate, "MMMM dd, yyyy")}</p>
         </div>
-        <div className="flex pb-4">
-          <h2 className={CAT_STYLE}>Last Session:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Last Session:</h2>
           <p className="shrink-0">{format(eDate, "MMMM dd, yyyy")}</p>
         </div>
-        <div className="flex pb-4">
-          <h2 className={CAT_STYLE}>Campaign Duration:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Campaign Duration:</h2>
           <p className="">
             {campaignLength} days ({getFormatedDiff(sDate, eDate)})
           </p>
         </div>
-        <div className="flex pb-4 items-center">
-          <h2 className={CAT_STYLE}>Average time between sessions:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Average time between sessions:</h2>
           <p className="shrink-0">
             {(campaignLength / numberOfSessions).toFixed(2)} days
           </p>

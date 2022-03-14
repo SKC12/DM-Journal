@@ -1,6 +1,7 @@
 import StatsLeveling from "./StatsLevelling";
 import StatsTime from "./StatsTime";
 import StatsIngameTime from "./StatsIngameTime";
+import "../style/StatsInfo.css";
 
 function StatsInfo(props) {
   let component = null;
@@ -19,7 +20,7 @@ function StatsInfo(props) {
   }
 
   return (
-    <div className="overflow-x-hidden overflow-y-auto p-3 bg-gray-300 grow ">
+    <div className="StatsInfo__container">
       {props.sessions.length > 0 ? component : null}
     </div>
   );

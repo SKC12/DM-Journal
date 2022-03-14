@@ -1,0 +1,30 @@
+.main__container {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.Stats__sidebar-item {
+  padding-bottom: 16px;
+  cursor: pointer;
+  transition-property: color;
+  transition-duration: 300ms;
+}
+
+.Stats__sidebar-item:hover {
+  color: var(--selected-color);
+}
+
+.Stats__selected {
+  color: var(--selected-color);
+}
+
+/* pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 */
+
+@media (min-width: 768px) {
+  .main__container {
+    height: 95vh;
+  }
+}
+
+/* box-border flex md:h-[95vh] w-[100%] */

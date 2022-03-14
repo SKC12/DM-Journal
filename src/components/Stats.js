@@ -9,6 +9,7 @@ import {
   useSessionState,
 } from "../customHooks";
 import Sidebar from "./Sidebar";
+import "../style/main.css";
 
 function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
@@ -72,24 +73,24 @@ function Stats(props) {
     <div>
       <ul className="pl-4 font-normal">
         <li
-          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
-            stat === "time" ? "text-gray-400" : ""
+          className={`Stats__sidebar-item  ${
+            stat === "time" ? "Stats__selected" : ""
           }`}
           onClick={() => setStat("time")}
         >
           Sessions
         </li>
         <li
-          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
-            stat === "leveling" ? "text-gray-400" : ""
+          className={`Stats__sidebar-item ${
+            stat === "leveling" ? "Stats__selected" : ""
           }`}
           onClick={() => setStat("leveling")}
         >
           Levels
         </li>
         <li
-          className={`pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 ${
-            stat === "ingameTime" ? "text-gray-400" : ""
+          className={`Stats__sidebar-item ${
+            stat === "ingameTime" ? "Stats__selected" : ""
           }`}
           onClick={() => setStat("ingameTime")}
         >
@@ -113,7 +114,7 @@ function Stats(props) {
   );
 
   return (
-    <div className="box-border flex md:h-[95vh] w-[100%]">
+    <div className="main__container">
       <Sidebar
         campaigns={campaigns}
         currentCampaign={currentCampaign}

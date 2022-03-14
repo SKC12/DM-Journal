@@ -1,0 +1,83 @@
+.StatsInfo__container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: var(--main-bg-color);
+  flex-grow: 1;
+}
+
+.StatsInfo__element-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.StatsInfo__graph-container {
+  margin: 16px 8px;
+  background-color: var(--light-bg-color);
+  overflow: auto;
+}
+
+.StatsInfo__label {
+  padding-right: 8px;
+  display: block;
+  font-weight: 700;
+  max-width: 50vw;
+}
+
+.StatsInfo__stat-container {
+  padding-bottom: 16px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.StatsTime__weekdays {
+  background-color: var(--light-bg-color);
+  width: fit-content;
+  padding: 8px;
+  margin: 8px;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto;
+  gap: 12px;
+}
+
+.StatsLevelling__levels {
+  background-color: var(--light-bg-color);
+  padding: 8px;
+  margin: 8px;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: min-content;
+  gap: 12px;
+  overflow: auto;
+}
+
+.StatsLevelling__levels-level {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .StatsInfo__element-container {
+    padding-left: 96px;
+    padding-top: 48px;
+    padding-right: 48px;
+  }
+  .StatsInfo__stat-container {
+    display: flex;
+  }
+  .StatsTime__weekdays {
+    grid-auto-flow: column;
+  }
+  .StatsLevelling__levels {
+    grid-auto-flow: column;
+  }
+}
+.StatsInfo__weekdays-day {
+  display: grid;
+  grid-template-columns: 100px 100px;
+}

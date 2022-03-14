@@ -8,7 +8,7 @@ import {
   Label,
 } from "recharts";
 import "animate.css";
-const CAT_STYLE = "pr-2 block text-gray-700 font-bold max-w-[50vw]";
+import "../style/StatsInfo.css";
 
 function StatsIngameTime(props) {
   const sessionsData = props.sessions.map((entry, index) => {
@@ -96,10 +96,8 @@ function StatsIngameTime(props) {
     (entry, index) => {
       let indLevels = getIndividualLevels();
       return (
-        <div className="flex w-48 grow" key={index}>
-          <h2 className="pb-1 pr-2 block text-gray-700 font-bold">
-            Level {entry}:
-          </h2>
+        <div className="StatsLevelling__levels-level" key={index}>
+          <h2 className="font-bold">Level {entry}:</h2>
           <p>{indLevels[entry].length} sessions</p>
         </div>
       );
@@ -126,7 +124,7 @@ function StatsIngameTime(props) {
 
   //Session x level line chart
   const lineChart = (
-    <div className="overflow-auto bg-gray-200">
+    <div className="StatsInfo__graph-container">
       <LineChart
         margin={{
           top: 15,
@@ -192,23 +190,20 @@ function StatsIngameTime(props) {
   );
 
   return (
-    <div className="animate__animated animate__fadeIn md:pl-24 md:pt-12 md:pr-12 flex-col">
-      <h2 className={`${CAT_STYLE} pb-4`}>Levels:</h2>
+    <div className="StatsInfo__element-container animate__animated animate__fadeIn">
+      <h2 className="StatsInfo__label">Levels:</h2>
       {lineChart}
 
-      <div className="mb-4 overflow-auto"></div>
       <div>
-        <h2 className={`${CAT_STYLE} pb-4`}>Time to level:</h2>
-        <div className="bg-gray-200 h-40 p-4 mb-4 flex flex-col flex-wrap gap-2 overflow-x-auto">
-          {individualLevelElements}
-        </div>
+        <h2 className="StatsInfo__label">Time to level:</h2>
+        <div className="StatsLevelling__levels">{individualLevelElements}</div>
 
-        <div className="flex pb-4 items-center">
-          <h2 className={CAT_STYLE}>Number of sessions:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Number of sessions:</h2>
           <p>{numberOfSessions}</p>
         </div>
-        <div className="flex pb-4 items-center">
-          <h2 className={CAT_STYLE}>Average time to level:</h2>
+        <div className="StatsInfo__stat-container">
+          <h2 className="StatsInfo__label">Average time to level:</h2>
           <p>{avgTTL.toFixed(1)} sessions</p>
         </div>
       </div>

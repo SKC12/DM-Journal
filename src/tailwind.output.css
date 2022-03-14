@@ -514,10 +514,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.75rem;
 }
 
-.box-border {
-  box-sizing: border-box;
-}
-
 .block {
   display: block;
 }
@@ -578,20 +574,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 93vh;
 }
 
-.h-40 {
-  height: 10rem;
-}
-
 .h-\[140px\] {
   height: 140px;
 }
 
 .max-h-\[50vh\] {
   max-height: 50vh;
-}
-
-.w-\[100\%\] {
-  width: 100%;
 }
 
 .w-\[250px\] {
@@ -642,18 +630,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 18rem;
 }
 
-.w-48 {
-  width: 12rem;
-}
-
 .max-w-fit {
   max-width: -webkit-fit-content;
   max-width: -moz-fit-content;
   max-width: fit-content;
-}
-
-.max-w-\[50vw\] {
-  max-width: 50vw;
 }
 
 .flex-1 {
@@ -691,10 +671,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex-direction: column;
 }
 
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
 .items-center {
   align-items: center;
 }
@@ -723,28 +699,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   gap: 0.75rem;
 }
 
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .self-stretch {
   align-self: stretch;
 }
 
-.overflow-auto {
-  overflow: auto;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
 .overflow-y-auto {
   overflow-y: auto;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
 }
 
 .whitespace-nowrap {
@@ -908,14 +868,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-left: 1rem;
 }
 
-.pr-2 {
-  padding-right: 0.5rem;
-}
-
-.pb-1 {
-  padding-bottom: 0.25rem;
-}
-
 .text-center {
   text-align: center;
 }
@@ -985,11 +937,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
-.text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
-}
-
 .accent-gray-700 {
   accent-color: #374151;
 }
@@ -999,22 +946,11 @@ Ensure the default browser behavior of the `hidden` attribute.
           filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.transition-colors {
-  transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.duration-300 {
-  transition-duration: 300ms;
-}
-
 :root {
   --main-bg-color: #d1d5db;
   --light-bg-color: #e5e7eb;
   --very-light-bg-color: #f3f4f6;
+  --selected-color: #9ca3af;
   --error-text-color: #ef4444;
   --button-color: #4b5563;
   --button-hover-color: #6b7280;
@@ -1160,18 +1096,15 @@ table {
 
 body {
   background-color: var(--main-bg-color);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   color: var(--text-color);
 }
 
 .hover\:bg-gray-500:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
-}
-
-.hover\:text-gray-400:hover {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .focus\:border-gray-700:focus {
@@ -1221,16 +1154,16 @@ body {
     display: none;
   }
 
-  .md\:h-\[95vh\] {
-    height: 95vh;
-  }
-
   .md\:h-10 {
     height: 2.5rem;
   }
 
   .md\:h-60 {
     height: 15rem;
+  }
+
+  .md\:h-\[95vh\] {
+    height: 95vh;
   }
 
   .md\:w-96 {
@@ -1277,9 +1210,5 @@ body {
 
   .md\:pt-6 {
     padding-top: 1.5rem;
-  }
-
-  .md\:pr-12 {
-    padding-right: 3rem;
   }
 }
