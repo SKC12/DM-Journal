@@ -52,6 +52,14 @@ function Header(props) {
           Journal
         </li>
         <li
+          className={`header__nav-item ${
+            currentTab === "Characters" ? "header__selected" : ""
+          }`}
+          onClick={() => navigate(`/characters${idParameters}`)}
+        >
+          Characters
+        </li>
+        <li
           className={`header__nav-item   ${
             currentTab === "Stats" ? "header__selected" : ""
           }`}

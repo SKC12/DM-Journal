@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   loadSessionsFromDatabase,
   loadCampaignsFromDatabase,
+  loadCharactersFromDatabase,
 } from "./helpers.js";
 
 export const useSessionState = (userID, campaignName) => {
@@ -35,6 +36,38 @@ export const useSessionState = (userID, campaignName) => {
   }, [campaignName, userID, loadSessions]);
 
   return [sessions, setSessions, loadingSessions];
+};
+
+export const useCharacterState = (userID, campaignName) => {
+  const [characters, setCharacters] = useState([]);
+  const [loadingCharacters, setLoadingCharacters] = useState(false);
+  const navigate = useNavigate();
+
+  //Loads session list based on params
+  const loadCharacters = useCallback(
+    async (userID, campaignName) => {
+      if (campaignName) {
+        setLoadingCharacters(true);
+        let characters = await loadCharactersFromDatabase(
+          userID,
+          campaignName,
+          navigate
+        );
+        setLoadingCharacters(false);
+        setCharacters(characters);
+      }
+    },
+    [navigate]
+  );
+
+  //Changes session list on campaign change
+  useEffect(() => {
+    if (campaignName && userID) {
+      loadCharacters(userID, campaignName);
+    }
+  }, [campaignName, userID, loadCharacters]);
+
+  return [characters, setCharacters, loadingCharacters];
 };
 
 export const useCurrentCampaignState = (campaigns, campaignName) => {

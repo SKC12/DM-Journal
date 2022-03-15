@@ -17,6 +17,7 @@ import Journal from "./Journal";
 import Stats from "./Stats";
 import { useState } from "react";
 import ErrorPage from "./ErrorPage";
+import Characters from "./Characters";
 
 function App() {
   const [currentUserID, setCurrentUserID] = useState("");
@@ -68,6 +69,34 @@ function App() {
             path="/journal/:user/:campaign"
             element={
               <Journal
+                sideBarHidden={sideBarHidden}
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/characters/*"
+            element={
+              <Characters
+                sideBarHidden={sideBarHidden}
+                currentUserID={currentUserID}
+                setCurrentUserID={setCurrentUserID}
+                currentCampaignID={currentCampaignID}
+                setCurrentCampaignID={setCurrentCampaignID}
+                setCurrentTab={setCurrentTab}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/characters/:user/:campaign"
+            element={
+              <Characters
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}

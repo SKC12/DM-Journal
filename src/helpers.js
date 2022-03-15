@@ -50,6 +50,29 @@ async function loadSessionsFromDatabase(userID, campName, navigate) {
   return sessionsArray;
 }
 
+//Loads characters array from Database
+async function loadCharactersFromDatabase(userID, campName, navigate) {
+  let charactersArray = [];
+  try {
+    const query = await getDocs(
+      collection(
+        db,
+        "users/" + userID + "/campaigns/" + campName + "/characters"
+      )
+    );
+    query.forEach((doc) => {
+      charactersArray.push(doc.data());
+    });
+  } catch (e) {
+    console.log(e);
+    navigate("/error");
+  }
+
+  //console.log("LOADING SESSIONS FROM DB");
+
+  return charactersArray;
+}
+
 function sortSessionsByDate(sessionsArray) {
   return sessionsArray.sort((a, b) => {
     return new Date(a.date) - new Date(b.date);
@@ -99,6 +122,27 @@ async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
   }
 }
 
+async function searchFirebaseForCharacterName(
+  userID,
+  campaignName,
+  characterName
+) {
+  try {
+    const q = query(
+      collection(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/characters"
+      ),
+      where("name", "==", characterName)
+    );
+    const docs = await getDocs(q);
+    return docs;
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
+}
+
 // Writes session to Firebase.
 async function writeSessionToFirebase(userID, campaignName, session) {
   try {
@@ -116,6 +160,23 @@ async function writeSessionToFirebase(userID, campaignName, session) {
   }
 }
 
+// Writes character to Firebase.
+async function writeCharacterToFirebase(userID, campaignName, character) {
+  try {
+    await setDoc(
+      doc(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/characters",
+        character.uid
+      ),
+      character
+    );
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
+}
+
 async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
   try {
     await deleteDoc(
@@ -123,6 +184,21 @@ async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
         db,
         "users/" + userID + "/campaigns/" + campaignName + "/sessions",
         sessionID
+      )
+    );
+  } catch (e) {
+    console.log(e);
+    alert(e);
+  }
+}
+
+async function deleteCharacterFromFirebase(userID, campaignName, characterID) {
+  try {
+    await deleteDoc(
+      doc(
+        db,
+        "users/" + userID + "/campaigns/" + campaignName + "/characters",
+        characterID
       )
     );
   } catch (e) {
@@ -169,11 +245,15 @@ export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
   loadSessionsFromDatabase,
+  loadCharactersFromDatabase,
   loadCampaignsFromDatabase,
   searchFirebaseForSessionName,
+  searchFirebaseForCharacterName,
   writeSessionToFirebase,
+  writeCharacterToFirebase,
   sortSessionsByDate,
   deleteSessionFromFirebase,
+  deleteCharacterFromFirebase,
   deleteCampaignFromFirebase,
   containsInvalidCharacters,
   isOwner,
