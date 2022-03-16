@@ -124,12 +124,14 @@ function Stats(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      <StatsInfo
-        campaign={currentCampaign}
-        sessions={sessions}
-        user={user}
-        stat={stat}
-      />
+      {isPrivate(currentCampaign) ? null : (
+        <StatsInfo
+          campaign={currentCampaign}
+          sessions={sessions}
+          user={user}
+          stat={stat}
+        />
+      )}
     </div>
   );
 }

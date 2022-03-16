@@ -289,22 +289,24 @@ function CharacterInfo(props) {
                     onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                 </div>
-                <div className="CharacterInfo__input-container">
-                  <label
-                    className="CharacterInfo__label"
-                    htmlFor="info-private-description"
-                  >
-                    Private description:
-                  </label>
-                  <textarea
-                    disabled={!isOwner()}
-                    className="CharacterInfo__input CharacterInfo__input-large "
-                    id="info-private-description"
-                    value={privateDescription}
-                    maxLength="3000"
-                    onChange={(e) => setPrivateDescription(e.target.value)}
-                  ></textarea>
-                </div>
+                {isOwner() ? (
+                  <div className="CharacterInfo__input-container">
+                    <label
+                      className="CharacterInfo__label"
+                      htmlFor="info-private-description"
+                    >
+                      Private description:
+                    </label>
+                    <textarea
+                      disabled={!isOwner()}
+                      className="CharacterInfo__input CharacterInfo__input-large "
+                      id="info-private-description"
+                      value={privateDescription}
+                      maxLength="3000"
+                      onChange={(e) => setPrivateDescription(e.target.value)}
+                    ></textarea>
+                  </div>
+                ) : null}
               </div>
               {isOwner() ? buttons(props.character) : null}
             </form>

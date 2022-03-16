@@ -137,14 +137,16 @@ function Journal(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      <JournalInfo
-        campaign={currentCampaign}
-        session={currentSession}
-        sessions={sessions}
-        setSessions={setSessions}
-        user={user}
-        key={currentSession.name}
-      />
+      {isPrivate(currentCampaign) ? null : (
+        <JournalInfo
+          campaign={currentCampaign}
+          session={currentSession}
+          sessions={sessions}
+          setSessions={setSessions}
+          user={user}
+          key={currentSession.name}
+        />
+      )}
     </div>
   );
 }

@@ -153,14 +153,16 @@ function Characters(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      <CharacterInfo
-        campaign={currentCampaign}
-        character={currentCharacter}
-        characters={characters}
-        setCharacters={setCharacters}
-        user={user}
-        key={currentCharacter.name}
-      />
+      {isPrivate(currentCampaign) ? null : (
+        <CharacterInfo
+          campaign={currentCampaign}
+          character={currentCharacter}
+          characters={characters}
+          setCharacters={setCharacters}
+          user={user}
+          key={currentCharacter.name}
+        />
+      )}
     </div>
   );
 }
