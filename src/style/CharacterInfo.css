@@ -1,11 +1,11 @@
 .CharacterInfo__top-container {
   display: grid;
-  grid-template-columns: min-content auto;
-  gap: 24px;
+  grid-template-columns: 100%;
+  gap: 8px;
 }
 
 .CharacterInfo__img-container {
-  width: 200px;
+  width: 100%;
   height: 200px;
   cursor: pointer;
   display: flex;
@@ -72,6 +72,13 @@
 }
 
 @media (min-width: 768px) {
+  .CharacterInfo__top-container {
+    grid-template-columns: min-content auto;
+    gap: 24px;
+  }
+  .CharacterInfo__img-container {
+    width: 200px;
+  }
   .CharacterInfo__buttons {
     width: 160px;
     height: 40px;

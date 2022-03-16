@@ -68,7 +68,7 @@ function Characters(props) {
 
   const sideBarContent = (
     <div>
-      <h2 className="select-none pb-4">Sessions:</h2>
+      <h2 className="select-none pb-4">Characters:</h2>
       {isOwner(user, paramsUser) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
