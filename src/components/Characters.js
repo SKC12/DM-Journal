@@ -109,23 +109,29 @@ function Characters(props) {
   //Populates the sidebar with the character Accordion
   function populateCharacters() {
     let locationsObj = getLocationCharacterObject(characters);
-    //Iterates through location keys, for titles
-    return Object.keys(locationsObj).map((location, index) => {
-      //Iterates through characters in each location, for content
-      let accordionContent = locationsObj[location].map((entry, index) => {
+    //Iterates through sorted location keys, for titles
+    return Object.keys(locationsObj)
+      .sort()
+      .map((location, index) => {
+        //Iterates through characters in each location for accordion content, sorting by name
+        let accordionContent = locationsObj[location]
+          .sort((a, b) => {
+            return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+          })
+          .map((entry, index) => {
+            return (
+              <CharacterCard
+                current={currentCharacter}
+                character={entry}
+                key={entry.name}
+                onClickEvent={setCurrentCharacter}
+              />
+            );
+          });
         return (
-          <CharacterCard
-            current={currentCharacter}
-            character={entry}
-            key={entry.name}
-            onClickEvent={setCurrentCharacter}
-          />
+          <Accordion title={location} content={accordionContent} key={index} />
         );
       });
-      return (
-        <Accordion title={location} content={accordionContent} key={index} />
-      );
-    });
   }
 
   function isPrivate(campaign) {
