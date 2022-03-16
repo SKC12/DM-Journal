@@ -5,6 +5,8 @@
     var(--main-bg-color) 50%,
     var(--main-bg-color)
   );
+  font-size: 0.85rem;
+
   background-size: 100% 210%;
   transition: background-position 0.3s;
   padding: 8px;
@@ -37,6 +39,14 @@
   display: flex;
   align-self: center;
   height: 7vh;
+  max-width: 60vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.header__nav-item-container::-webkit-scrollbar {
+  display: none;
 }
 
 .header__button {
