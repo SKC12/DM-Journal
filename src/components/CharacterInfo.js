@@ -13,10 +13,18 @@ import { confirmAlert } from "react-confirm-alert";
 
 function CharacterInfo(props) {
   const [img, setImg] = useState(genericImage);
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [privateDescription, setPrivateDescription] = "";
+  const [name, setName] = useState(
+    props.character.name ? props.character.name : ""
+  );
+  const [location, setLocation] = useState(
+    props.character.location ? props.character.location : ""
+  );
+  const [description, setDescription] = useState(
+    props.character.description ? props.character.description : ""
+  );
+  const [privateDescription, setPrivateDescription] = useState(
+    props.character.privateDescription ? props.character.privateDescription : ""
+  );
   const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
   const uid = props.character.uid;
@@ -175,7 +183,7 @@ function CharacterInfo(props) {
           className="JournalInfo__buttons"
           onClick={(e) => createCharacter(e)}
         >
-          Create Session
+          Create Character
         </button>
       ) : (
         <>
@@ -183,13 +191,13 @@ function CharacterInfo(props) {
             className="JournalInfo__buttons"
             onClick={(e) => editCharacter(e)}
           >
-            Edit Session
+            Edit Character
           </button>
           <button
             className="JournalInfo__buttons"
             onClick={(e) => characterDeleteAlert(e)}
           >
-            Delete Session
+            Delete Character
           </button>
         </>
       )}

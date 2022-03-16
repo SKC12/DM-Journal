@@ -11,6 +11,8 @@ import { isOwner } from "../helpers";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
 import CharacterInfo from "./CharacterInfo";
+import CharacterCard from "./CharacterCard";
+import Accordion from "./Accordion";
 
 function Characters(props) {
   const setCurrentCampaignID = props.setCurrentCampaignID;
@@ -75,8 +77,64 @@ function Characters(props) {
           + New character
         </div>
       ) : null}
+
+      <div className="bg-gray-300 overflow-y-auto rounded max-h-[50vh]">
+        {isPrivate(currentCampaign) ? (
+          <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
+        ) : loadingCharacters ? (
+          <p className="text-gray-500 h-12 flex items-center justify-center">
+            LOADING...
+          </p>
+        ) : (
+          <ul className="font-normal">{populateCharacters()}</ul>
+        )}
+      </div>
     </div>
   );
+
+  //Returns an Object where each key is a location with value that equals an array of characters from the location
+  function getLocationCharacterObject(characters) {
+    let locationsObj = {};
+    for (let i = 0; i < characters.length; i++) {
+      let loc = characters[i].location;
+      if (locationsObj[loc]) {
+        locationsObj[loc].push(characters[i]);
+      } else {
+        locationsObj[loc] = [characters[i]];
+      }
+    }
+    return locationsObj;
+  }
+
+  //Populates the sidebar with the character Accordion
+  function populateCharacters() {
+    let locationsObj = getLocationCharacterObject(characters);
+    //Iterates through location keys, for titles
+    return Object.keys(locationsObj).map((location, index) => {
+      //Iterates through characters in each location, for content
+      let accordionContent = locationsObj[location].map((entry, index) => {
+        return (
+          <CharacterCard
+            current={currentCharacter}
+            character={entry}
+            key={entry.name}
+            onClickEvent={setCurrentCharacter}
+          />
+        );
+      });
+      return (
+        <Accordion title={location} content={accordionContent} key={index} />
+      );
+    });
+  }
+
+  function isPrivate(campaign) {
+    if (!user || user.uid !== paramsUser) {
+      return campaign.private;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div className="main__container">

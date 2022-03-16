@@ -1,0 +1,27 @@
+.Accordion__title {
+  color: var(--text-color);
+  display: grid;
+  grid-template-columns: min-content auto;
+  gap: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.Accordion__content {
+  color: var(--text-color);
+}
+
+.Accordion__item {
+  background-color: var(--very-light-bg-color);
+  padding: 8px 0;
+  padding-left: 24px;
+  cursor: pointer;
+}
+
+.Accordion__item:hover {
+  background-color: var(--light-bg-color);
+}
+
+.Accordion__selected {
+  background-color: var(--light-bg-color);
+}
