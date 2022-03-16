@@ -233,7 +233,6 @@ function CharacterInfo(props) {
                     src={img}
                     className="CharacterInfo__img"
                     alt="Character"
-                    color="gray"
                   />
                 </div>
                 <div className="CharacterInfo__data-container">
