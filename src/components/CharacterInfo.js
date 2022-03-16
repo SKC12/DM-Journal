@@ -10,9 +10,12 @@ import {
   containsInvalidCharacters,
 } from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
+import CharacterImagePopup from "./CharacterImgPopup";
 
 function CharacterInfo(props) {
-  const [img, setImg] = useState(genericImage);
+  const [img, setImg] = useState(
+    props.character.img ? props.character.img : genericImage
+  );
   const [name, setName] = useState(
     props.character.name ? props.character.name : ""
   );
@@ -27,6 +30,7 @@ function CharacterInfo(props) {
   );
   const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
+  const [isImgPopup, setIsImgPopup] = useState(false);
   const uid = props.character.uid;
 
   useEffect(() => {
@@ -39,6 +43,7 @@ function CharacterInfo(props) {
 
     let character = {
       name: name,
+      img: img,
       location: location,
       description: description,
       privateDescription: privateDescription,
@@ -70,6 +75,7 @@ function CharacterInfo(props) {
     e.preventDefault();
     let character = {
       name: name,
+      img: img,
       location: location,
       description: description,
       privateDescription: privateDescription,
@@ -208,11 +214,27 @@ function CharacterInfo(props) {
     <div className="p-3 grow">
       {props.character === "" || props.campaign === "" ? null : (
         <div>
+          {isImgPopup && (
+            <CharacterImagePopup
+              setImg={setImg}
+              img={img}
+              isVisible={setIsImgPopup}
+              genericImage={genericImage}
+            />
+          )}
           <div className="animate__animated animate__fadeIn">
             <form className="md:pl-20 md:pt-12 md:max-w-4xl">
               <div className="CharacterInfo__top-container">
-                <div className="CharacterInfo__img-container">
-                  <img src={img} alt="Character" width="200px" color="gray" />
+                <div
+                  className="CharacterInfo__img-container"
+                  onClick={() => setIsImgPopup(true)}
+                >
+                  <img
+                    src={img}
+                    className="CharacterInfo__img"
+                    alt="Character"
+                    color="gray"
+                  />
                 </div>
                 <div className="CharacterInfo__data-container">
                   <div className="CharacterInfo__input-container">
