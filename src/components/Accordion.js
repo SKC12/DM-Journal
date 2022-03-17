@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../style/Accordion.css";
 
 let chevronDown = (
@@ -33,6 +33,14 @@ let chevronRight = (
 
 function Accordion(props) {
   const [isActive, setIsActive] = useState(false);
+
+  //For cases where an Accordion should inilialize open
+  useEffect(() => {
+    if (props.startOpen === props.title) {
+      setIsActive(true);
+    }
+  }, [props.startOpen, props.title]);
+
   return (
     <div className="Accordion__container">
       <div className="Accordion__title" onClick={() => setIsActive(!isActive)}>

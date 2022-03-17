@@ -66,6 +66,16 @@ function Characters(props) {
     }
   }
 
+  //Sets up initial characcter on characters load
+  useEffect(() => {
+    let random = Math.floor(Math.random() * characters.length);
+    if (characters && characters.length > 0) {
+      setCurrentCharacter(characters[random]);
+    } else {
+      setCurrentCharacter("");
+    }
+  }, [characters]);
+
   const sideBarContent = (
     <div>
       <h2 className="select-none pb-4">Characters:</h2>
@@ -129,7 +139,12 @@ function Characters(props) {
             );
           });
         return (
-          <Accordion title={location} content={accordionContent} key={index} />
+          <Accordion
+            title={location}
+            content={accordionContent}
+            startOpen={currentCharacter.location}
+            key={index}
+          />
         );
       });
   }
