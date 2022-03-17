@@ -16,6 +16,7 @@
   background-color: var(--light-bg-color);
   overflow: auto;
 }
+
 .Stats__label {
   width: auto;
 }

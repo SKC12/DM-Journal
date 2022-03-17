@@ -12,6 +12,7 @@ function CharacterCard(props) {
       onClick={() => props.onClickEvent(props.character)}
     >
       <p>{props.character.name}</p>
+      <img className="Accordion__img" alt="" src={props.character.img}></img>
     </div>
   );
 }

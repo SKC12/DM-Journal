@@ -1,5 +1,9 @@
+.Accordion__container {
+}
+
 .Accordion__title {
   color: var(--text-color);
+  background-color: var(--main-bg-color);
   display: grid;
   grid-template-columns: min-content auto;
   gap: 8px;
@@ -9,13 +13,27 @@
 
 .Accordion__content {
   color: var(--text-color);
+  background-color: var(--main-bg-color);
+}
+
+.Accordion__img {
+  height: 220%;
+  justify-self: center;
 }
 
 .Accordion__item {
   background-color: var(--very-light-bg-color);
-  padding: 8px 0;
-  padding-left: 24px;
+  white-space: nowrap;
+  font-size: small;
+  padding: 4px 0;
+  padding-left: 12px;
   cursor: pointer;
+  height: 26px;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  align-items: center;
+  overflow: hidden;
+  margin: 2px 0;
 }
 
 .Accordion__item:hover {

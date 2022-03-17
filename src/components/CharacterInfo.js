@@ -252,7 +252,7 @@ function CharacterInfo(props) {
                       disabled={!isOwner()}
                       id="info-character-name"
                       value={name}
-                      maxLength="50"
+                      maxLength="25"
                       onChange={(e) => setName(e.target.value)}
                     ></input>
                   </div>
@@ -269,7 +269,7 @@ function CharacterInfo(props) {
                       disabled={!isOwner()}
                       id="info-character-location"
                       value={location}
-                      maxLength="50"
+                      maxLength="25"
                       onChange={(e) => setLocation(e.target.value)}
                     ></input>
                   </div>
