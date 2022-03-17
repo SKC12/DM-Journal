@@ -685,6 +685,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   align-self: stretch;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .whitespace-nowrap {
   white-space: nowrap;
 }
