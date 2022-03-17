@@ -211,7 +211,7 @@ function CharacterInfo(props) {
   );
 
   return (
-    <div className="p-3 grow">
+    <div className="grow overflow-auto">
       {props.character === "" || props.campaign === "" ? null : (
         <div>
           {isImgPopup && (
@@ -223,7 +223,7 @@ function CharacterInfo(props) {
             />
           )}
           <div className="animate__animated animate__fadeIn">
-            <form className="md:pl-20 md:pt-12 md:max-w-4xl">
+            <form className="p-3 md:pl-20 md:pt-12 md:max-w-4xl">
               <div className="CharacterInfo__top-container">
                 <div
                   className={`CharacterInfo__img-container ${

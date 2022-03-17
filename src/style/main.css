@@ -43,6 +43,13 @@
   border-color: var(--text-color);
 }
 
+.generic__Sidebar {
+  background-color: var(--main-bg-color);
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+  border-radius: 0.25rem;
+}
+
 .main__container {
   display: flex;
   width: 100%;
@@ -52,6 +59,7 @@
 @media (min-width: 768px) {
   .main__container {
     height: 95vh;
+    max-height: 95vh;
   }
   .generic__buttons {
     width: 160px;

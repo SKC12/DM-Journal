@@ -577,10 +577,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 140px;
 }
 
-.max-h-\[50vh\] {
-  max-height: 50vh;
-}
-
 .w-5 {
   width: 1.25rem;
 }
@@ -687,10 +683,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .self-stretch {
   align-self: stretch;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
 }
 
 .whitespace-nowrap {

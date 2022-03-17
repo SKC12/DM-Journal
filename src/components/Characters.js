@@ -78,7 +78,7 @@ function Characters(props) {
         </div>
       ) : null}
 
-      <div className="bg-gray-300 overflow-y-auto rounded max-h-[50vh]">
+      <div className="generic__Sidebar">
         {isPrivate(currentCampaign) ? (
           <ul className="text-gray-800 text-center">PRIVATE CAMPAIGN</ul>
         ) : loadingCharacters ? (

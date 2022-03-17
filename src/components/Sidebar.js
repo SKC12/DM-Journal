@@ -16,7 +16,7 @@ function Sidebar(props) {
     <div
       className={`${
         props.sideBarHidden ? "hidden" : "block"
-      } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50`}
+      } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50 `}
     >
       {isOwner(user, currentUserID) ? (
         <CampaignSelector

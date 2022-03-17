@@ -235,7 +235,7 @@ function JournalInfo(props) {
     } else {
       return (
         <div className="animate__animated animate__fadeIn">
-          <form className="md:pl-20 md:pt-12 md:max-w-4xl">
+          <form className="p-3 md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="md:flex ">
               <div className="JournalInfo__input-container">
                 <label className="generic__label" htmlFor="info-session-name">
@@ -348,7 +348,7 @@ function JournalInfo(props) {
     }
   }
 
-  return <div className="p-3 grow ">{populate(props.session)}</div>;
+  return <div className="grow overflow-auto">{populate(props.session)}</div>;
 }
 
 export default JournalInfo;
