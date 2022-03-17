@@ -226,8 +226,12 @@ function CharacterInfo(props) {
             <form className="md:pl-20 md:pt-12 md:max-w-4xl">
               <div className="CharacterInfo__top-container">
                 <div
-                  className="CharacterInfo__img-container"
-                  onClick={() => setIsImgPopup(true)}
+                  className={`CharacterInfo__img-container ${
+                    isOwner() ? "cursor-pointer" : ""
+                  }`}
+                  onClick={() => {
+                    if (isOwner()) setIsImgPopup(true);
+                  }}
                 >
                   <img
                     src={img}
@@ -241,7 +245,7 @@ function CharacterInfo(props) {
                       className="generic__label"
                       htmlFor="info-character-name"
                     >
-                      Name:
+                      Name
                     </label>
                     <input
                       className="generic__input"
@@ -258,7 +262,7 @@ function CharacterInfo(props) {
                       className="generic__label"
                       htmlFor="info-character-location"
                     >
-                      Location:
+                      Location
                     </label>
                     <input
                       className="generic__input"
@@ -277,7 +281,7 @@ function CharacterInfo(props) {
                     className="generic__label"
                     htmlFor="info-character-description"
                   >
-                    Character description:
+                    Character description
                   </label>
                   <textarea
                     disabled={!isOwner()}
@@ -294,7 +298,7 @@ function CharacterInfo(props) {
                       className="generic__label"
                       htmlFor="info-private-description"
                     >
-                      Private description:
+                      Private description
                     </label>
                     <textarea
                       disabled={!isOwner()}
