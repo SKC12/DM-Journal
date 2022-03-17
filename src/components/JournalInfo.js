@@ -186,7 +186,7 @@ function JournalInfo(props) {
 
   let titleErrorMessage = () => {
     return errorMsg ? (
-      <p className="JournalInfo__alert-text">
+      <p className="generic__alert-text">
         Session names must be unique and cannot contain forward slashes ("/")
       </p>
     ) : null;
@@ -194,29 +194,23 @@ function JournalInfo(props) {
 
   let dateErrorMessage = () => {
     return dateErrorMsg ? (
-      <p className="JournalInfo__alert-text">Invalid session date</p>
+      <p className="generic__alert-text">Invalid session date</p>
     ) : null;
   };
 
   const buttons = (entry) => (
     <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
-        <button
-          className="JournalInfo__buttons"
-          onClick={(e) => createSession(e)}
-        >
+        <button className="generic__buttons" onClick={(e) => createSession(e)}>
           Create Session
         </button>
       ) : (
         <>
-          <button
-            className="JournalInfo__buttons"
-            onClick={(e) => editSession(e)}
-          >
+          <button className="generic__buttons" onClick={(e) => editSession(e)}>
             Edit Session
           </button>
           <button
-            className="JournalInfo__buttons"
+            className="generic__buttons"
             onClick={(e) => sessionDeleteAlert(e)}
           >
             Delete Session
@@ -244,16 +238,13 @@ function JournalInfo(props) {
           <form className="md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="md:flex ">
               <div className="JournalInfo__input-container">
-                <label
-                  className="JournalInfo__label"
-                  htmlFor="info-session-name"
-                >
+                <label className="generic__label" htmlFor="info-session-name">
                   Session title{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
-                  className="JournalInfo__input md:w-96 mr-8"
+                  className="generic__input md:w-96 mr-8"
                   id="info-session-name"
                   value={name}
                   maxLength="50"
@@ -262,17 +253,14 @@ function JournalInfo(props) {
               </div>
 
               <div className="JournalInfo__input-container">
-                <label
-                  className="JournalInfo__label"
-                  htmlFor="info-session-color"
-                >
+                <label className="generic__label" htmlFor="info-session-color">
                   Color{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="color"
-                  className="JournalInfo__input w-12"
+                  className="generic__input w-12"
                   id="info-session-color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
@@ -284,17 +272,14 @@ function JournalInfo(props) {
 
             <div className="md:flex md:pt-6">
               <div className="JournalInfo__input-container">
-                <label
-                  className="JournalInfo__label"
-                  htmlFor="info-session-date"
-                >
+                <label className="generic__label" htmlFor="info-session-date">
                   Session date{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="date"
-                  className="JournalInfo__input"
+                  className="generic__input"
                   id="info-session-date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
@@ -302,10 +287,7 @@ function JournalInfo(props) {
               </div>
 
               <div className="JournalInfo__input-container">
-                <label
-                  className="JournalInfo__label"
-                  htmlFor="info-session-time"
-                >
+                <label className="generic__label" htmlFor="info-session-time">
                   Ingame duration{" "}
                 </label>
 
@@ -313,7 +295,7 @@ function JournalInfo(props) {
                   <input
                     disabled={!isOwner()}
                     type="number"
-                    className={`JournalInfo__input w-16 mr-2`}
+                    className={`generic__input w-16 mr-2`}
                     id="info-session-time"
                     value={ingameTime}
                     min="0"
@@ -325,17 +307,14 @@ function JournalInfo(props) {
               </div>
 
               <div className="JournalInfo__input-container">
-                <label
-                  className="JournalInfo__label"
-                  htmlFor="info-session-level"
-                >
+                <label className="generic__label" htmlFor="info-session-level">
                   Party level{" "}
                 </label>
 
                 <input
                   disabled={!isOwner()}
                   type="number"
-                  className="JournalInfo__input w-16"
+                  className="generic__input w-16"
                   id="info-session-level"
                   value={partyLevel}
                   min="0"
@@ -348,14 +327,14 @@ function JournalInfo(props) {
 
             <div className="JournalInfo__input-container pb-6 md:pt-6 md:pr-6">
               <label
-                className="JournalInfo__label"
+                className="generic__label"
                 htmlFor="info-session-description"
               >
                 Session description{" "}
               </label>
               <textarea
                 disabled={!isOwner()}
-                className="JournalInfo__input w-full h-32 md:h-60 resize-none"
+                className="generic__input w-full h-32 md:h-60 resize-none"
                 id="info-session-description"
                 value={description}
                 maxLength="3000"

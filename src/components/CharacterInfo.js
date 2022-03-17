@@ -158,7 +158,7 @@ function CharacterInfo(props) {
 
   let nameErrorMessage = () => {
     return errorMsg ? (
-      <p className="JournalInfo__alert-text">
+      <p className="generic__alert-text">
         Character names must be unique and cannot contain forward slashes ("/")
       </p>
     ) : null;
@@ -186,7 +186,7 @@ function CharacterInfo(props) {
     <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
         <button
-          className="JournalInfo__buttons"
+          className="generic__buttons"
           onClick={(e) => createCharacter(e)}
         >
           Create Character
@@ -194,13 +194,13 @@ function CharacterInfo(props) {
       ) : (
         <>
           <button
-            className="JournalInfo__buttons"
+            className="generic__buttons"
             onClick={(e) => editCharacter(e)}
           >
             Edit Character
           </button>
           <button
-            className="JournalInfo__buttons"
+            className="generic__buttons"
             onClick={(e) => characterDeleteAlert(e)}
           >
             Delete Character
@@ -238,13 +238,13 @@ function CharacterInfo(props) {
                 <div className="CharacterInfo__data-container">
                   <div className="CharacterInfo__input-container">
                     <label
-                      className="CharacterInfo__label"
+                      className="generic__label"
                       htmlFor="info-character-name"
                     >
                       Name:
                     </label>
                     <input
-                      className="CharacterInfo__input"
+                      className="generic__input"
                       disabled={!isOwner()}
                       id="info-character-name"
                       value={name}
@@ -255,13 +255,13 @@ function CharacterInfo(props) {
                   {nameErrorMessage()}
                   <div className="CharacterInfo__input-container">
                     <label
-                      className="CharacterInfo__label"
+                      className="generic__label"
                       htmlFor="info-character-location"
                     >
                       Location:
                     </label>
                     <input
-                      className="CharacterInfo__input"
+                      className="generic__input"
                       disabled={!isOwner()}
                       id="info-character-location"
                       value={location}
@@ -274,14 +274,14 @@ function CharacterInfo(props) {
               <div className="CharacterInfo__bot-container">
                 <div className="CharacterInfo__input-container">
                   <label
-                    className="CharacterInfo__label"
+                    className="generic__label"
                     htmlFor="info-character-description"
                   >
                     Character description:
                   </label>
                   <textarea
                     disabled={!isOwner()}
-                    className="CharacterInfo__input  CharacterInfo__input-large"
+                    className="generic__input  CharacterInfo__input-large"
                     id="info-character-description"
                     value={description}
                     maxLength="3000"
@@ -291,14 +291,14 @@ function CharacterInfo(props) {
                 {isOwner() ? (
                   <div className="CharacterInfo__input-container">
                     <label
-                      className="CharacterInfo__label"
+                      className="generic__label"
                       htmlFor="info-private-description"
                     >
                       Private description:
                     </label>
                     <textarea
                       disabled={!isOwner()}
-                      className="CharacterInfo__input CharacterInfo__input-large "
+                      className="generic__input CharacterInfo__input-large "
                       id="info-private-description"
                       value={privateDescription}
                       maxLength="3000"

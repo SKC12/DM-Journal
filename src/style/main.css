@@ -1,30 +1,60 @@
+.generic__alert-text {
+  color: var(--error-text-color);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding-top: 4px;
+  padding-left: 4px;
+}
+
+.generic__buttons {
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 8px;
+  color: white;
+  background-color: var(--button-color);
+}
+.generic__buttons:hover {
+  background-color: var(--button-hover-color);
+}
+
+.generic__label {
+  width: 208px;
+  display: block;
+  font-weight: 700;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.generic__input {
+  background-color: var(--light-bg-color);
+  min-height: 28px;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--text-color);
+  line-height: 1.25;
+}
+
+.generic__input:disabled {
+  background-color: var(--main-bg-color);
+}
+
+.generic__input:focus {
+  background-color: var(--very-light-bg-color);
+  border-color: var(--text-color);
+}
+
 .main__container {
   display: flex;
   width: 100%;
   box-sizing: border-box;
 }
 
-.Stats__sidebar-item {
-  padding-bottom: 16px;
-  cursor: pointer;
-  transition-property: color;
-  transition-duration: 300ms;
-}
-
-.Stats__sidebar-item:hover {
-  color: var(--selected-color);
-}
-
-.Stats__selected {
-  color: var(--selected-color);
-}
-
-/* pb-2 cursor-pointer hover:text-gray-400 transition-colors duration-300 */
-
 @media (min-width: 768px) {
   .main__container {
     height: 95vh;
   }
+  .generic__buttons {
+    width: 160px;
+    height: 40px;
+  }
 }
-
-/* box-border flex md:h-[95vh] w-[100%] */

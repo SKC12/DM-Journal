@@ -16,16 +16,11 @@
   background-color: var(--light-bg-color);
   overflow: auto;
 }
-
-.StatsInfo__label {
-  padding-right: 8px;
-  display: block;
-  font-weight: 700;
-  max-width: 50vw;
+.Stats__label {
+  width: auto;
 }
 
 .StatsInfo__stat-container {
-  padding-bottom: 16px;
   display: grid;
   grid-template-columns: 120px 1fr;
   align-items: center;
@@ -63,6 +58,21 @@
   grid-template-columns: 1fr 100px;
   white-space: nowrap;
   gap: 8px;
+}
+
+.Stats__sidebar-item {
+  padding-bottom: 16px;
+  cursor: pointer;
+  transition-property: color;
+  transition-duration: 300ms;
+}
+
+.Stats__sidebar-item:hover {
+  color: var(--selected-color);
+}
+
+.Stats__selected {
+  color: var(--selected-color);
 }
 
 @media (min-width: 768px) {

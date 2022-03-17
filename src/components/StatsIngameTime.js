@@ -220,20 +220,24 @@ function StatsIngameTime(props) {
 
   return (
     <div className="StatsInfo__element-container animate__animated animate__fadeIn ">
-      <h2 className="StatsInfo__label">Time passed:</h2>
+      <h2 className="generic__label  Stats__label">Time passed:</h2>
       {lineChart}
 
       <div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Ingame time passed:</h2>
+          <h2 className="generic__label  Stats__label">Ingame time passed:</h2>
           <p className="shrink-0">{maxTime} days</p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Average time passed per session:</h2>
+          <h2 className="generic__label  Stats__label">
+            Average time passed per session:
+          </h2>
           <p className="shrink-0">{avgTPS.toFixed(1)} days</p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Max time passed in a session:</h2>
+          <h2 className="generic__label  Stats__label">
+            Max time passed in a session:
+          </h2>
           <p className="flex 1">
             {maxSession.ingameTime} days in "{maxSession.name}"
           </p>

@@ -72,7 +72,7 @@ function CampaignInfo(props) {
 
   let errorMessage = () => {
     return errorMsg ? (
-      <p className="CampaignInfo__alert-text">
+      <p className="generic__alert-text">
         Campaign names must be unique and cannot contain forward slashes "/"
       </p>
     ) : (
@@ -125,15 +125,12 @@ function CampaignInfo(props) {
         <div className="animate__animated animate__fadeIn">
           <form className="md:pl-20 md:pt-12 md:max-w-4xl">
             <div className="flex-col items-center md:pb-6">
-              <label
-                className="CampaignInfo__label"
-                htmlFor="info-campaign-name"
-              >
+              <label className="generic__label" htmlFor="info-campaign-name">
                 Campaign name{" "}
               </label>
 
               <input
-                className="CampaignInfo__input md:w-96"
+                className="generic__input md:w-96"
                 id="info-campaign-name"
                 value={name}
                 maxLength="50"
@@ -145,13 +142,13 @@ function CampaignInfo(props) {
 
             <div className="flex-col items-center md:pb-3 md:pr-6">
               <label
-                className="CampaignInfo__label"
+                className="generic__label"
                 htmlFor="info-campaign-description"
               >
                 Campaign description{" "}
               </label>
               <textarea
-                className={`CampaignInfo__input my-3 indent-6 w-full h-60 resize-none`}
+                className={`generic__input my-3 indent-6 w-full h-60 resize-none`}
                 id="info-campaign-description"
                 maxLength="1500"
                 value={description}
@@ -161,7 +158,7 @@ function CampaignInfo(props) {
 
             <div className="flex items-center pb-6">
               <label
-                className={`CampaignInfo__label pb-0 max-w-fit`}
+                className={`generic__label pb-0 max-w-fit`}
                 htmlFor="info-campaign-private"
               >
                 Private?
@@ -175,10 +172,10 @@ function CampaignInfo(props) {
               />
             </div>
 
-            <div className="flex justify-center h-10 items-stretch">
+            <div className="flex justify-center h-10 items-stretch gap-3">
               {campaign === "new" ? (
                 <button
-                  className="w-40 h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                  className="generic__buttons"
                   onClick={(e) => createCampaign(e)}
                 >
                   Create Campaign
@@ -186,13 +183,13 @@ function CampaignInfo(props) {
               ) : (
                 <>
                   <button
-                    className="mx-2 px-2 w-20 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    className="generic__buttons"
                     onClick={(e) => editCampaign(e)}
                   >
                     Edit
                   </button>
                   <button
-                    className="mx-2 px-2 w-20 md:w-40 md:h-10 rounded-lg bg-gray-600 hover:bg-gray-500 text-white"
+                    className="generic__buttons"
                     onClick={(e) => campaignDeleteAlert(e)}
                   >
                     Delete
@@ -205,7 +202,7 @@ function CampaignInfo(props) {
       );
     }
   }
-  return <div className="p-3 bg-gray-300 grow">{populate(props.campaign)}</div>;
+  return <div className="p-3 grow">{populate(props.campaign)}</div>;
 }
 
 export default CampaignInfo;

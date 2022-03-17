@@ -137,29 +137,31 @@ function StatsTime(props) {
       </div>
       <div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Number of sessions:</h2>
+          <h2 className="generic__label Stats__label">Number of sessions:</h2>
           <p className="shrink-0">{numberOfSessions}</p>
         </div>
         <div>
-          <h2 className="StatsInfo__label">Session days:</h2>
+          <h2 className="generic__label Stats__label">Session days:</h2>
           <div className="StatsTime__weekdays">{weekdayElements}</div>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">First Session:</h2>
+          <h2 className="generic__label Stats__label">First Session:</h2>
           <p className="shrink-0">{format(sDate, "MMMM dd, yyyy")}</p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Last Session:</h2>
+          <h2 className="generic__label Stats__label">Last Session:</h2>
           <p className="shrink-0">{format(eDate, "MMMM dd, yyyy")}</p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Campaign Duration:</h2>
+          <h2 className="generic__label Stats__label">Campaign Duration:</h2>
           <p className="">
             {campaignLength} days ({getFormatedDiff(sDate, eDate)})
           </p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Average time between sessions:</h2>
+          <h2 className="generic__label Stats__label">
+            Average time between sessions:
+          </h2>
           <p className="shrink-0">
             {(campaignLength / numberOfSessions).toFixed(2)} days
           </p>

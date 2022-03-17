@@ -191,19 +191,23 @@ function StatsIngameTime(props) {
 
   return (
     <div className="StatsInfo__element-container animate__animated animate__fadeIn">
-      <h2 className="StatsInfo__label">Levels:</h2>
+      <h2 className="generic__label  Stats__label">Levels:</h2>
       {lineChart}
 
       <div>
-        <h2 className="StatsInfo__label">Time to level:</h2>
-        <div className="StatsLevelling__levels">{individualLevelElements}</div>
+        <h2 className="generic__label">Time to level:</h2>
+        <div className="StatsLevelling__levels  Stats__label">
+          {individualLevelElements}
+        </div>
 
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Number of sessions:</h2>
+          <h2 className="generic__label  Stats__label">Number of sessions:</h2>
           <p>{numberOfSessions}</p>
         </div>
         <div className="StatsInfo__stat-container">
-          <h2 className="StatsInfo__label">Average time to level:</h2>
+          <h2 className="generic__label  Stats__label">
+            Average time to level:
+          </h2>
           <p>{avgTTL.toFixed(1)} sessions</p>
         </div>
       </div>
