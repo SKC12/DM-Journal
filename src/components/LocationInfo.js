@@ -255,15 +255,17 @@ function LocationInfo(props) {
                     }  `}
                     alt="Location"
                   />
-                  <div
-                    className="ChaLocInfo__img-zoom"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsBigImage(!isBigImage);
-                    }}
-                  >
-                    <img alt="" src={zoomImg} />
-                  </div>
+                  {img === genericImage ? null : (
+                    <div
+                      className="ChaLocInfo__img-zoom"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsBigImage(!isBigImage);
+                      }}
+                    >
+                      <img alt="" src={zoomImg} />
+                    </div>
+                  )}
                 </div>
                 <div className="ChaLocInfo__data-container">
                   <div className="ChaLocInfo__input-container">
