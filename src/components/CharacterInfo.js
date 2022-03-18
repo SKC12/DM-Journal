@@ -238,7 +238,15 @@ function CharacterInfo(props) {
                     if (isOwner()) setIsImgPopup(true);
                   }}
                 >
-                  <img src={img} className="ChaLocInfo__img" alt="Character" />
+                  <img
+                    src={img}
+                    className={`${
+                      img === genericImage
+                        ? "ChaLocInfo__genericImg"
+                        : "ChaLocInfo__img"
+                    } `}
+                    alt="Character"
+                  />
                 </div>
                 <div className="ChaLocInfo__data-container">
                   <div className="ChaLocInfo__input-container">

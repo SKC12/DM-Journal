@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "../style/ChaLocInfo.css";
 import genericImage from "../img/bx-image.svg";
+import zoomInImage from "../img/bx-zoom-in.svg";
+import zoomOutImage from "../img/bx-zoom-out.svg";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
@@ -27,10 +29,17 @@ function LocationInfo(props) {
   const [privateDescription, setPrivateDescription] = useState(
     props.location.privateDescription ? props.location.privateDescription : ""
   );
+  const [isBigImage, setIsBigImage] = useState(false);
   const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
+  const [zoomImg, setZoomImg] = useState(zoomInImage);
   const uid = props.location.uid;
+
+  useEffect(() => {
+    console.log(isBigImage);
+    isBigImage ? setZoomImg(zoomOutImage) : setZoomImg(zoomInImage);
+  }, [isBigImage]);
 
   useEffect(() => {
     setErrorMsg(false);
@@ -80,6 +89,7 @@ function LocationInfo(props) {
     };
     if (isValidLocation(location)) {
       if (
+        name === props.location.name ||
         props.locations.filter((e) => e.name === location.name).length === 0
       ) {
         await writeToFirebase(
@@ -221,7 +231,11 @@ function LocationInfo(props) {
           )}
           <div className="animate__animated animate__fadeIn">
             <form className="p-3 md:pl-20 md:pt-12 md:max-w-4xl">
-              <div className="ChaLocInfo__top-container">
+              <div
+                className={`ChaLocInfo__top-container ${
+                  isBigImage ? "ChaLocInfo__big-img-container" : ""
+                }`}
+              >
                 <div
                   className={`ChaLocInfo__img-container ${
                     isOwner() ? "cursor-pointer" : ""
@@ -230,7 +244,26 @@ function LocationInfo(props) {
                     if (isOwner()) setIsImgPopup(true);
                   }}
                 >
-                  <img src={img} className="ChaLocInfo__img" alt="Location" />
+                  <img
+                    src={img}
+                    className={`${
+                      img === genericImage
+                        ? "ChaLocInfo__genericImg"
+                        : isBigImage
+                        ? "ChaLocInfo__big-img"
+                        : "ChaLocInfo__img"
+                    }  `}
+                    alt="Location"
+                  />
+                  <div
+                    className="ChaLocInfo__img-zoom"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsBigImage(!isBigImage);
+                    }}
+                  >
+                    <img alt="" src={zoomImg} />
+                  </div>
                 </div>
                 <div className="ChaLocInfo__data-container">
                   <div className="ChaLocInfo__input-container">
