@@ -6,7 +6,6 @@ import "animate.css";
 import "../style/JournalInfo.css";
 
 import {
-  searchFirebaseForName,
   writeToFirebase,
   sortSessionsByDate,
   deleteFromFirebase,
@@ -70,13 +69,7 @@ function JournalInfo(props) {
     };
 
     if (isValidSession(session)) {
-      const docs = await searchFirebaseForName(
-        "sessions",
-        props.user.uid,
-        props.campaign.name,
-        name
-      );
-      if (docs.docs.length === 0) {
+      if (props.sessions.filter((e) => e.name === session.name).length === 0) {
         await writeToFirebase(
           "sessions",
           props.user.uid,
@@ -118,16 +111,20 @@ function JournalInfo(props) {
       uid: uid,
     };
     if (isValidSession(session)) {
-      await writeToFirebase(
-        "sessions",
-        props.user.uid,
-        props.campaign.name,
-        session
-      );
-      let newArr = props.sessions.map((entry) => {
-        return entry.uid === uid ? session : entry;
-      });
-      props.setSessions(sortSessionsByDate(newArr));
+      if (props.sessions.filter((e) => e.name === session.name).length === 0) {
+        await writeToFirebase(
+          "sessions",
+          props.user.uid,
+          props.campaign.name,
+          session
+        );
+        let newArr = props.sessions.map((entry) => {
+          return entry.uid === uid ? session : entry;
+        });
+        props.setSessions(sortSessionsByDate(newArr));
+      } else {
+        setErrorMsg(true);
+      }
     }
   }
 

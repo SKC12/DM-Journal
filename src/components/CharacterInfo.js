@@ -4,7 +4,6 @@ import genericImage from "../img/bxs-face.svg";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
-  searchFirebaseForName,
   writeToFirebase,
   deleteFromFirebase,
   containsInvalidCharacters,
@@ -51,13 +50,9 @@ function CharacterInfo(props) {
     };
 
     if (isValidCharacter(character)) {
-      const docs = await searchFirebaseForName(
-        "characters",
-        props.user.uid,
-        props.campaign.name,
-        name
-      );
-      if (docs.docs.length === 0) {
+      if (
+        props.characters.filter((e) => e.name === character.name).length === 0
+      ) {
         await writeToFirebase(
           "characters",
           props.user.uid,
@@ -84,16 +79,22 @@ function CharacterInfo(props) {
       uid: uid,
     };
     if (isValidCharacter(character)) {
-      await writeToFirebase(
-        "characters",
-        props.user.uid,
-        props.campaign.name,
-        character
-      );
-      let newArr = props.characters.map((entry) => {
-        return entry.uid === uid ? character : entry;
-      });
-      props.setCharacters(newArr);
+      if (
+        props.characters.filter((e) => e.name === character.name).length === 0
+      ) {
+        await writeToFirebase(
+          "characters",
+          props.user.uid,
+          props.campaign.name,
+          character
+        );
+        let newArr = props.characters.map((entry) => {
+          return entry.uid === uid ? character : entry;
+        });
+        props.setCharacters(newArr);
+      } else {
+        setErrorMsg(true);
+      }
     }
   }
 
