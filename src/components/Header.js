@@ -60,6 +60,14 @@ function Header(props) {
           Characters
         </li>
         <li
+          className={`header__nav-item ${
+            currentTab === "Locations" ? "header__selected" : ""
+          }`}
+          onClick={() => navigate(`/locations${idParameters}`)}
+        >
+          Locations
+        </li>
+        <li
           className={`header__nav-item   ${
             currentTab === "Stats" ? "header__selected" : ""
           }`}

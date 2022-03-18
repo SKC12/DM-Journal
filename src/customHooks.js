@@ -63,7 +63,7 @@ export const useCharacterState = (userID, campaignName) => {
     [navigate]
   );
 
-  //Changes session list on campaign change
+  //Changes character list on campaign change
   useEffect(() => {
     if (campaignName && userID) {
       loadCharacters(userID, campaignName);
@@ -71,6 +71,39 @@ export const useCharacterState = (userID, campaignName) => {
   }, [campaignName, userID, loadCharacters]);
 
   return [characters, setCharacters, loadingCharacters];
+};
+
+export const useLocationState = (userID, campaignName) => {
+  const [locations, setLocations] = useState([]);
+  const [loadingLocations, setLoadingLocations] = useState(false);
+  const navigate = useNavigate();
+
+  //Loads session list based on params
+  const loadLocations = useCallback(
+    async (userID, campaignName) => {
+      if (campaignName) {
+        setLoadingLocations(true);
+        let locations = await loadFromFirebase(
+          "locations",
+          userID,
+          campaignName,
+          navigate
+        );
+        setLoadingLocations(false);
+        setLocations(locations);
+      }
+    },
+    [navigate]
+  );
+
+  //Changes location list on campaign change
+  useEffect(() => {
+    if (campaignName && userID) {
+      loadLocations(userID, campaignName);
+    }
+  }, [campaignName, userID, loadLocations]);
+
+  return [locations, setLocations, loadingLocations];
 };
 
 export const useCurrentCampaignState = (campaigns, campaignName) => {

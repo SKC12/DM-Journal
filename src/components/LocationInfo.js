@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../style/ChaLocInfo.css";
-import genericImage from "../img/bxs-face.svg";
+import genericImage from "../img/bx-image.svg";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
@@ -11,56 +11,56 @@ import {
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
 
-function CharacterInfo(props) {
+function LocationInfo(props) {
   const [img, setImg] = useState(
-    props.character.img ? props.character.img : genericImage
+    props.location.img ? props.location.img : genericImage
   );
   const [name, setName] = useState(
-    props.character.name ? props.character.name : ""
+    props.location.name ? props.location.name : ""
   );
-  const [location, setLocation] = useState(
-    props.character.location ? props.character.location : ""
+  const [folder, setFolder] = useState(
+    props.location.location ? props.location.location : ""
   );
   const [description, setDescription] = useState(
-    props.character.description ? props.character.description : ""
+    props.location.description ? props.location.description : ""
   );
   const [privateDescription, setPrivateDescription] = useState(
-    props.character.privateDescription ? props.character.privateDescription : ""
+    props.location.privateDescription ? props.location.privateDescription : ""
   );
   const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
-  const uid = props.character.uid;
+  const uid = props.location.uid;
 
   useEffect(() => {
     setErrorMsg(false);
   }, [name]);
 
   //Adds character to Database
-  async function createCharacter(e) {
+  async function createLocation(e) {
     e.preventDefault();
 
-    let character = {
+    let location = {
       name: name,
       img: img,
-      location: location,
+      location: folder,
       description: description,
       privateDescription: privateDescription,
       uid: nanoid(),
     };
 
-    if (isValidCharacter(character)) {
+    if (isValidLocation(location)) {
       if (
-        props.characters.filter((e) => e.name === character.name).length === 0
+        props.locations.filter((e) => e.name === location.name).length === 0
       ) {
         await writeToFirebase(
-          "characters",
+          "locations",
           props.user.uid,
           props.campaign.name,
-          character
+          location
         );
-        let newCharacters = props.characters.concat(character);
-        props.setCharacters(newCharacters);
+        let newLocations = props.locations.concat(location);
+        props.setLocations(newLocations);
       } else {
         setErrorMsg(true);
       }
@@ -68,50 +68,50 @@ function CharacterInfo(props) {
   }
 
   //Edits character
-  async function editCharacter(e) {
+  async function editLocation(e) {
     e.preventDefault();
-    let character = {
+    let location = {
       name: name,
       img: img,
-      location: location,
+      location: folder,
       description: description,
       privateDescription: privateDescription,
       uid: uid,
     };
-    if (isValidCharacter(character)) {
+    if (isValidLocation(location)) {
       if (
-        props.characters.filter((e) => e.name === character.name).length === 0
+        props.locations.filter((e) => e.name === location.name).length === 0
       ) {
         await writeToFirebase(
-          "characters",
+          "locations",
           props.user.uid,
           props.campaign.name,
-          character
+          location
         );
-        let newArr = props.characters.map((entry) => {
-          return entry.uid === uid ? character : entry;
+        let newArr = props.locations.map((entry) => {
+          return entry.uid === uid ? location : entry;
         });
-        props.setCharacters(newArr);
+        props.setLocations(newArr);
       } else {
         setErrorMsg(true);
       }
     }
   }
 
-  //Deletes character
-  async function deleteCharacter(e) {
+  //Deletes location
+  async function deleteLocation(e) {
     e.preventDefault();
     try {
       await deleteFromFirebase(
-        "characters",
+        "locations",
         props.user.uid,
         props.campaign.name,
         uid
       );
 
-      //Removes character from state
-      props.setCharacters(
-        props.characters.filter((entry) => {
+      //Removes location from state
+      props.setLocations(
+        props.locations.filter((entry) => {
           return entry.name !== name;
         })
       );
@@ -123,23 +123,21 @@ function CharacterInfo(props) {
   }
 
   //Alert for deletion confirmation
-  const characterDeleteAlert = (e) => {
+  const locationDeleteAlert = (e) => {
     e.preventDefault();
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui JournalInfo__delete-alert-container">
             <div className="JournalInfo__delete-alert-text-container">
-              <p className="">
-                Are you sure you want to delete this character?
-              </p>
+              <p className="">Are you sure you want to delete this location?</p>
               <p className="">The process is irreversible.</p>
             </div>
 
             <div className="JournalInfo__delete-alert-button-container">
               <button
                 onClick={() => {
-                  deleteCharacter(e);
+                  deleteLocation(e);
                   onClose();
                 }}
                 className="flex-1 bg-red-800"
@@ -164,13 +162,13 @@ function CharacterInfo(props) {
   let nameErrorMessage = () => {
     return errorMsg ? (
       <p className="generic__alert-text">
-        Character names must be unique and cannot contain forward slashes ("/")
+        Location names must be unique and cannot contain forward slashes ("/")
       </p>
     ) : null;
   };
 
-  function isValidCharacter(character) {
-    if (character.name === "" || containsInvalidCharacters(character.name)) {
+  function isValidLocation(location) {
+    if (location.name === "" || containsInvalidCharacters(location.name)) {
       setErrorMsg(true);
       return false;
     }
@@ -190,25 +188,19 @@ function CharacterInfo(props) {
   const buttons = (entry) => (
     <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
-        <button
-          className="generic__buttons"
-          onClick={(e) => createCharacter(e)}
-        >
-          Create Character
+        <button className="generic__buttons" onClick={(e) => createLocation(e)}>
+          Create Location
         </button>
       ) : (
         <>
-          <button
-            className="generic__buttons"
-            onClick={(e) => editCharacter(e)}
-          >
-            Edit Character
+          <button className="generic__buttons" onClick={(e) => editLocation(e)}>
+            Edit Location
           </button>
           <button
             className="generic__buttons"
-            onClick={(e) => characterDeleteAlert(e)}
+            onClick={(e) => locationDeleteAlert(e)}
           >
-            Delete Character
+            Delete Location
           </button>
         </>
       )}
@@ -217,7 +209,7 @@ function CharacterInfo(props) {
 
   return (
     <div className="grow overflow-auto">
-      {props.character === "" || props.campaign === "" ? null : (
+      {props.location === "" || props.campaign === "" ? null : (
         <div>
           {isImgPopup && (
             <CharacterImagePopup
@@ -238,20 +230,20 @@ function CharacterInfo(props) {
                     if (isOwner()) setIsImgPopup(true);
                   }}
                 >
-                  <img src={img} className="ChaLocInfo__img" alt="Character" />
+                  <img src={img} className="ChaLocInfo__img" alt="Location" />
                 </div>
                 <div className="ChaLocInfo__data-container">
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-character-name"
+                      htmlFor="info-location-name"
                     >
                       Name
                     </label>
                     <input
                       className="generic__input"
                       disabled={!isOwner()}
-                      id="info-character-name"
+                      id="info-location-name"
                       value={name}
                       maxLength="25"
                       onChange={(e) => setName(e.target.value)}
@@ -261,17 +253,17 @@ function CharacterInfo(props) {
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-character-location"
+                      htmlFor="info-location-folder"
                     >
-                      Location
+                      Folder
                     </label>
                     <input
                       className="generic__input"
                       disabled={!isOwner()}
-                      id="info-character-location"
-                      value={location}
+                      id="info-location-folder"
+                      value={folder}
                       maxLength="25"
-                      onChange={(e) => setLocation(e.target.value)}
+                      onChange={(e) => setFolder(e.target.value)}
                     ></input>
                   </div>
                 </div>
@@ -280,14 +272,14 @@ function CharacterInfo(props) {
                 <div className="ChaLocInfo__input-container">
                   <label
                     className="generic__label"
-                    htmlFor="info-character-description"
+                    htmlFor="info-location-description"
                   >
-                    Character description
+                    Location description
                   </label>
                   <textarea
                     disabled={!isOwner()}
                     className="generic__input  ChaLocInfo__input-large"
-                    id="info-character-description"
+                    id="info-location-description"
                     value={description}
                     maxLength="3000"
                     onChange={(e) => setDescription(e.target.value)}
@@ -297,14 +289,14 @@ function CharacterInfo(props) {
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-private-description"
+                      htmlFor="info-location-private-description"
                     >
                       Private description
                     </label>
                     <textarea
                       disabled={!isOwner()}
                       className="generic__input ChaLocInfo__input-large "
-                      id="info-private-description"
+                      id="info-location-private-description"
                       value={privateDescription}
                       maxLength="3000"
                       onChange={(e) => setPrivateDescription(e.target.value)}
@@ -312,7 +304,7 @@ function CharacterInfo(props) {
                   </div>
                 ) : null}
               </div>
-              {isOwner() ? buttons(props.character) : null}
+              {isOwner() ? buttons(props.location) : null}
             </form>
           </div>
         </div>
@@ -321,4 +313,4 @@ function CharacterInfo(props) {
   );
 }
 
-export default CharacterInfo;
+export default LocationInfo;

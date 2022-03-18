@@ -18,6 +18,7 @@ import Stats from "./Stats";
 import { useState } from "react";
 import ErrorPage from "./ErrorPage";
 import Characters from "./Characters";
+import Locations from "./Locations";
 
 function App() {
   const [currentUserID, setCurrentUserID] = useState("");
@@ -98,6 +99,34 @@ function App() {
               path="/characters/:user/:campaign"
               element={
                 <Characters
+                  sideBarHidden={sideBarHidden}
+                  currentUserID={currentUserID}
+                  setCurrentUserID={setCurrentUserID}
+                  currentCampaignID={currentCampaignID}
+                  setCurrentCampaignID={setCurrentCampaignID}
+                  setCurrentTab={setCurrentTab}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/locations/*"
+              element={
+                <Locations
+                  sideBarHidden={sideBarHidden}
+                  currentUserID={currentUserID}
+                  setCurrentUserID={setCurrentUserID}
+                  currentCampaignID={currentCampaignID}
+                  setCurrentCampaignID={setCurrentCampaignID}
+                  setCurrentTab={setCurrentTab}
+                />
+              }
+            />
+            <Route
+              exact
+              path="/locations/:user/:campaign"
+              element={
+                <Locations
                   sideBarHidden={sideBarHidden}
                   currentUserID={currentUserID}
                   setCurrentUserID={setCurrentUserID}
