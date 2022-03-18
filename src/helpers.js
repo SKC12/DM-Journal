@@ -29,35 +29,6 @@ async function loadCampaignsFromDatabase(userID, navigate) {
   return campArray;
 }
 
-//Loads category array from Firebase
-async function loadFromFirebase(categoryString, userID, campName, navigate) {
-  let itemsArray = [];
-  try {
-    const query = await getDocs(
-      collection(
-        db,
-        "users/" + userID + "/campaigns/" + campName + `/${categoryString}`
-      )
-    );
-    query.forEach((doc) => {
-      itemsArray.push(doc.data());
-    });
-  } catch (e) {
-    console.log(e);
-    navigate("/error");
-  }
-
-  //console.log("LOADING ITEMS FROM DB");
-
-  return itemsArray;
-}
-
-function sortSessionsByDate(sessionsArray) {
-  return sessionsArray.sort((a, b) => {
-    return new Date(a.date) - new Date(b.date);
-  });
-}
-
 async function searchFirebaseForCampaignName(userID, name) {
   try {
     const q = query(
@@ -84,29 +55,48 @@ async function writeCampaignToFirebase(userID, campaignName, campaign) {
   }
 }
 
-//Searches Firebase on given category to check if itemName exists
-async function searchFirebaseForName(
-  categoryString,
-  userID,
-  campaignName,
-  itemName
-) {
+async function deleteCampaignFromFirebase(userID, name) {
   try {
     const q = query(
-      collection(
-        db,
-        "users/" + userID + "/campaigns/" + campaignName + `/${categoryString}`
-      ),
-      where("name", "==", itemName)
+      collection(db, "users/" + userID + "/campaigns/" + name + "/sessions")
     );
     const docs = await getDocs(q);
-    return docs;
+
+    const deletions = [];
+    docs.forEach((doc) => {
+      deletions.push(deleteDoc(doc.ref));
+    });
+
+    Promise.all(deletions).then();
+
+    await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
   } catch (e) {
     console.log(e);
     alert(e);
   }
+}
 
-  //console.log("SEARCHING FIREBASE FOR NAME")
+//Loads category array from Firebase
+async function loadFromFirebase(categoryString, userID, campName, navigate) {
+  let itemsArray = [];
+  try {
+    const query = await getDocs(
+      collection(
+        db,
+        "users/" + userID + "/campaigns/" + campName + `/${categoryString}`
+      )
+    );
+    query.forEach((doc) => {
+      itemsArray.push(doc.data());
+    });
+  } catch (e) {
+    console.log(e);
+    navigate("/error");
+  }
+
+  //console.log("LOADING ITEMS FROM DB");
+
+  return itemsArray;
 }
 
 // Writes to Firebase on given category.
@@ -147,25 +137,10 @@ async function deleteFromFirebase(
   }
 }
 
-async function deleteCampaignFromFirebase(userID, name) {
-  try {
-    const q = query(
-      collection(db, "users/" + userID + "/campaigns/" + name + "/sessions")
-    );
-    const docs = await getDocs(q);
-
-    const deletions = [];
-    docs.forEach((doc) => {
-      deletions.push(deleteDoc(doc.ref));
-    });
-
-    Promise.all(deletions).then();
-
-    await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
-  } catch (e) {
-    console.log(e);
-    alert(e);
-  }
+function sortSessionsByDate(sessionsArray) {
+  return sessionsArray.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
 }
 
 function containsInvalidCharacters(string) {
@@ -184,13 +159,12 @@ function isOwner(user, currentUserID) {
 export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
-  loadFromFirebase,
   loadCampaignsFromDatabase,
-  searchFirebaseForName,
-  writeToFirebase,
-  sortSessionsByDate,
-  deleteFromFirebase,
   deleteCampaignFromFirebase,
+  writeToFirebase,
+  loadFromFirebase,
+  deleteFromFirebase,
+  sortSessionsByDate,
   containsInvalidCharacters,
   isOwner,
 };
