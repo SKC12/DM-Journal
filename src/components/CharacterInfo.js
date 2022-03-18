@@ -4,9 +4,9 @@ import genericImage from "../img/bxs-face.svg";
 import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
-  searchFirebaseForCharacterName,
-  writeCharacterToFirebase,
-  deleteCharacterFromFirebase,
+  searchFirebaseForName,
+  writeToFirebase,
+  deleteFromFirebase,
   containsInvalidCharacters,
 } from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
@@ -51,13 +51,15 @@ function CharacterInfo(props) {
     };
 
     if (isValidCharacter(character)) {
-      const docs = await searchFirebaseForCharacterName(
+      const docs = await searchFirebaseForName(
+        "characters",
         props.user.uid,
         props.campaign.name,
         name
       );
       if (docs.docs.length === 0) {
-        await writeCharacterToFirebase(
+        await writeToFirebase(
+          "characters",
           props.user.uid,
           props.campaign.name,
           character
@@ -82,7 +84,8 @@ function CharacterInfo(props) {
       uid: uid,
     };
     if (isValidCharacter(character)) {
-      await writeCharacterToFirebase(
+      await writeToFirebase(
+        "characters",
         props.user.uid,
         props.campaign.name,
         character
@@ -98,7 +101,8 @@ function CharacterInfo(props) {
   async function deleteCharacter(e) {
     e.preventDefault();
     try {
-      await deleteCharacterFromFirebase(
+      await deleteFromFirebase(
+        "characters",
         props.user.uid,
         props.campaign.name,
         uid

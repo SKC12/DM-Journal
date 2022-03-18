@@ -130,7 +130,7 @@ function CampaignInfo(props) {
               </label>
 
               <input
-                className="generic__input md:w-96"
+                className="generic__input generic__input-disabledBg md:w-96"
                 id="info-campaign-name"
                 value={name}
                 maxLength="50"

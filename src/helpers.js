@@ -29,48 +29,27 @@ async function loadCampaignsFromDatabase(userID, navigate) {
   return campArray;
 }
 
-//Loads session array from Database, sorted by Date
-async function loadSessionsFromDatabase(userID, campName, navigate) {
-  let sessionsArray = [];
-  try {
-    const query = await getDocs(
-      collection(db, "users/" + userID + "/campaigns/" + campName + "/sessions")
-    );
-    query.forEach((doc) => {
-      sessionsArray.push(doc.data());
-    });
-  } catch (e) {
-    console.log(e);
-    navigate("/error");
-  }
-  sortSessionsByDate(sessionsArray);
-
-  //console.log("LOADING SESSIONS FROM DB");
-
-  return sessionsArray;
-}
-
-//Loads characters array from Database
-async function loadCharactersFromDatabase(userID, campName, navigate) {
-  let charactersArray = [];
+//Loads category array from Firebase
+async function loadFromFirebase(categoryString, userID, campName, navigate) {
+  let itemsArray = [];
   try {
     const query = await getDocs(
       collection(
         db,
-        "users/" + userID + "/campaigns/" + campName + "/characters"
+        "users/" + userID + "/campaigns/" + campName + `/${categoryString}`
       )
     );
     query.forEach((doc) => {
-      charactersArray.push(doc.data());
+      itemsArray.push(doc.data());
     });
   } catch (e) {
     console.log(e);
     navigate("/error");
   }
 
-  //console.log("LOADING SESSIONS FROM DB");
+  //console.log("LOADING ITEMS FROM DB");
 
-  return charactersArray;
+  return itemsArray;
 }
 
 function sortSessionsByDate(sessionsArray) {
@@ -105,35 +84,20 @@ async function writeCampaignToFirebase(userID, campaignName, campaign) {
   }
 }
 
-async function searchFirebaseForSessionName(userID, campaignName, sessionName) {
-  try {
-    const q = query(
-      collection(
-        db,
-        "users/" + userID + "/campaigns/" + campaignName + "/sessions"
-      ),
-      where("name", "==", sessionName)
-    );
-    const docs = await getDocs(q);
-    return docs;
-  } catch (e) {
-    console.log(e);
-    alert(e);
-  }
-}
-
-async function searchFirebaseForCharacterName(
+//Searches Firebase on given category to check if itemName exists
+async function searchFirebaseForName(
+  categoryString,
   userID,
   campaignName,
-  characterName
+  itemName
 ) {
   try {
     const q = query(
       collection(
         db,
-        "users/" + userID + "/campaigns/" + campaignName + "/characters"
+        "users/" + userID + "/campaigns/" + campaignName + `/${categoryString}`
       ),
-      where("name", "==", characterName)
+      where("name", "==", itemName)
     );
     const docs = await getDocs(q);
     return docs;
@@ -141,18 +105,20 @@ async function searchFirebaseForCharacterName(
     console.log(e);
     alert(e);
   }
+
+  //console.log("SEARCHING FIREBASE FOR NAME")
 }
 
-// Writes session to Firebase.
-async function writeSessionToFirebase(userID, campaignName, session) {
+// Writes to Firebase on given category.
+async function writeToFirebase(categoryString, userID, campaignName, item) {
   try {
     await setDoc(
       doc(
         db,
-        "users/" + userID + "/campaigns/" + campaignName + "/sessions",
-        session.uid
+        "users/" + userID + "/campaigns/" + campaignName + `/${categoryString}`,
+        item.uid
       ),
-      session
+      item
     );
   } catch (e) {
     console.log(e);
@@ -160,45 +126,19 @@ async function writeSessionToFirebase(userID, campaignName, session) {
   }
 }
 
-// Writes character to Firebase.
-async function writeCharacterToFirebase(userID, campaignName, character) {
-  try {
-    await setDoc(
-      doc(
-        db,
-        "users/" + userID + "/campaigns/" + campaignName + "/characters",
-        character.uid
-      ),
-      character
-    );
-  } catch (e) {
-    console.log(e);
-    alert(e);
-  }
-}
-
-async function deleteSessionFromFirebase(userID, campaignName, sessionID) {
+//Deletes from Firebase on given category.
+async function deleteFromFirebase(
+  categoryString,
+  userID,
+  campaignName,
+  itemID
+) {
   try {
     await deleteDoc(
       doc(
         db,
-        "users/" + userID + "/campaigns/" + campaignName + "/sessions",
-        sessionID
-      )
-    );
-  } catch (e) {
-    console.log(e);
-    alert(e);
-  }
-}
-
-async function deleteCharacterFromFirebase(userID, campaignName, characterID) {
-  try {
-    await deleteDoc(
-      doc(
-        db,
-        "users/" + userID + "/campaigns/" + campaignName + "/characters",
-        characterID
+        "users/" + userID + "/campaigns/" + campaignName + `/${categoryString}`,
+        itemID
       )
     );
   } catch (e) {
@@ -244,16 +184,12 @@ function isOwner(user, currentUserID) {
 export {
   searchFirebaseForCampaignName,
   writeCampaignToFirebase,
-  loadSessionsFromDatabase,
-  loadCharactersFromDatabase,
+  loadFromFirebase,
   loadCampaignsFromDatabase,
-  searchFirebaseForSessionName,
-  searchFirebaseForCharacterName,
-  writeSessionToFirebase,
-  writeCharacterToFirebase,
+  searchFirebaseForName,
+  writeToFirebase,
   sortSessionsByDate,
-  deleteSessionFromFirebase,
-  deleteCharacterFromFirebase,
+  deleteFromFirebase,
   deleteCampaignFromFirebase,
   containsInvalidCharacters,
   isOwner,

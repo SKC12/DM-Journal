@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  loadSessionsFromDatabase,
+  loadFromFirebase,
   loadCampaignsFromDatabase,
-  loadCharactersFromDatabase,
+  sortSessionsByDate,
 } from "./helpers.js";
 
 export const useSessionState = (userID, campaignName) => {
@@ -16,11 +16,13 @@ export const useSessionState = (userID, campaignName) => {
     async (userID, campaignName) => {
       if (campaignName) {
         setLoadingSessions(true);
-        let sessions = await loadSessionsFromDatabase(
+        let sessions = await loadFromFirebase(
+          "sessions",
           userID,
           campaignName,
           navigate
         );
+        sortSessionsByDate(sessions);
         setLoadingSessions(false);
         setSessions(sessions);
       }
@@ -48,7 +50,8 @@ export const useCharacterState = (userID, campaignName) => {
     async (userID, campaignName) => {
       if (campaignName) {
         setLoadingCharacters(true);
-        let characters = await loadCharactersFromDatabase(
+        let characters = await loadFromFirebase(
+          "characters",
           userID,
           campaignName,
           navigate

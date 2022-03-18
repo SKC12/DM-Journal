@@ -6,10 +6,10 @@ import "animate.css";
 import "../style/JournalInfo.css";
 
 import {
-  searchFirebaseForSessionName,
-  writeSessionToFirebase,
+  searchFirebaseForName,
+  writeToFirebase,
   sortSessionsByDate,
-  deleteSessionFromFirebase,
+  deleteFromFirebase,
   containsInvalidCharacters,
 } from "../helpers.js";
 
@@ -70,13 +70,15 @@ function JournalInfo(props) {
     };
 
     if (isValidSession(session)) {
-      const docs = await searchFirebaseForSessionName(
+      const docs = await searchFirebaseForName(
+        "sessions",
         props.user.uid,
         props.campaign.name,
         name
       );
       if (docs.docs.length === 0) {
-        await writeSessionToFirebase(
+        await writeToFirebase(
+          "sessions",
           props.user.uid,
           props.campaign.name,
           session
@@ -116,7 +118,8 @@ function JournalInfo(props) {
       uid: uid,
     };
     if (isValidSession(session)) {
-      await writeSessionToFirebase(
+      await writeToFirebase(
+        "sessions",
         props.user.uid,
         props.campaign.name,
         session
@@ -132,7 +135,12 @@ function JournalInfo(props) {
   async function deleteSession(e) {
     e.preventDefault();
     try {
-      await deleteSessionFromFirebase(props.user.uid, props.campaign.name, uid);
+      await deleteFromFirebase(
+        "sessions",
+        props.user.uid,
+        props.campaign.name,
+        uid
+      );
 
       //Removes session from state
       props.setSessions(
