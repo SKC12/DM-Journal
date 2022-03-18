@@ -68,13 +68,15 @@ function Characters(props) {
 
   //Sets up initial characcter on characters load
   useEffect(() => {
-    let random = Math.floor(Math.random() * characters.length);
-    if (characters && characters.length > 0) {
-      setCurrentCharacter(characters[random]);
-    } else {
-      setCurrentCharacter("");
+    if (!currentCharacter) {
+      let random = Math.floor(Math.random() * characters.length);
+      if (characters && characters.length > 0) {
+        setCurrentCharacter(characters[random]);
+      } else {
+        setCurrentCharacter("");
+      }
     }
-  }, [characters]);
+  }, [characters, currentCharacter]);
 
   const sideBarContent = (
     <div>
