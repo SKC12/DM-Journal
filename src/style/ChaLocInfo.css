@@ -39,6 +39,10 @@
 .ChaLocInfo__bot-container {
   padding-bottom: 16px;
 }
+.ChaLoc__input {
+  margin-right: 36px;
+  width: 260px;
+}
 
 .ChaLocInfo__input-large {
   width: 100%;

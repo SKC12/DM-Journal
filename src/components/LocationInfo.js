@@ -276,7 +276,7 @@ function LocationInfo(props) {
                       Name
                     </label>
                     <input
-                      className="generic__input"
+                      className="generic__input ChaLoc__input"
                       disabled={!isOwner()}
                       id="info-location-name"
                       value={name}
@@ -293,7 +293,7 @@ function LocationInfo(props) {
                       Folder
                     </label>
                     <input
-                      className="generic__input"
+                      className="generic__input ChaLoc__input"
                       disabled={!isOwner()}
                       id="info-location-folder"
                       value={folder}
