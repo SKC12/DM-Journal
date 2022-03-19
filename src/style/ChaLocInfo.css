@@ -40,8 +40,8 @@
   padding-bottom: 16px;
 }
 .ChaLoc__input {
-  margin-right: 36px;
-  width: 260px;
+  margin-right: 40px;
+  width: 270px;
 }
 
 .ChaLocInfo__input-large {
@@ -83,16 +83,18 @@
   .ChaLocInfo__big-img {
     height: auto;
     width: 100%;
+    max-width: 2000px;
+    max-height: 1000px;
     transition: all 100ms ease-in;
     transition-property: max-height, max-width;
   }
 
   .ChaLocInfo__img {
     object-fit: contain;
-    height: auto;
+    height: 200px;
     max-height: 200px;
-    width: fit-content;
-    max-width: 200px;
+    width: auto;
+    max-width: 600px;
   }
 }
 
