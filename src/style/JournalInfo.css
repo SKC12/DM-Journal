@@ -45,5 +45,5 @@
 }
 
 .JournalCard__container:hover {
-  background-color: var(--light-background-color);
+  background-color: var(--light-bg-color);
 }
