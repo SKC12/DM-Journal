@@ -1,4 +1,10 @@
-.Accordion__container {
+.Accordion__text {
+  display: flex;
+  align-items: center;
+}
+.Accordion_chevron {
+  height: 14px;
+  width: 14px;
 }
 
 .Accordion__title {
@@ -9,6 +15,7 @@
   gap: 8px;
   padding: 4px 8px;
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .Accordion__content {
@@ -43,4 +50,20 @@
 
 .Accordion__selected {
   background-color: var(--light-bg-color);
+}
+
+@media (min-width: 1400px) {
+  .Accordion_chevron {
+    height: 18px;
+    width: 18px;
+  }
+  .Accordion__title {
+    font-size: 14px;
+  }
+  .Accordion__item {
+    font-size: 14px;
+  }
+  .Accordion__img {
+    height: 40px;
+  }
 }

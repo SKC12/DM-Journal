@@ -1,0 +1,25 @@
+.Sidebar__sidebar {
+  position: absolute;
+  height: 100%;
+  padding: 14px;
+  width: 250px;
+  flex-shrink: 0;
+  background-color: var(--button-color);
+  color: var(--light-bg-color);
+  font-weight: 700;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .Sidebar__sidebar {
+    position: relative;
+    display: block;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Sidebar__sidebar {
+    width: 300px;
+    padding: 20px;
+  }
+}

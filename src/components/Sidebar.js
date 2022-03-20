@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { isOwner } from "../helpers";
 import CampaignSelector from "./CampaignSelector";
+import "../style/Sidebar.css";
 
 function Sidebar(props) {
   const campaigns = props.campaigns;
@@ -16,7 +17,7 @@ function Sidebar(props) {
     <div
       className={`${
         props.sideBarHidden ? "hidden" : "block"
-      } absolute md:relative h-full p-3 md:block w-[250px] shrink-0 bg-gray-700 text-gray-200 font-bold z-50 `}
+      } Sidebar__sidebar `}
     >
       {isOwner(user, currentUserID) ? (
         <CampaignSelector

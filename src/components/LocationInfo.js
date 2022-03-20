@@ -230,7 +230,7 @@ function LocationInfo(props) {
             />
           )}
           <div className="animate__animated animate__fadeIn">
-            <form className="p-3 md:pl-20 md:pt-12 md:max-w-4xl">
+            <form className="generic__main-form">
               <div
                 className={`ChaLocInfo__top-container ${
                   isBigImage ? "ChaLocInfo__big-img-container" : ""

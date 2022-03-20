@@ -84,6 +84,7 @@
   }
   .StatsInfo__stat-container {
     display: flex;
+    margin-bottom: 8px;
   }
   .StatsTime__weekdays {
     grid-auto-flow: column;
@@ -95,4 +96,11 @@
 .StatsInfo__weekdays-day {
   display: grid;
   grid-template-columns: 100px 100px;
+}
+
+@media (min-width: 768px) {
+  .StatsInfo__element-container {
+    padding-left: 120px;
+    padding-top: 48px;
+  }
 }

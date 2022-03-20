@@ -34,6 +34,7 @@
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .ChaLocInfo__bot-container {
@@ -84,7 +85,7 @@
     height: auto;
     width: 100%;
     max-width: 2000px;
-    max-height: 1000px;
+    max-height: 3000px;
     transition: all 100ms ease-in;
     transition-property: max-height, max-width;
   }
@@ -93,6 +94,27 @@
     object-fit: contain;
     height: 200px;
     max-height: 200px;
+    width: auto;
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .ChaLoc__input {
+    margin-right: 75px;
+    width: 310px;
+  }
+  .ChaLocInfo__genericImg {
+    min-height: 230px;
+    min-width: 230px;
+  }
+  .ChaLocInfo__input-large {
+    height: 175px;
+  }
+  .ChaLocInfo__img {
+    object-fit: contain;
+    height: 230px;
+    max-height: 230px;
     width: auto;
     max-width: 600px;
   }

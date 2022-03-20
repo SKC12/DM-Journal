@@ -4,7 +4,7 @@ import "../style/Accordion.css";
 let chevronDown = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
+    className="Accordion_chevron"
     viewBox="0 0 20 20"
     fill="currentColor"
   >
@@ -19,7 +19,7 @@ let chevronDown = (
 let chevronRight = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
+    className="Accordion_chevron"
     viewBox="0 0 20 20"
     fill="currentColor"
   >

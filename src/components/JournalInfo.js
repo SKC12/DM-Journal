@@ -240,7 +240,7 @@ function JournalInfo(props) {
     } else {
       return (
         <div className="animate__animated animate__fadeIn">
-          <form className="p-3 md:pl-20 md:pt-12 md:max-w-4xl">
+          <form className="generic__main-form">
             <div className="md:flex ">
               <div className="JournalInfo__input-container">
                 <label className="generic__label" htmlFor="info-session-name">
