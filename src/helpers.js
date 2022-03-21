@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 //Load campaigns array from database
-async function loadCampaignsFromDatabase(userID, navigate) {
+async function loadCampaignsFromDatabase(userID) {
   let campArray = [];
   try {
     const query = await getDocs(
@@ -21,7 +21,7 @@ async function loadCampaignsFromDatabase(userID, navigate) {
     });
   } catch (e) {
     console.log(e);
-    navigate("/error");
+    return e;
   }
 
   //console.log("LOADING CAMPAIGNS FROM DB");
@@ -77,7 +77,7 @@ async function deleteCampaignFromFirebase(userID, name) {
 }
 
 //Loads category array from Firebase
-async function loadFromFirebase(categoryString, userID, campName, navigate) {
+async function loadFromFirebase(categoryString, userID, campName) {
   let itemsArray = [];
   try {
     const query = await getDocs(
@@ -91,10 +91,10 @@ async function loadFromFirebase(categoryString, userID, campName, navigate) {
     });
   } catch (e) {
     console.log(e);
-    navigate("/error");
+    return e;
   }
 
-  //console.log("LOADING ITEMS FROM DB");
+  //console.log("LOADING " + categoryString + " FROM DB");
 
   return itemsArray;
 }

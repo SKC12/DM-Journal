@@ -2,11 +2,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  useCampaignsState,
-  useCurrentCampaignState,
-  useLocationState,
-} from "../customHooks";
 import { isOwner } from "../helpers";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
@@ -22,16 +17,11 @@ function Locations(props) {
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
-  const [campaigns] = useCampaignsState(paramsUser);
-  const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
-    campaigns,
-    params.campaign
-  );
+  const [campaigns] = props.campaignsState;
+  const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
+
   const [currentLocation, setCurrentLocation] = useState("");
-  const [locations, setLocations, loadingLocations] = useLocationState(
-    paramsUser,
-    currentCampaign.name
-  );
+  const [locations, setLocations, loadingLocations] = props.locationsState;
 
   //Navigates to link containing User params
   useEffect(() => {

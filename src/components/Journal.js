@@ -4,11 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
-import {
-  useCampaignsState,
-  useCurrentCampaignState,
-  useSessionState,
-} from "../customHooks";
 import { isOwner } from "../helpers";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
@@ -22,15 +17,9 @@ function Journal(props) {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [currentSession, setCurrentSession] = useState("");
-  const [campaigns] = useCampaignsState(paramsUser);
-  const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
-    campaigns,
-    params.campaign
-  );
-  const [sessions, setSessions, loadingSessions] = useSessionState(
-    paramsUser,
-    currentCampaign.name
-  );
+  const [campaigns] = props.campaignsState;
+  const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
+  const [sessions, setSessions, loadingSessions] = props.sessionsState;
 
   //Navigates to link containing User params
   useEffect(() => {

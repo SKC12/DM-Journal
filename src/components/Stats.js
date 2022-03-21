@@ -3,11 +3,6 @@ import { auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import StatsInfo from "./StatsInfo";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  useCampaignsState,
-  useCurrentCampaignState,
-  useSessionState,
-} from "../customHooks";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
 
@@ -19,12 +14,9 @@ function Stats(props) {
   const params = useParams();
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const [user] = useAuthState(auth);
-  const [campaigns] = useCampaignsState(paramsUser);
-  const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
-    campaigns,
-    params.campaign
-  );
-  const [sessions] = useSessionState(paramsUser, currentCampaign.name);
+  const [campaigns] = props.campaignsState;
+  const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
+  const [sessions] = props.sessionsState;
   const [stat, setStat] = useState("time");
 
   //Navigates to link containing User params

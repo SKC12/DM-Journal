@@ -9,26 +9,17 @@ import {
 export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
   const [loadingSessions, setLoadingSessions] = useState(false);
-  const navigate = useNavigate();
 
   //Loads session list based on params
-  const loadSessions = useCallback(
-    async (userID, campaignName) => {
-      if (campaignName) {
-        setLoadingSessions(true);
-        let sessions = await loadFromFirebase(
-          "sessions",
-          userID,
-          campaignName,
-          navigate
-        );
-        sortSessionsByDate(sessions);
-        setLoadingSessions(false);
-        setSessions(sessions);
-      }
-    },
-    [navigate]
-  );
+  const loadSessions = useCallback(async (userID, campaignName) => {
+    if (campaignName) {
+      setLoadingSessions(true);
+      let sessions = await loadFromFirebase("sessions", userID, campaignName);
+      sortSessionsByDate(sessions);
+      setLoadingSessions(false);
+      setSessions(sessions);
+    }
+  }, []);
 
   //Changes session list on campaign change
   useEffect(() => {
@@ -37,31 +28,28 @@ export const useSessionState = (userID, campaignName) => {
     }
   }, [campaignName, userID, loadSessions]);
 
+  //console.log("CURRENT SESSION STATE", [campaignName, userID, loadSessions]);
+
   return [sessions, setSessions, loadingSessions];
 };
 
 export const useCharacterState = (userID, campaignName) => {
   const [characters, setCharacters] = useState([]);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
-  const navigate = useNavigate();
 
   //Loads session list based on params
-  const loadCharacters = useCallback(
-    async (userID, campaignName) => {
-      if (campaignName) {
-        setLoadingCharacters(true);
-        let characters = await loadFromFirebase(
-          "characters",
-          userID,
-          campaignName,
-          navigate
-        );
-        setLoadingCharacters(false);
-        setCharacters(characters);
-      }
-    },
-    [navigate]
-  );
+  const loadCharacters = useCallback(async (userID, campaignName) => {
+    if (campaignName) {
+      setLoadingCharacters(true);
+      let characters = await loadFromFirebase(
+        "characters",
+        userID,
+        campaignName
+      );
+      setLoadingCharacters(false);
+      setCharacters(characters);
+    }
+  }, []);
 
   //Changes character list on campaign change
   useEffect(() => {
@@ -76,25 +64,16 @@ export const useCharacterState = (userID, campaignName) => {
 export const useLocationState = (userID, campaignName) => {
   const [locations, setLocations] = useState([]);
   const [loadingLocations, setLoadingLocations] = useState(false);
-  const navigate = useNavigate();
 
   //Loads session list based on params
-  const loadLocations = useCallback(
-    async (userID, campaignName) => {
-      if (campaignName) {
-        setLoadingLocations(true);
-        let locations = await loadFromFirebase(
-          "locations",
-          userID,
-          campaignName,
-          navigate
-        );
-        setLoadingLocations(false);
-        setLocations(locations);
-      }
-    },
-    [navigate]
-  );
+  const loadLocations = useCallback(async (userID, campaignName) => {
+    if (campaignName) {
+      setLoadingLocations(true);
+      let locations = await loadFromFirebase("locations", userID, campaignName);
+      setLoadingLocations(false);
+      setLocations(locations);
+    }
+  }, []);
 
   //Changes location list on campaign change
   useEffect(() => {
