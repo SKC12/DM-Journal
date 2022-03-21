@@ -77,10 +77,10 @@ function StatsTime(props) {
     })
     .map((entry, index) => {
       return (
-        <div className="StatsInfo__weekdays-day" key={index}>
+        <>
           <h2 className="font-bold">{entry}:</h2>
           <p>{sessionByWeekday[entry]} sessions</p>
-        </div>
+        </>
       );
     });
 

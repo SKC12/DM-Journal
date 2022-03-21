@@ -30,12 +30,13 @@
 
 .StatsTime__weekdays {
   background-color: var(--light-bg-color);
+  border-radius: 4px;
   width: fit-content;
   padding: 8px;
   margin: 8px;
   display: grid;
-  grid-template-rows: auto auto auto;
-  grid-template-columns: auto;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto;
   gap: 12px;
 }
 
@@ -44,7 +45,6 @@
   width: fit-content;
   max-width: calc(100% - 16px);
   padding: 8px;
-
   margin: 8px;
   display: grid;
   grid-template-rows: auto auto auto auto;
@@ -52,6 +52,7 @@
   grid-auto-columns: min-content;
   gap: 12px;
   overflow: auto;
+  border-radius: 4px;
 }
 
 .StatsLevelling__levels-level {
@@ -87,9 +88,6 @@
   .StatsInfo__stat-container {
     display: flex;
     margin-bottom: 8px;
-  }
-  .StatsTime__weekdays {
-    grid-auto-flow: column;
   }
   .StatsLevelling__levels {
     grid-auto-flow: column;
