@@ -66,6 +66,8 @@
     gap: 0px;
   }
   .ChaLocInfo__img-container {
+    min-width: 100px;
+    min-height: 200px;
     justify-content: start;
   }
   .ChaLocInfo__input-large {
@@ -91,6 +93,7 @@
   }
 
   .ChaLocInfo__img {
+    border-radius: 4px;
     object-fit: contain;
     height: 200px;
     max-height: 200px;
@@ -100,6 +103,10 @@
 }
 
 @media (min-width: 1400px) {
+  .ChaLocInfo__img-container {
+    min-width: 130px;
+    min-height: 230px;
+  }
   .ChaLoc__input {
     margin-right: 75px;
     width: 310px;

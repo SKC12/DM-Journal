@@ -806,6 +806,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .indent-6 {
   text-indent: 1.5rem;
 }
@@ -1093,6 +1097,10 @@ body {
 
   .md\:max-w-4xl {
     max-width: 56rem;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
   }
 
   .md\:pl-20 {

@@ -98,9 +98,9 @@
   grid-template-columns: 100px 100px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1400px) {
   .StatsInfo__element-container {
     padding-left: 120px;
-    padding-top: 48px;
+    padding-right: 120px;
   }
 }

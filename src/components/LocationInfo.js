@@ -45,7 +45,6 @@ function LocationInfo(props) {
   }, [props.location]);
 
   useEffect(() => {
-    console.log(isBigImage);
     isBigImage ? setZoomImg(zoomOutImage) : setZoomImg(zoomInImage);
   }, [isBigImage]);
 
