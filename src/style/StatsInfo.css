@@ -62,18 +62,20 @@
 }
 
 .Stats__sidebar-item {
-  padding-bottom: 16px;
+  color: var(--text-color);
+  background-color: var(--very-light-bg-color);
+  padding: 8px;
   cursor: pointer;
-  transition-property: color;
-  transition-duration: 300ms;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .Stats__sidebar-item:hover {
-  color: var(--selected-color);
+  background-color: var(--light-bg-color);
 }
 
 .Stats__selected {
-  color: var(--selected-color);
+  background-color: var(--light-bg-color);
 }
 
 @media (min-width: 768px) {

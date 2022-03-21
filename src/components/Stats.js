@@ -62,8 +62,8 @@ function Stats(props) {
   }
 
   const renderStats = (
-    <div>
-      <ul className="pl-4 font-normal">
+    <div className="">
+      <ul className="generic__Sidebar">
         <li
           className={`Stats__sidebar-item  ${
             stat === "time" ? "Stats__selected" : ""
