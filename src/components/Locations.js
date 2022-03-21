@@ -174,6 +174,7 @@ function Locations(props) {
         <LocationInfo
           campaign={currentCampaign}
           location={currentLocation}
+          setLocation={setCurrentLocation}
           locations={locations}
           setLocations={setLocations}
           user={user}

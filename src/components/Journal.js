@@ -51,12 +51,14 @@ function Journal(props) {
 
   //Sets up initial session on sessions load
   useEffect(() => {
-    if (sessions && sessions.length > 0) {
-      setCurrentSession(sessions[0]);
-    } else {
-      setCurrentSession("");
+    if (!currentSession) {
+      if (sessions && sessions.length > 0) {
+        setCurrentSession(sessions[0]);
+      } else {
+        setCurrentSession("");
+      }
     }
-  }, [sessions]);
+  }, [sessions, currentSession]);
 
   //Updates currentTab on parent main element
   useEffect(() => {
@@ -141,6 +143,7 @@ function Journal(props) {
         <JournalInfo
           campaign={currentCampaign}
           session={currentSession}
+          setSession={setCurrentSession}
           sessions={sessions}
           setSessions={setSessions}
           user={user}

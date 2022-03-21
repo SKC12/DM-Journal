@@ -30,16 +30,22 @@ function CharacterInfo(props) {
   const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+
   const uid = props.character.uid;
+
+  useEffect(() => {
+    if (props.character === "new") {
+      setIsEditable(true);
+    }
+  }, [props.character]);
 
   useEffect(() => {
     setErrorMsg(false);
   }, [name]);
 
   //Adds character to Database
-  async function createCharacter(e) {
-    e.preventDefault();
-
+  async function createCharacter() {
     let character = {
       name: name,
       img: img,
@@ -61,6 +67,7 @@ function CharacterInfo(props) {
         );
         let newCharacters = props.characters.concat(character);
         props.setCharacters(newCharacters);
+        props.setCharacter(character);
       } else {
         setErrorMsg(true);
       }
@@ -68,8 +75,7 @@ function CharacterInfo(props) {
   }
 
   //Edits character
-  async function editCharacter(e) {
-    e.preventDefault();
+  async function editCharacter() {
     let character = {
       name: name,
       img: img,
@@ -99,8 +105,7 @@ function CharacterInfo(props) {
   }
 
   //Deletes character
-  async function deleteCharacter(e) {
-    e.preventDefault();
+  async function deleteCharacter() {
     try {
       await deleteFromFirebase(
         "characters",
@@ -139,7 +144,7 @@ function CharacterInfo(props) {
             <div className="JournalInfo__delete-alert-button-container">
               <button
                 onClick={() => {
-                  deleteCharacter(e);
+                  deleteCharacter();
                   onClose();
                 }}
                 className="flex-1 bg-red-800"
@@ -169,6 +174,14 @@ function CharacterInfo(props) {
     ) : null;
   };
 
+  function returnToInitialValues() {
+    setImg(props.character.img);
+    setName(props.character.name);
+    setLocation(props.character.location);
+    setDescription(props.character.description);
+    setPrivateDescription(props.character.privateDescription);
+  }
+
   function isValidCharacter(character) {
     if (character.name === "" || containsInvalidCharacters(character.name)) {
       setErrorMsg(true);
@@ -192,7 +205,10 @@ function CharacterInfo(props) {
       {entry === "new" ? (
         <button
           className="generic__buttons"
-          onClick={(e) => createCharacter(e)}
+          onClick={(e) => {
+            e.preventDefault();
+            createCharacter();
+          }}
         >
           Create Character
         </button>
@@ -200,15 +216,31 @@ function CharacterInfo(props) {
         <>
           <button
             className="generic__buttons"
-            onClick={(e) => editCharacter(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                editCharacter();
+                setIsEditable(false);
+              } else {
+                setIsEditable(true);
+              }
+            }}
           >
-            Edit Character
+            {isEditable ? "Save" : "Edit Character"}
           </button>
           <button
             className="generic__buttons"
-            onClick={(e) => characterDeleteAlert(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                returnToInitialValues();
+                setIsEditable(false);
+              } else {
+                characterDeleteAlert();
+              }
+            }}
           >
-            Delete Character
+            {isEditable ? "Cancel" : "Delete Session"}
           </button>
         </>
       )}
@@ -232,10 +264,10 @@ function CharacterInfo(props) {
               <div className="ChaLocInfo__top-container">
                 <div
                   className={`ChaLocInfo__img-container ${
-                    isOwner() ? "cursor-pointer" : ""
+                    isOwner() && isEditable ? "cursor-pointer" : ""
                   }`}
                   onClick={() => {
-                    if (isOwner()) setIsImgPopup(true);
+                    if (isOwner() && isEditable) setIsImgPopup(true);
                   }}
                 >
                   <img
@@ -258,7 +290,7 @@ function CharacterInfo(props) {
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       id="info-character-name"
                       value={name}
                       maxLength="25"
@@ -275,7 +307,7 @@ function CharacterInfo(props) {
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       id="info-character-location"
                       value={location}
                       maxLength="25"
@@ -293,7 +325,7 @@ function CharacterInfo(props) {
                     Character description
                   </label>
                   <textarea
-                    disabled={!isOwner()}
+                    disabled={!isOwner() || !isEditable}
                     className="generic__input  ChaLocInfo__input-large"
                     id="info-character-description"
                     value={description}
@@ -310,7 +342,7 @@ function CharacterInfo(props) {
                       Private description
                     </label>
                     <textarea
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       className="generic__input ChaLocInfo__input-large "
                       id="info-private-description"
                       value={privateDescription}

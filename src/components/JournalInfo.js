@@ -41,10 +41,17 @@ function JournalInfo(props) {
   );
   const [errorMsg, setErrorMsg] = useState(false);
   const [dateErrorMsg, setDateErrorMsg] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
 
   const params = useParams();
 
   const uid = props.session.uid;
+
+  useEffect(() => {
+    if (props.session === "new") {
+      setIsEditable(true);
+    }
+  }, [props.session]);
 
   useEffect(() => {
     setErrorMsg(false);
@@ -55,9 +62,7 @@ function JournalInfo(props) {
   }, [date]);
 
   //Adds session to Database
-  async function createSession(e) {
-    e.preventDefault();
-
+  async function createSession() {
     let session = {
       name: name,
       color: color,
@@ -78,6 +83,7 @@ function JournalInfo(props) {
         );
         let newSessions = sortSessionsByDate(props.sessions.concat(session));
         props.setSessions(newSessions);
+        props.setSession(session);
       } else {
         setErrorMsg(true);
       }
@@ -99,8 +105,7 @@ function JournalInfo(props) {
   }
 
   //Edits session
-  async function editSession(e) {
-    e.preventDefault();
+  async function editSession() {
     let session = {
       name: name,
       color: color,
@@ -111,7 +116,10 @@ function JournalInfo(props) {
       uid: uid,
     };
     if (isValidSession(session)) {
-      if (props.sessions.filter((e) => e.name === session.name).length === 0) {
+      if (
+        name === props.session.name ||
+        props.sessions.filter((e) => e.name === session.name).length === 0
+      ) {
         await writeToFirebase(
           "sessions",
           props.user.uid,
@@ -129,8 +137,7 @@ function JournalInfo(props) {
   }
 
   //Deletes session
-  async function deleteSession(e) {
-    e.preventDefault();
+  async function deleteSession() {
     try {
       await deleteFromFirebase(
         "sessions",
@@ -189,6 +196,15 @@ function JournalInfo(props) {
     });
   };
 
+  function returnToInitialValues() {
+    setName(props.session.name);
+    setDate(props.session.date);
+    setColor(props.session.color);
+    setIngameTime(props.session.ingameTime);
+    setPartyLevel(props.session.partyLevel);
+    setDescription(props.session.description);
+  }
+
   let titleErrorMessage = () => {
     return errorMsg ? (
       <p className="generic__alert-text">
@@ -206,19 +222,44 @@ function JournalInfo(props) {
   const buttons = (entry) => (
     <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
-        <button className="generic__buttons" onClick={(e) => createSession(e)}>
+        <button
+          className="generic__buttons"
+          onClick={(e) => {
+            e.preventDefault();
+            createSession();
+          }}
+        >
           Create Session
         </button>
       ) : (
         <>
-          <button className="generic__buttons" onClick={(e) => editSession(e)}>
-            Edit Session
+          <button
+            className="generic__buttons"
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                editSession();
+                setIsEditable(false);
+              } else {
+                setIsEditable(true);
+              }
+            }}
+          >
+            {isEditable ? "Save" : "Edit Session"}
           </button>
           <button
             className="generic__buttons"
-            onClick={(e) => sessionDeleteAlert(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                returnToInitialValues();
+                setIsEditable(false);
+              } else {
+                sessionDeleteAlert();
+              }
+            }}
           >
-            Delete Session
+            {isEditable ? "Cancel" : "Delete Session"}
           </button>
         </>
       )}
@@ -248,7 +289,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
-                  disabled={!isOwner()}
+                  disabled={!isOwner() || !isEditable}
                   className="generic__input md:w-96 mr-8"
                   id="info-session-name"
                   value={name}
@@ -263,7 +304,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
-                  disabled={!isOwner()}
+                  disabled={!isOwner() || !isEditable}
                   type="color"
                   className="generic__input w-12"
                   id="info-session-color"
@@ -282,7 +323,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
-                  disabled={!isOwner()}
+                  disabled={!isOwner() || !isEditable}
                   type="date"
                   className="generic__input"
                   id="info-session-date"
@@ -298,9 +339,9 @@ function JournalInfo(props) {
 
                 <span>
                   <input
-                    disabled={!isOwner()}
+                    disabled={!isOwner() || !isEditable}
                     type="number"
-                    className={`generic__input w-16 mr-2`}
+                    className={`generic__input text-right w-16 mr-2`}
                     id="info-session-time"
                     value={ingameTime}
                     min="0"
@@ -317,7 +358,7 @@ function JournalInfo(props) {
                 </label>
 
                 <input
-                  disabled={!isOwner()}
+                  disabled={!isOwner() || !isEditable}
                   type="number"
                   className="generic__input w-16"
                   id="info-session-level"
@@ -338,7 +379,7 @@ function JournalInfo(props) {
                 Session description{" "}
               </label>
               <textarea
-                disabled={!isOwner()}
+                disabled={!isOwner() || !isEditable}
                 className="generic__input w-full h-32 md:h-60 resize-none"
                 id="info-session-description"
                 value={description}

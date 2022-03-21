@@ -34,7 +34,15 @@ function LocationInfo(props) {
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
   const [zoomImg, setZoomImg] = useState(zoomInImage);
+  const [isEditable, setIsEditable] = useState(false);
+
   const uid = props.location.uid;
+
+  useEffect(() => {
+    if (props.location === "new") {
+      setIsEditable(true);
+    }
+  }, [props.location]);
 
   useEffect(() => {
     console.log(isBigImage);
@@ -46,9 +54,7 @@ function LocationInfo(props) {
   }, [name]);
 
   //Adds character to Database
-  async function createLocation(e) {
-    e.preventDefault();
-
+  async function createLocation() {
     let location = {
       name: name,
       img: img,
@@ -70,6 +76,7 @@ function LocationInfo(props) {
         );
         let newLocations = props.locations.concat(location);
         props.setLocations(newLocations);
+        props.setLocation(location);
       } else {
         setErrorMsg(true);
       }
@@ -77,8 +84,7 @@ function LocationInfo(props) {
   }
 
   //Edits character
-  async function editLocation(e) {
-    e.preventDefault();
+  async function editLocation() {
     let location = {
       name: name,
       img: img,
@@ -109,8 +115,7 @@ function LocationInfo(props) {
   }
 
   //Deletes location
-  async function deleteLocation(e) {
-    e.preventDefault();
+  async function deleteLocation() {
     try {
       await deleteFromFirebase(
         "locations",
@@ -177,6 +182,14 @@ function LocationInfo(props) {
     ) : null;
   };
 
+  function returnToInitialValues() {
+    setImg(props.location.img);
+    setName(props.location.name);
+    setFolder(props.location.folder);
+    setDescription(props.location.description);
+    setPrivateDescription(props.location.privateDescription);
+  }
+
   function isValidLocation(location) {
     if (location.name === "" || containsInvalidCharacters(location.name)) {
       setErrorMsg(true);
@@ -198,19 +211,44 @@ function LocationInfo(props) {
   const buttons = (entry) => (
     <div className="flex justify-center h-10 items-stretch gap-3">
       {entry === "new" ? (
-        <button className="generic__buttons" onClick={(e) => createLocation(e)}>
+        <button
+          className="generic__buttons"
+          onClick={(e) => {
+            e.preventDefault();
+            createLocation();
+          }}
+        >
           Create Location
         </button>
       ) : (
         <>
-          <button className="generic__buttons" onClick={(e) => editLocation(e)}>
-            Edit Location
+          <button
+            className="generic__buttons"
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                editLocation();
+                setIsEditable(false);
+              } else {
+                setIsEditable(true);
+              }
+            }}
+          >
+            {isEditable ? "Save" : "Edit Location"}
           </button>
           <button
             className="generic__buttons"
-            onClick={(e) => locationDeleteAlert(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              if (isEditable) {
+                returnToInitialValues();
+                setIsEditable(false);
+              } else {
+                locationDeleteAlert();
+              }
+            }}
           >
-            Delete Location
+            {isEditable ? "Cancel" : "Delete Session"}
           </button>
         </>
       )}
@@ -238,10 +276,10 @@ function LocationInfo(props) {
               >
                 <div
                   className={`ChaLocInfo__img-container ${
-                    isOwner() ? "cursor-pointer" : ""
+                    isOwner() && isEditable ? "cursor-pointer" : ""
                   }`}
                   onClick={() => {
-                    if (isOwner()) setIsImgPopup(true);
+                    if (isOwner() && isEditable) setIsImgPopup(true);
                   }}
                 >
                   <img
@@ -277,7 +315,7 @@ function LocationInfo(props) {
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       id="info-location-name"
                       value={name}
                       maxLength="25"
@@ -294,7 +332,7 @@ function LocationInfo(props) {
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       id="info-location-folder"
                       value={folder}
                       maxLength="25"
@@ -312,7 +350,7 @@ function LocationInfo(props) {
                     Location description
                   </label>
                   <textarea
-                    disabled={!isOwner()}
+                    disabled={!isOwner() || !isEditable}
                     className="generic__input  ChaLocInfo__input-large"
                     id="info-location-description"
                     value={description}
@@ -329,7 +367,7 @@ function LocationInfo(props) {
                       Private description
                     </label>
                     <textarea
-                      disabled={!isOwner()}
+                      disabled={!isOwner() || !isEditable}
                       className="generic__input ChaLocInfo__input-large "
                       id="info-location-private-description"
                       value={privateDescription}

@@ -174,6 +174,7 @@ function Characters(props) {
         <CharacterInfo
           campaign={currentCampaign}
           character={currentCharacter}
+          setCharacter={setCurrentCharacter}
           characters={characters}
           setCharacters={setCharacters}
           user={user}
