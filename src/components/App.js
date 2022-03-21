@@ -1,6 +1,6 @@
 import "../index.css";
 //import SignIn from "./SignIn";
-import { Route, Routes, useMatch } from "react-router-dom";
+import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Reset from "./Reset";
@@ -10,7 +10,7 @@ import Main from "./Main";
 import Campaign from "./Campaign";
 import Journal from "./Journal";
 import Stats from "./Stats";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorPage from "./ErrorPage";
 import Characters from "./Characters";
 import Locations from "./Locations";
@@ -25,6 +25,7 @@ import {
 function App() {
   const routerMatch = useMatch;
   let params = getParams();
+  const navigate = useNavigate();
   const [currentUserID, setCurrentUserID] = useState("");
   const [currentCampaignID, setCurrentCampaignID] = useState("");
   const [currentTab, setCurrentTab] = useState("");
@@ -34,18 +35,18 @@ function App() {
     campaigns,
     params.campaign
   );
-  const [sessions, setSessions, loadingSessions] = useSessionState(
-    params.user,
-    currentCampaign.name
-  );
-  const [characters, setCharacters, loadingCharacters] = useCharacterState(
-    params.user,
-    currentCampaign.name
-  );
-  const [locations, setLocations, loadingLocations] = useLocationState(
-    params.user,
-    currentCampaign.name
-  );
+  const [sessions, setSessions, loadingSessions, hasSessionError] =
+    useSessionState(params.user, currentCampaign.name);
+  const [characters, setCharacters, loadingCharacters, hasCharacterError] =
+    useCharacterState(params.user, currentCampaign.name);
+  const [locations, setLocations, loadingLocations, hasLocationError] =
+    useLocationState(params.user, currentCampaign.name);
+
+  useEffect(() => {
+    if (hasSessionError || hasCharacterError || hasLocationError) {
+      navigate("/error");
+    }
+  }, [hasSessionError, hasCharacterError, hasLocationError, navigate]);
 
   function getParams() {
     let fullMatch = routerMatch("/:route/:user/:campaign");
