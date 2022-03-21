@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   loadFromFirebase,
   loadCampaignsFromDatabase,
@@ -9,15 +8,21 @@ import {
 export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
   const [loadingSessions, setLoadingSessions] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   //Loads session list based on params
   const loadSessions = useCallback(async (userID, campaignName) => {
     if (campaignName) {
       setLoadingSessions(true);
-      let sessions = await loadFromFirebase("sessions", userID, campaignName);
-      sortSessionsByDate(sessions);
-      setLoadingSessions(false);
-      setSessions(sessions);
+      try {
+        let sessions = await loadFromFirebase("sessions", userID, campaignName);
+        sortSessionsByDate(sessions);
+        setLoadingSessions(false);
+        setSessions(sessions);
+      } catch (e) {
+        setHasError(true);
+        throw e;
+      }
     }
   }, []);
 
@@ -30,24 +35,30 @@ export const useSessionState = (userID, campaignName) => {
 
   //console.log("CURRENT SESSION STATE", [campaignName, userID, loadSessions]);
 
-  return [sessions, setSessions, loadingSessions];
+  return [sessions, setSessions, loadingSessions, hasError];
 };
 
 export const useCharacterState = (userID, campaignName) => {
   const [characters, setCharacters] = useState([]);
   const [loadingCharacters, setLoadingCharacters] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   //Loads session list based on params
   const loadCharacters = useCallback(async (userID, campaignName) => {
     if (campaignName) {
       setLoadingCharacters(true);
-      let characters = await loadFromFirebase(
-        "characters",
-        userID,
-        campaignName
-      );
-      setLoadingCharacters(false);
-      setCharacters(characters);
+      try {
+        let characters = await loadFromFirebase(
+          "characters",
+          userID,
+          campaignName
+        );
+        setLoadingCharacters(false);
+        setCharacters(characters);
+      } catch (e) {
+        setHasError(true);
+        throw e;
+      }
     }
   }, []);
 
@@ -58,20 +69,30 @@ export const useCharacterState = (userID, campaignName) => {
     }
   }, [campaignName, userID, loadCharacters]);
 
-  return [characters, setCharacters, loadingCharacters];
+  return [characters, setCharacters, loadingCharacters, hasError];
 };
 
 export const useLocationState = (userID, campaignName) => {
   const [locations, setLocations] = useState([]);
   const [loadingLocations, setLoadingLocations] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   //Loads session list based on params
   const loadLocations = useCallback(async (userID, campaignName) => {
     if (campaignName) {
       setLoadingLocations(true);
-      let locations = await loadFromFirebase("locations", userID, campaignName);
-      setLoadingLocations(false);
-      setLocations(locations);
+      try {
+        let locations = await loadFromFirebase(
+          "locations",
+          userID,
+          campaignName
+        );
+        setLoadingLocations(false);
+        setLocations(locations);
+      } catch (e) {
+        setHasError(true);
+        throw e;
+      }
     }
   }, []);
 
@@ -82,7 +103,7 @@ export const useLocationState = (userID, campaignName) => {
     }
   }, [campaignName, userID, loadLocations]);
 
-  return [locations, setLocations, loadingLocations];
+  return [locations, setLocations, loadingLocations, hasError];
 };
 
 export const useCurrentCampaignState = (campaigns, campaignName) => {
@@ -108,22 +129,27 @@ export const useCurrentCampaignState = (campaigns, campaignName) => {
 
 export const useCampaignsState = (userID) => {
   const [campaigns, setCampaigns] = useState([]);
-  const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   //Loads campaign list based on params
   useEffect(() => {
-    async function loadCampaigns(userID, navigate) {
+    async function loadCampaigns(userID) {
       if (!hasLoaded) {
-        let campArray = await loadCampaignsFromDatabase(userID, navigate);
-        setCampaigns(campArray);
-        setHasLoaded(true);
+        try {
+          let campArray = await loadCampaignsFromDatabase(userID);
+          setCampaigns(campArray);
+          setHasLoaded(true);
+        } catch (e) {
+          setHasError(true);
+          throw e;
+        }
       }
     }
     if (userID) {
-      loadCampaigns(userID, navigate);
+      loadCampaigns(userID);
     }
-  }, [navigate, hasLoaded, userID]);
+  }, [hasLoaded, userID]);
 
-  return [campaigns, setCampaigns];
+  return [campaigns, setCampaigns, hasError];
 };

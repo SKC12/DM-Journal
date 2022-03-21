@@ -21,7 +21,7 @@ async function loadCampaignsFromDatabase(userID) {
     });
   } catch (e) {
     console.log(e);
-    return e;
+    throw e;
   }
 
   //console.log("LOADING CAMPAIGNS FROM DB");
@@ -39,7 +39,7 @@ async function searchFirebaseForCampaignName(userID, name) {
     return docs;
   } catch (e) {
     console.log(e);
-    alert(e);
+    throw e;
   }
 }
 
@@ -51,7 +51,7 @@ async function writeCampaignToFirebase(userID, campaignName, campaign) {
     );
   } catch (e) {
     console.log(e);
-    alert(e);
+    throw e;
   }
 }
 
@@ -72,7 +72,7 @@ async function deleteCampaignFromFirebase(userID, name) {
     await deleteDoc(doc(db, "users/" + userID + "/campaigns", name));
   } catch (e) {
     console.log(e);
-    alert(e);
+    throw e;
   }
 }
 
@@ -91,7 +91,7 @@ async function loadFromFirebase(categoryString, userID, campName) {
     });
   } catch (e) {
     console.log(e);
-    return e;
+    throw e;
   }
 
   //console.log("LOADING " + categoryString + " FROM DB");
@@ -112,7 +112,7 @@ async function writeToFirebase(categoryString, userID, campaignName, item) {
     );
   } catch (e) {
     console.log(e);
-    alert(e);
+    throw e;
   }
 }
 
@@ -133,7 +133,7 @@ async function deleteFromFirebase(
     );
   } catch (e) {
     console.log(e);
-    alert(e);
+    throw e;
   }
 }
 
