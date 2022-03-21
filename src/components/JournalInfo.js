@@ -282,7 +282,7 @@ function JournalInfo(props) {
       return (
         <div className="animate__animated animate__fadeIn">
           <form className="generic__main-form">
-            <div className="md:flex md:justify-between">
+            <div className="md:flex">
               <div className="JournalInfo__input-container">
                 <label className="generic__label" htmlFor="info-session-name">
                   Session title{" "}
@@ -316,8 +316,8 @@ function JournalInfo(props) {
 
             {titleErrorMessage()}
 
-            <div className="md:flex md:pt-6 md:justify-between">
-              <div className="JournalInfo__input-container">
+            <div className="md:flex md:pt-6">
+              <div className="JournalInfo__input-container mr-4">
                 <label className="generic__label" htmlFor="info-session-date">
                   Session date{" "}
                 </label>
