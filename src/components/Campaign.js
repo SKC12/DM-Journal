@@ -78,7 +78,7 @@ function Campaign(props) {
       <CampaignInfo
         campaign={currentCampaign}
         user={user}
-        key={currentCampaign.name}
+        key={"CI" + currentCampaign.name}
       />
     </div>
   );

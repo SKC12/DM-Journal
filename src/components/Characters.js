@@ -125,7 +125,7 @@ function Characters(props) {
               <CharacterCard
                 current={currentCharacter}
                 character={entry}
-                key={entry.name}
+                key={"CG" + entry.name}
                 onClickEvent={setCurrentCharacter}
               />
             );
@@ -168,7 +168,7 @@ function Characters(props) {
           characters={characters}
           setCharacters={setCharacters}
           user={user}
-          key={currentCharacter.name}
+          key={"CI" + currentCharacter.name}
         />
       )}
     </div>

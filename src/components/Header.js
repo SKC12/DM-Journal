@@ -13,11 +13,11 @@ function Header(props) {
 
   useEffect(() => {
     setIdParameters(
-      props.currentUserID !== "" && props.currentCampaignId !== ""
+      props.currentUserID !== "" && props.currentCampaignID !== ""
         ? `/${props.currentUserID}/${props.currentCampaignID}`
         : ""
     );
-  }, [props]);
+  }, [props.currentCampaignID, props.currentUserID]);
 
   function toggleSidebar() {
     props.setSideBarHidden(!props.sideBarHidden);

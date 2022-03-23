@@ -20,7 +20,7 @@ export default function DraftjsMentionItem(props) {
     }
   );
 
-  const [isPopout, setIsPopout] = useState(true);
+  const [isPopout, setIsPopout] = useState(false);
 
   useEffect(() => {
     async function updatePopper() {
@@ -36,7 +36,7 @@ export default function DraftjsMentionItem(props) {
   return (
     <>
       <span
-        className={props.className}
+        className="popper__linked-element"
         ref={setReferenceElement}
         // eslint-disable-next-line no-alert
         onClick={() => console.log("Clicked on the Mention!")}

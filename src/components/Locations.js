@@ -125,7 +125,7 @@ function Locations(props) {
               <LocationCard
                 current={currentLocation}
                 location={entry}
-                key={entry.name}
+                key={"LC" + entry.name}
                 onClickEvent={setCurrentLocation}
               />
             );
@@ -168,7 +168,7 @@ function Locations(props) {
           locations={locations}
           setLocations={setLocations}
           user={user}
-          key={currentLocation.name}
+          key={"LI" + currentLocation.name}
         />
       )}
     </div>

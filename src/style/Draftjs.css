@@ -30,3 +30,9 @@
   font-size: 0.9rem;
   padding-bottom: 4px;
 }
+
+.popper__linked-element {
+  cursor: pointer;
+  text-decoration: underline dotted var(--button-color) 1.5px;
+  text-underline-offset: 1.5px;
+}
