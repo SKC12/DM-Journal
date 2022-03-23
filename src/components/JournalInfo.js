@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
+import {
+  ContentState,
+  EditorState,
+  convertFromRaw,
+  convertToRaw,
+} from "draft-js";
+import "draft-js/dist/Draft.css";
 import "animate.css";
 import "../style/JournalInfo.css";
+import "../style/Draftjs.css";
 
 import {
   writeToFirebase,
@@ -11,6 +19,7 @@ import {
   deleteFromFirebase,
   containsInvalidCharacters,
 } from "../helpers.js";
+import DraftjsMentions from "./DraftjsMentions";
 
 function JournalInfo(props) {
   const [name, setName] = useState(
@@ -24,6 +33,9 @@ function JournalInfo(props) {
   );
   const [description, setDescription] = useState(
     props.session.description ? props.session.description : ""
+  );
+  const [descriptionEditorState, setDescriptionEditorState] = useState(() =>
+    getEditorStateFromStringOrRaw(description)
   );
   const [color, setColor] = useState(
     props.session.color
@@ -47,6 +59,17 @@ function JournalInfo(props) {
 
   const uid = props.session.uid;
 
+  //Allows the Editor to accept descripts both in String and Raw Draftjs format
+  function getEditorStateFromStringOrRaw(description) {
+    if (typeof description === "string") {
+      return EditorState.createWithContent(
+        ContentState.createFromText(description)
+      );
+    } else {
+      return EditorState.createWithContent(convertFromRaw(description));
+    }
+  }
+
   useEffect(() => {
     if (props.session === "new") {
       setIsEditable(true);
@@ -69,7 +92,7 @@ function JournalInfo(props) {
       date: date,
       ingameTime: ingameTime,
       partyLevel: partyLevel,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       uid: nanoid(),
     };
 
@@ -112,7 +135,7 @@ function JournalInfo(props) {
       date: date,
       ingameTime: ingameTime,
       partyLevel: partyLevel,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       uid: uid,
     };
     if (isValidSession(session)) {
@@ -203,6 +226,9 @@ function JournalInfo(props) {
     setIngameTime(props.session.ingameTime);
     setPartyLevel(props.session.partyLevel);
     setDescription(props.session.description);
+    setDescriptionEditorState(
+      getEditorStateFromStringOrRaw(props.session.description)
+    );
   }
 
   let titleErrorMessage = () => {
@@ -378,14 +404,18 @@ function JournalInfo(props) {
               >
                 Session description{" "}
               </label>
-              <textarea
-                disabled={!isOwner() || !isEditable}
-                className="generic__input w-full h-32 md:h-60 resize-none"
+              <DraftjsMentions
+                readOnly={!isOwner() || !isEditable}
                 id="info-session-description"
-                value={description}
-                maxLength="3000"
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+                editorStateArray={[
+                  descriptionEditorState,
+                  setDescriptionEditorState,
+                ]}
+                characters={props.characters}
+                locations={props.locations}
+                editorState={descriptionEditorState}
+                onChange={setDescriptionEditorState}
+              ></DraftjsMentions>
             </div>
             {isOwner() ? buttons(entry) : null}
           </form>

@@ -555,10 +555,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: 1.5rem;
 }
 
-.h-32 {
-  height: 8rem;
-}
-
 .h-\[93vh\] {
   height: 93vh;
 }
@@ -1083,10 +1079,6 @@ body {
 
   .md\:hidden {
     display: none;
-  }
-
-  .md\:h-60 {
-    height: 15rem;
   }
 
   .md\:h-\[95vh\] {

@@ -112,6 +112,8 @@ function App() {
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
+                characters={characters}
+                locations={locations}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}
@@ -129,6 +131,8 @@ function App() {
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
+                characters={characters}
+                locations={locations}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 setCurrentUserID={setCurrentUserID}

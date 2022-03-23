@@ -1,3 +1,15 @@
+.DraftEditor-root {
+  background-color: var(--light-bg-color);
+  height: 128px;
+  min-height: 128px;
+  border-radius: 4px;
+  padding: 4px;
+  color: var(--text-color);
+  line-height: 1.25;
+
+  /* className="generic__input w-full h-32 md:h-60 resize-none" */
+}
+
 .generic__alert-text {
   color: var(--error-text-color);
   font-size: 0.75rem;

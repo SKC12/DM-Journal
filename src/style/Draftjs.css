@@ -1,0 +1,32 @@
+.popper__main {
+  background-color: var(--light-bg-color);
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid var(--button-color);
+}
+
+.popper__top {
+  background-color: var(--very-light-bg-color);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.popper__main[hidden] {
+  display: none;
+}
+
+.popper__img {
+  height: 46px;
+}
+
+.popper__name {
+  padding: 0 14px;
+  font-size: 1.5rem;
+}
+
+.popper__folder {
+  font-size: 0.9rem;
+  padding-bottom: 4px;
+}

@@ -61,7 +61,7 @@ function Journal(props) {
         <JounalCard
           current={currentSession}
           session={entry}
-          key={entry.name}
+          key={"JC" + entry.name}
           sessionNumber={index + 1}
           onClickEvent={setCurrentSession}
         />
@@ -135,8 +135,10 @@ function Journal(props) {
           setSession={setCurrentSession}
           sessions={sessions}
           setSessions={setSessions}
+          characters={props.characters}
+          locations={props.locations}
           user={user}
-          key={currentSession.name}
+          key={"JI" + currentSession.name}
         />
       )}
     </div>
