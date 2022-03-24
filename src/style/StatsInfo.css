@@ -64,6 +64,7 @@
 
 .Stats__sidebar-item {
   color: var(--text-color);
+  font-weight: normal;
   background-color: var(--very-light-bg-color);
   padding: 8px;
   cursor: pointer;
