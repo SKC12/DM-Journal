@@ -21,18 +21,22 @@ export default function DraftjsMentions(props) {
     if (characters) {
       for (let i = 0; i < characters.length; i++) {
         mentions.push({
+          key: "char" + characters[i].name,
           name: characters[i].name,
           folder: characters[i].location,
           avatar: characters[i].img,
+          type: "characters",
         });
       }
     }
     if (locations) {
       for (let i = 0; i < locations.length; i++) {
         mentions.push({
+          key: "loc" + characters[i].name,
           name: locations[i].name,
           folder: locations[i].location,
           avatar: locations[i].img,
+          type: "locations",
         });
       }
     }
@@ -44,6 +48,7 @@ export default function DraftjsMentions(props) {
       mentionComponent(mentionProps) {
         return (
           <DraftjsMentionItem
+            params={props.params}
             className={mentionProps.className}
             // eslint-disable-next-line no-alert
             onClick={() => alert("Clicked on the Mention!")}
@@ -59,7 +64,7 @@ export default function DraftjsMentions(props) {
     // eslint-disable-next-line no-shadow
     const plugins = [mentionPlugin];
     return { plugins, MentionSuggestions };
-  }, []);
+  }, [props.params]);
 
   const onOpenChange = useCallback((_open) => {
     setOpen(_open);

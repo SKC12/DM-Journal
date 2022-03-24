@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { useParams } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import {
   ContentState,
@@ -54,8 +53,7 @@ function JournalInfo(props) {
   const [errorMsg, setErrorMsg] = useState(false);
   const [dateErrorMsg, setDateErrorMsg] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
-
-  const params = useParams();
+  const params = props.params;
 
   const uid = props.session.uid;
 
@@ -415,6 +413,7 @@ function JournalInfo(props) {
                 locations={props.locations}
                 editorState={descriptionEditorState}
                 onChange={setDescriptionEditorState}
+                params={props.params}
               ></DraftjsMentions>
             </div>
             {isOwner() ? buttons(entry) : null}

@@ -126,6 +126,7 @@ function Journal(props) {
       />
       {isPrivate(currentCampaign) ? null : (
         <JournalInfo
+          params={params}
           campaign={currentCampaign}
           session={currentSession}
           setSession={setCurrentSession}
