@@ -12,6 +12,7 @@ export default function DraftjsMentionItem(props) {
     popperElement,
     {
       placement: "right-end",
+      container: "body",
       modifiers: [
         {
           name: "offset",

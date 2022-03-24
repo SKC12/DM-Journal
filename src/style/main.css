@@ -6,8 +6,6 @@
   padding: 4px;
   color: var(--text-color);
   line-height: 1.25;
-
-  /* className="generic__input w-full h-32 md:h-60 resize-none" */
 }
 
 .generic__alert-text {
@@ -83,6 +81,10 @@
     height: 95vh;
     max-height: 95vh;
   }
+  .DraftEditor-root {
+    min-height: 160px;
+    max-height: 160px;
+  }
   .generic__buttons {
     width: 160px;
     height: 40px;
@@ -98,6 +100,7 @@
   .generic__input {
     min-height: 34px;
   }
+
   :root {
     font-size: large;
   }

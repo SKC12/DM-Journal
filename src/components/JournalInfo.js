@@ -388,7 +388,7 @@ function JournalInfo(props) {
                 <input
                   disabled={!isOwner() || !isEditable}
                   type="number"
-                  className="generic__input w-16"
+                  className="generic__input w-16 text-right"
                   id="info-session-level"
                   value={partyLevel}
                   min="0"
