@@ -48,14 +48,11 @@ export default function DraftjsMentionItem(props) {
     }
   }, [isPopout, update]);
 
-  //console.log(props);
-
   return (
     <>
       <span
         className="popper__linked-element"
         ref={setReferenceElement}
-        // eslint-disable-next-line no-alert
         onClick={() => navigate(getNavigateUrl(params))}
         onMouseOver={() => setIsPopout(true)}
         onMouseOut={() => setIsPopout(false)}

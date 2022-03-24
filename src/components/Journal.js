@@ -58,7 +58,7 @@ function Journal(props) {
           key={"JC" + entry.name}
           sessionNumber={index + 1}
           onClickEvent={() =>
-            navigate(`/journal/${user.uid}/${params.campaign}/${entry.name}`)
+            navigate(`/journal/${params.user}/${params.campaign}/${entry.name}`)
           }
         />
       );

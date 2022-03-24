@@ -122,7 +122,7 @@ function Locations(props) {
                 key={"LC" + entry.name}
                 onClickEvent={() =>
                   navigate(
-                    `/locations/${user.uid}/${params.campaign}/${entry.name}`
+                    `/locations/${params.user}/${params.campaign}/${entry.name}`
                   )
                 }
               />

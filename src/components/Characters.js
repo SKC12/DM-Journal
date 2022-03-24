@@ -120,7 +120,7 @@ function Characters(props) {
                 key={"CG" + entry.name}
                 onClickEvent={() =>
                   navigate(
-                    `/characters/${user.uid}/${params.campaign}/${entry.name}`
+                    `/characters/${params.user}/${params.campaign}/${entry.name}`
                   )
                 }
               />

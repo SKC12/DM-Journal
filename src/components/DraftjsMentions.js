@@ -21,7 +21,7 @@ export default function DraftjsMentions(props) {
     if (characters) {
       for (let i = 0; i < characters.length; i++) {
         mentions.push({
-          key: "char" + characters[i].name,
+          id: "char" + characters[i].name,
           name: characters[i].name,
           folder: characters[i].location,
           avatar: characters[i].img,
@@ -32,7 +32,7 @@ export default function DraftjsMentions(props) {
     if (locations) {
       for (let i = 0; i < locations.length; i++) {
         mentions.push({
-          key: "loc" + characters[i].name,
+          id: "loc" + characters[i].name,
           name: locations[i].name,
           folder: locations[i].location,
           avatar: locations[i].img,
@@ -51,8 +51,6 @@ export default function DraftjsMentions(props) {
             params={props.params}
             className={mentionProps.className}
             // eslint-disable-next-line no-alert
-            onClick={() => alert("Clicked on the Mention!")}
-            onMouseOver={() => console.log("TEST")}
             content={mentionProps.children}
             item={mentionProps.mention}
           />
@@ -78,14 +76,12 @@ export default function DraftjsMentions(props) {
 
   return (
     <div
-      //className={editorStyles.editor}
       onClick={() => {
         ref.current.focus();
       }}
     >
       <Editor
         readOnly={!!props.readOnly}
-        editorKey={"editor"}
         editorState={editorState}
         onChange={setEditorState}
         plugins={plugins}
