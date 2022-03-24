@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { isOwner } from "../helpers";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
@@ -10,35 +10,21 @@ import CharacterCard from "./CharacterCard";
 import Accordion from "./Accordion";
 
 function Characters(props) {
-  const setCurrentCampaignID = props.setCurrentCampaignID;
-  const setCurrentUserID = props.setCurrentUserID;
   const setCurrentTab = props.setCurrentTab;
-  const params = useParams();
-  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
+  const params = props.params;
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [campaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
-
-  const [currentCharacter, setCurrentCharacter] = useState("");
+  const [currentCharacter, setCurrentCharacter] = props.currentCharacterState;
   const [characters, setCharacters, loadingCharacters] = props.charactersState;
 
   //Navigates to link containing User params
   useEffect(() => {
-    if (!paramsUser && user) {
+    if (!params.user && user) {
       navigate("/characters/" + user.uid);
     }
-  }, [paramsUser, user, navigate]);
-
-  //Updates current IDs on parent main element
-  useEffect(() => {
-    if (params.campaign) {
-      setCurrentCampaignID(params.campaign);
-    }
-    if (paramsUser) {
-      setCurrentUserID(paramsUser);
-    }
-  });
+  }, [params.user, user, navigate]);
 
   //Updates currentTab on parent main element
   useEffect(() => {
@@ -58,7 +44,13 @@ function Characters(props) {
 
   //Sets up initial characcter on characters load
   useEffect(() => {
-    if (!currentCharacter) {
+    if (params.item) {
+      let currentItem = characters.find((char) => char.name === params.item);
+      if (currentItem) {
+        setCurrentCharacter(currentItem);
+      }
+    }
+    if (!currentCharacter && !params.item) {
       let random = Math.floor(Math.random() * characters.length);
       if (characters && characters.length > 0) {
         setCurrentCharacter(characters[random]);
@@ -66,12 +58,12 @@ function Characters(props) {
         setCurrentCharacter("");
       }
     }
-  }, [characters, currentCharacter]);
+  }, [characters, currentCharacter, setCurrentCharacter, params.item]);
 
   const sideBarContent = (
     <div>
       <h2 className="select-none pb-4">Characters:</h2>
-      {isOwner(user, paramsUser) ? (
+      {isOwner(user, params.user) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
           onClick={() => setCurrentCharacter("new")}
@@ -126,7 +118,11 @@ function Characters(props) {
                 current={currentCharacter}
                 character={entry}
                 key={"CG" + entry.name}
-                onClickEvent={setCurrentCharacter}
+                onClickEvent={() =>
+                  navigate(
+                    `/characters/${user.uid}/${params.campaign}/${entry.name}`
+                  )
+                }
               />
             );
           });
@@ -142,7 +138,7 @@ function Characters(props) {
   }
 
   function isPrivate(campaign) {
-    if (!user || user.uid !== paramsUser) {
+    if (!user || user.uid !== params.user) {
       return campaign.private;
     } else {
       return false;

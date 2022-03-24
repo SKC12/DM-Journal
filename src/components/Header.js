@@ -6,6 +6,15 @@ import "../style/Header.css";
 
 function Header(props) {
   const [user] = useAuthState(auth);
+  const sessionParam = props.currentSession
+    ? "/" + props.currentSession.name
+    : "";
+  const characterParam = props.currentCharacter
+    ? "/" + props.currentCharacter.name
+    : "";
+  const locationParam = props.currentLocation
+    ? "/" + props.currentLocation.name
+    : "";
 
   const [idParameters, setIdParameters] = useState("");
   const navigate = useNavigate();
@@ -47,7 +56,7 @@ function Header(props) {
           className={`header__nav-item ${
             currentTab === "Journal" ? "header__selected" : ""
           }`}
-          onClick={() => navigate(`/journal${idParameters}`)}
+          onClick={() => navigate(`/journal${idParameters + sessionParam}`)}
         >
           Journal
         </li>
@@ -55,7 +64,9 @@ function Header(props) {
           className={`header__nav-item ${
             currentTab === "Characters" ? "header__selected" : ""
           }`}
-          onClick={() => navigate(`/characters${idParameters}`)}
+          onClick={() =>
+            navigate(`/characters${idParameters + characterParam}`)
+          }
         >
           Characters
         </li>
@@ -63,7 +74,7 @@ function Header(props) {
           className={`header__nav-item ${
             currentTab === "Locations" ? "header__selected" : ""
           }`}
-          onClick={() => navigate(`/locations${idParameters}`)}
+          onClick={() => navigate(`/locations${idParameters + locationParam}`)}
         >
           Locations
         </li>

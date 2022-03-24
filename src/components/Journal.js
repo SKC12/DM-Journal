@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
 import { isOwner } from "../helpers";
@@ -9,14 +9,12 @@ import Sidebar from "./Sidebar";
 import "../style/main.css";
 
 function Journal(props) {
-  const setCurrentCampaignID = props.setCurrentCampaignID;
-  const setCurrentUserID = props.setCurrentUserID;
   const setCurrentTab = props.setCurrentTab;
-  const params = useParams();
+  const params = props.params;
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
-  const [currentSession, setCurrentSession] = useState("");
+  const [currentSession, setCurrentSession] = props.currentSessionState;
   const [campaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
   const [sessions, setSessions, loadingSessions] = props.sessionsState;
@@ -28,26 +26,22 @@ function Journal(props) {
     }
   }, [paramsUser, user, navigate]);
 
-  //Updates current IDs on parent main element
-  useEffect(() => {
-    if (params.campaign) {
-      setCurrentCampaignID(params.campaign);
-    }
-    if (paramsUser) {
-      setCurrentUserID(paramsUser);
-    }
-  });
-
   //Sets up initial session on sessions load
   useEffect(() => {
-    if (!currentSession) {
+    if (params.item) {
+      let currentItem = sessions.find((char) => char.name === params.item);
+      if (currentItem) {
+        setCurrentSession(currentItem);
+      }
+    }
+    if (!currentSession && !params.item) {
       if (sessions && sessions.length > 0) {
         setCurrentSession(sessions[0]);
       } else {
         setCurrentSession("");
       }
     }
-  }, [sessions, currentSession]);
+  }, [sessions, currentSession, params.item, setCurrentSession]);
 
   //Updates currentTab on parent main element
   useEffect(() => {
@@ -63,7 +57,9 @@ function Journal(props) {
           session={entry}
           key={"JC" + entry.name}
           sessionNumber={index + 1}
-          onClickEvent={setCurrentSession}
+          onClickEvent={() =>
+            navigate(`/journal/${user.uid}/${params.campaign}/${entry.name}`)
+          }
         />
       );
     });

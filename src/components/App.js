@@ -37,10 +37,14 @@ function App() {
   );
   const [sessions, setSessions, loadingSessions, hasSessionError] =
     useSessionState(params.user, currentCampaign.name);
+  const [currentSession, setCurrentSession] = useState("");
+
   const [characters, setCharacters, loadingCharacters, hasCharacterError] =
     useCharacterState(params.user, currentCampaign.name);
+  const [currentCharacter, setCurrentCharacter] = useState("");
   const [locations, setLocations, loadingLocations, hasLocationError] =
     useLocationState(params.user, currentCampaign.name);
+  const [currentLocation, setCurrentLocation] = useState("");
 
   useEffect(() => {
     if (hasSessionError || hasCharacterError || hasLocationError) {
@@ -49,7 +53,9 @@ function App() {
   }, [hasSessionError, hasCharacterError, hasLocationError, navigate]);
 
   function getParams() {
-    let fullMatch = routerMatch("/:route/:user/:campaign");
+    let fullMatch = routerMatch("/:route/:user/:campaign/:item");
+    let userLocMatch = routerMatch("/:route/:user/:campaign");
+
     let userMath = routerMatch("/:route/:user");
     let routeMatch = routerMatch("/:route");
 
@@ -58,6 +64,16 @@ function App() {
         user: fullMatch.params.user,
         route: fullMatch.params.route,
         campaign: fullMatch.params.campaign,
+        item: fullMatch.params.item,
+      };
+    }
+
+    if (userLocMatch) {
+      return {
+        user: userLocMatch.params.user,
+        route: userLocMatch.params.route,
+        campaign: userLocMatch.params.campaign,
+        item: "",
       };
     }
 
@@ -66,6 +82,7 @@ function App() {
         user: userMath.params.user,
         route: userMath.params.route,
         campaign: "",
+        item: "",
       };
     }
     if (routeMatch) {
@@ -73,11 +90,28 @@ function App() {
         user: "",
         route: routeMatch.params.route,
         campaign: "",
+        item: "",
       };
     }
 
-    return { user: "", route: "", campaign: "" };
+    return { user: "", route: "", campaign: "", item: "" };
   }
+
+  // useEffect(() => {
+  //   setCurrentSession("");
+  //   setCurrentLocation("");
+  //   setCurrentCharacter("");
+  // }, [currentCampaign.name]);
+
+  //Updates current IDs on parent main element
+  useEffect(() => {
+    if (params.campaign) {
+      setCurrentCampaignID(params.campaign);
+    }
+    if (params.user) {
+      setCurrentUserID(params.user);
+    }
+  }, [params.campaign, params.user, params.item, params.route]);
 
   return (
     <div className="main-app">
@@ -91,6 +125,9 @@ function App() {
           setCurrentUserID={setCurrentUserID}
           currentCampaignID={currentCampaignID}
           setCurrentCampaignID={setCurrentCampaignID}
+          currentSession={currentSession}
+          currentCharacter={currentCharacter}
+          currentLocation={currentLocation}
         />
         <Routes>
           <Route exact path="/" element={<Main />} />
@@ -109,35 +146,18 @@ function App() {
             path="/journal/*"
             element={
               <Journal
+                params={params}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
+                currentSessionState={[currentSession, setCurrentSession]}
                 characters={characters}
+                currentCharacterState={[currentCharacter, setCurrentCharacter]}
                 locations={locations}
+                currentLocationState={[currentLocation, setCurrentLocation]}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
-                setCurrentTab={setCurrentTab}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/journal/:user/:campaign"
-            element={
-              <Journal
-                campaignsState={[campaigns]}
-                currentCampaignState={[currentCampaign, setCurrentCampaign]}
-                sessionsState={[sessions, setSessions, loadingSessions]}
-                characters={characters}
-                locations={locations}
-                sideBarHidden={sideBarHidden}
-                currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
-                currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
               />
             }
@@ -147,31 +167,15 @@ function App() {
             path="/characters/*"
             element={
               <Characters
+                params={params}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 charactersState={[characters, setCharacters, loadingCharacters]}
+                currentCharacterState={[currentCharacter, setCurrentCharacter]}
+                currentLocationState={[currentLocation, setCurrentLocation]}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
-                setCurrentTab={setCurrentTab}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/characters/:user/:campaign"
-            element={
-              <Characters
-                campaignsState={[campaigns]}
-                currentCampaignState={[currentCampaign, setCurrentCampaign]}
-                charactersState={[characters, setCharacters, loadingCharacters]}
-                sideBarHidden={sideBarHidden}
-                currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
-                currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
               />
             }
@@ -181,31 +185,15 @@ function App() {
             path="/locations/*"
             element={
               <Locations
+                params={params}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 locationsState={[locations, setLocations, loadingLocations]}
+                currentCharacterState={[currentCharacter, setCurrentCharacter]}
+                currentLocationState={[currentLocation, setCurrentLocation]}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
-                setCurrentTab={setCurrentTab}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/locations/:user/:campaign"
-            element={
-              <Locations
-                campaignsState={[campaigns]}
-                currentCampaignState={[currentCampaign, setCurrentCampaign]}
-                locationsState={[locations, setLocations, loadingLocations]}
-                sideBarHidden={sideBarHidden}
-                currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
-                currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
               />
             }
@@ -220,26 +208,7 @@ function App() {
                 sessionsState={[sessions, setSessions, loadingSessions]}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
                 currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
-                setCurrentTab={setCurrentTab}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/stats/:user/:campaign"
-            element={
-              <Stats
-                campaignsState={[campaigns]}
-                currentCampaignState={[currentCampaign, setCurrentCampaign]}
-                sessionsState={[sessions, setSessions, loadingSessions]}
-                sideBarHidden={sideBarHidden}
-                currentUserID={currentUserID}
-                setCurrentUserID={setCurrentUserID}
-                currentCampaignID={currentCampaignID}
-                setCurrentCampaignID={setCurrentCampaignID}
                 setCurrentTab={setCurrentTab}
               />
             }

@@ -8,8 +8,6 @@ import "../style/main.css";
 
 function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
-  const setCurrentCampaignID = props.setCurrentCampaignID;
-  const setCurrentUserID = props.setCurrentUserID;
   const navigate = useNavigate();
   const params = useParams();
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
@@ -26,16 +24,6 @@ function Stats(props) {
     }
   }, [paramsUser, user, navigate]);
 
-  //Updates current IDs on parent main element
-  useEffect(() => {
-    if (params.campaign) {
-      setCurrentCampaignID(params.campaign);
-    }
-    if (paramsUser) {
-      setCurrentUserID(paramsUser);
-    }
-  });
-
   //Updates currentTab on parent main element
   useEffect(() => {
     setCurrentTab("Stats");
@@ -48,7 +36,7 @@ function Stats(props) {
     });
     if (!!camp) {
       setCurrentCampaign(camp);
-      props.setCurrentCampaignID(camp.name);
+      //props.setCurrentCampaignID(camp.name);
       navigate(`/stats/${user.uid}/${camp.name}`);
     }
   }

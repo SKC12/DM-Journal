@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { isOwner } from "../helpers";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
@@ -10,35 +10,22 @@ import Accordion from "./Accordion";
 import LocationCard from "./LocationCard";
 
 function Locations(props) {
-  const setCurrentCampaignID = props.setCurrentCampaignID;
-  const setCurrentUserID = props.setCurrentUserID;
   const setCurrentTab = props.setCurrentTab;
-  const params = useParams();
-  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
+  const params = props.params;
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [campaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
 
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [currentLocation, setCurrentLocation] = props.currentLocationState;
   const [locations, setLocations, loadingLocations] = props.locationsState;
 
   //Navigates to link containing User params
   useEffect(() => {
-    if (!paramsUser && user) {
-      navigate("/characters/" + user.uid);
+    if (!params.user && user) {
+      navigate("/locations/" + user.uid);
     }
-  }, [paramsUser, user, navigate]);
-
-  //Updates current IDs on parent main element
-  useEffect(() => {
-    if (params.campaign) {
-      setCurrentCampaignID(params.campaign);
-    }
-    if (paramsUser) {
-      setCurrentUserID(paramsUser);
-    }
-  });
+  }, [params.user, user, navigate]);
 
   //Updates currentTab on parent main element
   useEffect(() => {
@@ -58,7 +45,14 @@ function Locations(props) {
 
   //Sets up initial location on locations load
   useEffect(() => {
-    if (!currentLocation) {
+    if (params.item) {
+      let currentItem = locations.find((char) => char.name === params.item);
+      if (currentItem) {
+        setCurrentLocation(currentItem);
+      }
+    }
+
+    if (!currentLocation && !params.item) {
       let random = Math.floor(Math.random() * locations.length);
       if (locations && locations.length > 0) {
         setCurrentLocation(locations[random]);
@@ -66,12 +60,12 @@ function Locations(props) {
         setCurrentLocation("");
       }
     }
-  }, [locations, currentLocation]);
+  }, [locations, currentLocation, setCurrentLocation, params.item]);
 
   const sideBarContent = (
     <div>
       <h2 className="select-none pb-4">Locations:</h2>
-      {isOwner(user, paramsUser) ? (
+      {isOwner(user, params.user) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
           onClick={() => setCurrentLocation("new")}
@@ -126,7 +120,11 @@ function Locations(props) {
                 current={currentLocation}
                 location={entry}
                 key={"LC" + entry.name}
-                onClickEvent={setCurrentLocation}
+                onClickEvent={() =>
+                  navigate(
+                    `/locations/${user.uid}/${params.campaign}/${entry.name}`
+                  )
+                }
               />
             );
           });
@@ -142,7 +140,7 @@ function Locations(props) {
   }
 
   function isPrivate(campaign) {
-    if (!user || user.uid !== paramsUser) {
+    if (!user || user.uid !== params.user) {
       return campaign.private;
     } else {
       return false;
