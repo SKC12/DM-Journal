@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "../style/ChaLocInfo.css";
 import genericImage from "../img/bxs-face.svg";
-import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
   writeToFirebase,
@@ -10,6 +9,13 @@ import {
 } from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
+import {
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+  EditorState,
+} from "draft-js";
+import DraftjsMentions from "./DraftjsMentions";
 
 function CharacterInfo(props) {
   const [img, setImg] = useState(
@@ -24,15 +30,29 @@ function CharacterInfo(props) {
   const [description, setDescription] = useState(
     props.character.description ? props.character.description : ""
   );
+  const [descriptionEditorState, setDescriptionEditorState] = useState(() =>
+    getEditorStateFromStringOrRaw(description)
+  );
   const [privateDescription, setPrivateDescription] = useState(
     props.character.privateDescription ? props.character.privateDescription : ""
   );
-  const params = useParams();
+  const params = props.params;
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
 
   const uid = props.character.uid;
+
+  //Allows the Editor to accept descripts both in String and Raw Draftjs format
+  function getEditorStateFromStringOrRaw(description) {
+    if (typeof description === "string") {
+      return EditorState.createWithContent(
+        ContentState.createFromText(description)
+      );
+    } else {
+      return EditorState.createWithContent(convertFromRaw(description));
+    }
+  }
 
   useEffect(() => {
     if (props.character === "new") {
@@ -50,7 +70,7 @@ function CharacterInfo(props) {
       name: name,
       img: img,
       location: location,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       privateDescription: privateDescription,
       uid: nanoid(),
     };
@@ -80,12 +100,13 @@ function CharacterInfo(props) {
       name: name,
       img: img,
       location: location,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       privateDescription: privateDescription,
       uid: uid,
     };
     if (isValidCharacter(character)) {
       if (
+        name === props.character.name ||
         props.characters.filter((e) => e.name === character.name).length === 0
       ) {
         await writeToFirebase(
@@ -180,6 +201,9 @@ function CharacterInfo(props) {
     setLocation(props.character.location);
     setDescription(props.character.description);
     setPrivateDescription(props.character.privateDescription);
+    setDescriptionEditorState(
+      getEditorStateFromStringOrRaw(props.character.description)
+    );
   }
 
   function isValidCharacter(character) {
@@ -324,14 +348,19 @@ function CharacterInfo(props) {
                   >
                     Character description
                   </label>
-                  <textarea
-                    disabled={!isOwner() || !isEditable}
-                    className="generic__input  ChaLocInfo__input-large"
+                  <DraftjsMentions
+                    readOnly={!isOwner() || !isEditable}
                     id="info-character-description"
-                    value={description}
-                    maxLength="3000"
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
+                    editorStateArray={[
+                      descriptionEditorState,
+                      setDescriptionEditorState,
+                    ]}
+                    characters={props.characters}
+                    locations={props.locations}
+                    editorState={descriptionEditorState}
+                    onChange={setDescriptionEditorState}
+                    params={props.params}
+                  ></DraftjsMentions>
                 </div>
                 {isOwner() ? (
                   <div className="ChaLocInfo__input-container">
@@ -341,6 +370,7 @@ function CharacterInfo(props) {
                     >
                       Private description
                     </label>
+
                     <textarea
                       disabled={!isOwner() || !isEditable}
                       className="generic__input ChaLocInfo__input-large "

@@ -173,6 +173,7 @@ function App() {
                 charactersState={[characters, setCharacters, loadingCharacters]}
                 currentCharacterState={[currentCharacter, setCurrentCharacter]}
                 currentLocationState={[currentLocation, setCurrentLocation]}
+                locations={locations}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}
@@ -191,6 +192,7 @@ function App() {
                 locationsState={[locations, setLocations, loadingLocations]}
                 currentCharacterState={[currentCharacter, setCurrentCharacter]}
                 currentLocationState={[currentLocation, setCurrentLocation]}
+                characters={characters}
                 sideBarHidden={sideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}

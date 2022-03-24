@@ -162,8 +162,10 @@ function Characters(props) {
           character={currentCharacter}
           setCharacter={setCurrentCharacter}
           characters={characters}
+          locations={props.locations}
           setCharacters={setCharacters}
           user={user}
+          params={props.params}
           key={"CI" + currentCharacter.name}
         />
       )}

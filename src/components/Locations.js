@@ -165,6 +165,8 @@ function Locations(props) {
           setLocation={setCurrentLocation}
           locations={locations}
           setLocations={setLocations}
+          params={props.params}
+          characters={props.characters}
           user={user}
           key={"LI" + currentLocation.name}
         />

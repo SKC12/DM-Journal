@@ -3,7 +3,6 @@ import "../style/ChaLocInfo.css";
 import genericImage from "../img/bx-image.svg";
 import zoomInImage from "../img/bx-zoom-in.svg";
 import zoomOutImage from "../img/bx-zoom-out.svg";
-import { useParams } from "react-router-dom";
 import { nanoid } from "nanoid";
 import {
   writeToFirebase,
@@ -12,6 +11,13 @@ import {
 } from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
+import {
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+  EditorState,
+} from "draft-js";
+import DraftjsMentions from "./DraftjsMentions";
 
 function LocationInfo(props) {
   const [img, setImg] = useState(
@@ -26,17 +32,31 @@ function LocationInfo(props) {
   const [description, setDescription] = useState(
     props.location.description ? props.location.description : ""
   );
+  const [descriptionEditorState, setDescriptionEditorState] = useState(() =>
+    getEditorStateFromStringOrRaw(description)
+  );
   const [privateDescription, setPrivateDescription] = useState(
     props.location.privateDescription ? props.location.privateDescription : ""
   );
   const [isBigImage, setIsBigImage] = useState(false);
-  const params = useParams();
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
   const [zoomImg, setZoomImg] = useState(zoomInImage);
   const [isEditable, setIsEditable] = useState(false);
+  const params = props.params;
 
   const uid = props.location.uid;
+
+  //Allows the Editor to accept descripts both in String and Raw Draftjs format
+  function getEditorStateFromStringOrRaw(description) {
+    if (typeof description === "string") {
+      return EditorState.createWithContent(
+        ContentState.createFromText(description)
+      );
+    } else {
+      return EditorState.createWithContent(convertFromRaw(description));
+    }
+  }
 
   useEffect(() => {
     if (props.location === "new") {
@@ -58,7 +78,7 @@ function LocationInfo(props) {
       name: name,
       img: img,
       location: folder,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       privateDescription: privateDescription,
       uid: nanoid(),
     };
@@ -88,7 +108,7 @@ function LocationInfo(props) {
       name: name,
       img: img,
       location: folder,
-      description: description,
+      description: convertToRaw(descriptionEditorState.getCurrentContent()),
       privateDescription: privateDescription,
       uid: uid,
     };
@@ -187,6 +207,9 @@ function LocationInfo(props) {
     setFolder(props.location.folder);
     setDescription(props.location.description);
     setPrivateDescription(props.location.privateDescription);
+    setDescriptionEditorState(
+      getEditorStateFromStringOrRaw(props.location.description)
+    );
   }
 
   function isValidLocation(location) {
@@ -348,14 +371,19 @@ function LocationInfo(props) {
                   >
                     Location description
                   </label>
-                  <textarea
-                    disabled={!isOwner() || !isEditable}
-                    className="generic__input  ChaLocInfo__input-large"
+                  <DraftjsMentions
+                    readOnly={!isOwner() || !isEditable}
                     id="info-location-description"
-                    value={description}
-                    maxLength="3000"
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
+                    editorStateArray={[
+                      descriptionEditorState,
+                      setDescriptionEditorState,
+                    ]}
+                    characters={props.characters}
+                    locations={props.locations}
+                    editorState={descriptionEditorState}
+                    onChange={setDescriptionEditorState}
+                    params={props.params}
+                  ></DraftjsMentions>
                 </div>
                 {isOwner() ? (
                   <div className="ChaLocInfo__input-container">
