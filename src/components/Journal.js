@@ -29,9 +29,13 @@ function Journal(props) {
   //Sets up initial session on sessions load
   useEffect(() => {
     if (params.item) {
-      let currentItem = sessions.find((char) => char.name === params.item);
-      if (currentItem) {
-        setCurrentSession(currentItem);
+      if (params.item === "createnew") {
+        setCurrentSession("new");
+      } else {
+        let currentItem = sessions.find((char) => char.name === params.item);
+        if (currentItem) {
+          setCurrentSession(currentItem);
+        }
       }
     }
     if (!currentSession && !params.item) {
@@ -93,7 +97,9 @@ function Journal(props) {
       {isOwner(user, paramsUser) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
-          onClick={() => setCurrentSession("new")}
+          onClick={() =>
+            navigate(`/journal/${params.user}/${params.campaign}/createnew`)
+          }
         >
           + New session
         </div>

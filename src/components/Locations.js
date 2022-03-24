@@ -46,9 +46,13 @@ function Locations(props) {
   //Sets up initial location on locations load
   useEffect(() => {
     if (params.item) {
-      let currentItem = locations.find((char) => char.name === params.item);
-      if (currentItem) {
-        setCurrentLocation(currentItem);
+      if (params.item === "createnew") {
+        setCurrentLocation("new");
+      } else {
+        let currentItem = locations.find((char) => char.name === params.item);
+        if (currentItem) {
+          setCurrentLocation(currentItem);
+        }
       }
     }
 
@@ -68,7 +72,9 @@ function Locations(props) {
       {isOwner(user, params.user) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
-          onClick={() => setCurrentLocation("new")}
+          onClick={() =>
+            navigate(`/locations/${params.user}/${params.campaign}/createnew`)
+          }
         >
           + New location
         </div>
@@ -114,7 +120,7 @@ function Locations(props) {
           .sort((a, b) => {
             return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
           })
-          .map((entry, index) => {
+          .map((entry) => {
             return (
               <LocationCard
                 current={currentLocation}

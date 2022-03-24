@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 //import { EditorState } from "draft-js";
 import Editor from "@draft-js-plugins/editor";
 import createMentionPlugin, {
@@ -13,8 +19,12 @@ export default function DraftjsMentions(props) {
   const mentions = getMentions(props.characters, props.locations);
   const ref = useRef(null);
   const [editorState, setEditorState] = props.editorStateArray;
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState(mentions);
+
+  useEffect(() => {
+    setSuggestions(getMentions(props.characters, props.locations));
+  }, [props.characters, props.locations]);
 
   function getMentions(characters, locations) {
     let mentions = [];
@@ -32,7 +42,7 @@ export default function DraftjsMentions(props) {
     if (locations) {
       for (let i = 0; i < locations.length; i++) {
         mentions.push({
-          id: "loc" + characters[i].name,
+          id: "loc" + locations[i].name,
           name: locations[i].name,
           folder: locations[i].location,
           avatar: locations[i].img,
@@ -68,10 +78,15 @@ export default function DraftjsMentions(props) {
     setOpen(_open);
   }, []);
   const onSearchChange = useCallback(
-    ({ trigger, value }) => {
-      setSuggestions(defaultSuggestionsFilter(value, mentions, trigger));
+    ({ value }) => {
+      setSuggestions(
+        defaultSuggestionsFilter(
+          value,
+          getMentions(props.characters, props.locations)
+        )
+      );
     },
-    [mentions]
+    [props.characters, props.locations]
   );
 
   return (
@@ -92,9 +107,10 @@ export default function DraftjsMentions(props) {
         onOpenChange={onOpenChange}
         suggestions={suggestions}
         onSearchChange={onSearchChange}
-        onAddMention={() => {
-          // get the mention object selected
-        }}
+        renderEmptyPopup={true}
+        // onAddMention={() => {
+        //   // get the mention object selected
+        // }}
       />
     </div>
   );

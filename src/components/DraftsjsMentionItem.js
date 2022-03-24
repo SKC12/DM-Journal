@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePopper } from "react-popper";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +23,7 @@ export default function DraftjsMentionItem(props) {
     }
   );
   const [isPopout, setIsPopout] = useState(false);
+  const isMounted = useRef(false);
 
   function getNavigateUrl(params) {
     if (params.user && params.campaign) {
@@ -43,9 +44,13 @@ export default function DraftjsMentionItem(props) {
     async function updatePopper() {
       await update();
     }
-    if (update) {
+    isMounted.current = true;
+    if (update && isMounted) {
       updatePopper();
     }
+    return () => {
+      isMounted.current = false;
+    };
   }, [isPopout, update]);
 
   return (

@@ -75,7 +75,7 @@ function StatsTime(props) {
     .sort((a, b) => {
       return sessionByWeekday[b] - sessionByWeekday[a];
     })
-    .map((entry, index) => {
+    .map((entry) => {
       return (
         <>
           <h2 className="font-bold">{entry}:</h2>
@@ -123,7 +123,7 @@ function StatsTime(props) {
             if (!data.count) return <rect {...props} />;
             return (
               <Tooltip
-                key={props.key}
+                key={data.name}
                 placement="top"
                 content={`${format(new Date(data.date), "MMMM dd, yyyy")} - #${
                   data.sessionNumber

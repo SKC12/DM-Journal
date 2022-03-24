@@ -112,7 +112,11 @@ function JournalInfo(props) {
   }
 
   function isValidSession(session) {
-    if (session.name === "" || containsInvalidCharacters(session.name)) {
+    if (
+      session.name === "" ||
+      session.name === "createnew" ||
+      containsInvalidCharacters(session.name)
+    ) {
       setErrorMsg(true);
       return false;
     }
@@ -411,8 +415,6 @@ function JournalInfo(props) {
                 ]}
                 characters={props.characters}
                 locations={props.locations}
-                editorState={descriptionEditorState}
-                onChange={setDescriptionEditorState}
                 params={props.params}
               ></DraftjsMentions>
             </div>

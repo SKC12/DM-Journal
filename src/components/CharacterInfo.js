@@ -107,6 +107,7 @@ function CharacterInfo(props) {
     if (isValidCharacter(character)) {
       if (
         name === props.character.name ||
+        character.name === "createnew" ||
         props.characters.filter((e) => e.name === character.name).length === 0
       ) {
         await writeToFirebase(

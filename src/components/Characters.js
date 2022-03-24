@@ -45,9 +45,13 @@ function Characters(props) {
   //Sets up initial characcter on characters load
   useEffect(() => {
     if (params.item) {
-      let currentItem = characters.find((char) => char.name === params.item);
-      if (currentItem) {
-        setCurrentCharacter(currentItem);
+      if (params.item === "createnew") {
+        setCurrentCharacter("new");
+      } else {
+        let currentItem = characters.find((char) => char.name === params.item);
+        if (currentItem) {
+          setCurrentCharacter(currentItem);
+        }
       }
     }
     if (!currentCharacter && !params.item) {
@@ -66,7 +70,9 @@ function Characters(props) {
       {isOwner(user, params.user) ? (
         <div
           className="text-blue-400 cursor-pointer pl-2 pb-2"
-          onClick={() => setCurrentCharacter("new")}
+          onClick={() =>
+            navigate(`/characters/${params.user}/${params.campaign}/createnew`)
+          }
         >
           + New character
         </div>
@@ -112,7 +118,7 @@ function Characters(props) {
           .sort((a, b) => {
             return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
           })
-          .map((entry, index) => {
+          .map((entry) => {
             return (
               <CharacterCard
                 current={currentCharacter}

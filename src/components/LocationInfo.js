@@ -213,7 +213,11 @@ function LocationInfo(props) {
   }
 
   function isValidLocation(location) {
-    if (location.name === "" || containsInvalidCharacters(location.name)) {
+    if (
+      location.name === "" ||
+      location.name === "createnew" ||
+      containsInvalidCharacters(location.name)
+    ) {
       setErrorMsg(true);
       return false;
     }
