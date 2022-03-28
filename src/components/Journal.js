@@ -33,7 +33,11 @@ function Journal(props) {
       if (params.item === "createnew") {
         setCurrentSession("new");
       } else {
-        let currentItem = sessions.find((char) => char.name === params.item);
+        let currentItem = sessions.find(
+          (char) =>
+            char.name.replace(/[\^?]/g, "") ===
+            params.item.replace(/[\^?]/g, "")
+        );
         if (currentItem) {
           setCurrentSession(currentItem);
         }

@@ -144,7 +144,7 @@ function sortSessionsByDate(sessionsArray) {
 }
 
 function containsInvalidCharacters(string) {
-  return string.includes("/");
+  return string.includes("/") || string.includes("^");
 }
 
 function isOwner(user, currentUserID) {

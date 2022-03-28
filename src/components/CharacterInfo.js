@@ -77,7 +77,11 @@ function CharacterInfo(props) {
 
     if (isValidCharacter(character)) {
       if (
-        props.characters.filter((e) => e.name === character.name).length === 0
+        props.characters.filter(
+          (e) =>
+            e.name.replace(/[\^?]/g, "") ===
+            character.name.replace(/[\^?]/g, "")
+        ).length === 0
       ) {
         await writeToFirebase(
           "characters",
@@ -195,6 +199,7 @@ function CharacterInfo(props) {
     return errorMsg ? (
       <p className="generic__alert-text">
         Character names must be unique and cannot contain forward slashes ("/")
+        or carets ("^")
       </p>
     ) : null;
   };

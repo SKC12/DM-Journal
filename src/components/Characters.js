@@ -49,7 +49,11 @@ function Characters(props) {
       if (params.item === "createnew") {
         setCurrentCharacter("new");
       } else {
-        let currentItem = characters.find((char) => char.name === params.item);
+        let currentItem = characters.find(
+          (char) =>
+            char.name.replace(/[\^?]/g, "") ===
+            params.item.replace(/[\^?]/g, "")
+        );
         if (currentItem) {
           setCurrentCharacter(currentItem);
         }

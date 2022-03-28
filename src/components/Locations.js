@@ -50,7 +50,11 @@ function Locations(props) {
       if (params.item === "createnew") {
         setCurrentLocation("new");
       } else {
-        let currentItem = locations.find((char) => char.name === params.item);
+        let currentItem = locations.find(
+          (char) =>
+            char.name.replace(/[\^?]/g, "") ===
+            params.item.replace(/[\^?]/g, "")
+        );
         if (currentItem) {
           setCurrentLocation(currentItem);
         }

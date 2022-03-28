@@ -239,7 +239,8 @@ function JournalInfo(props) {
   let titleErrorMessage = () => {
     return errorMsg ? (
       <p className="generic__alert-text">
-        Session names must be unique and cannot contain forward slashes ("/")
+        Session names must be unique and cannot contain forward slashes ("/") or
+        carets ("^")
       </p>
     ) : null;
   };

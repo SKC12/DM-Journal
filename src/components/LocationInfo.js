@@ -200,6 +200,7 @@ function LocationInfo(props) {
     return errorMsg ? (
       <p className="generic__alert-text">
         Location names must be unique and cannot contain forward slashes ("/")
+        or carets ("^")
       </p>
     ) : null;
   };
