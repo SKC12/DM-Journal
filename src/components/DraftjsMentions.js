@@ -21,6 +21,7 @@ export default function DraftjsMentions(props) {
   const [editorState, setEditorState] = props.editorStateArray;
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState(mentions);
+  console.log(props.characters);
 
   useEffect(() => {
     setSuggestions(getMentions(props.characters, props.locations));
@@ -31,7 +32,7 @@ export default function DraftjsMentions(props) {
     if (characters) {
       for (let i = 0; i < characters.length; i++) {
         mentions.push({
-          id: "char" + characters[i].name,
+          id: characters[i].uid,
           name: characters[i].name,
           folder: characters[i].location,
           avatar: characters[i].img,
@@ -42,7 +43,7 @@ export default function DraftjsMentions(props) {
     if (locations) {
       for (let i = 0; i < locations.length; i++) {
         mentions.push({
-          id: "loc" + locations[i].name,
+          id: locations[i].uid,
           name: locations[i].name,
           folder: locations[i].location,
           avatar: locations[i].img,
@@ -53,12 +54,43 @@ export default function DraftjsMentions(props) {
     return mentions;
   }
 
+  // //const { MentionSuggestions, plugins } = useMemo(() => {
+  // let mentionPlugin = createMentionPlugin({
+  //   mentionComponent(mentionProps) {
+  //     console.log("AAAAA", props.characters);
+  //     console.log(mentionProps);
+  //     return (
+  //       <DraftjsMentionItem
+  //         params={props.params}
+  //         characters={props.characters}
+  //         locations={props.locations}
+  //         className={mentionProps.className}
+  //         // eslint-disable-next-line no-alert
+  //         content={mentionProps.children}
+  //         item={mentionProps.mention}
+  //       />
+  //     );
+  //   },
+  // });
+  // // eslint-disable-next-line no-shadow
+  // let { MentionSuggestions } = mentionPlugin;
+  // // eslint-disable-next-line no-shadow
+  // let plugins = [mentionPlugin];
+  // //return { plugins, MentionSuggestions };
+  // //eslint-disable-next-line react-hooks/exhaustive-deps
+  // //}, []);
+
+  // console.log(mentionPlugin);
+
   const { MentionSuggestions, plugins } = useMemo(() => {
     const mentionPlugin = createMentionPlugin({
       mentionComponent(mentionProps) {
+        console.log(mentionProps);
         return (
           <DraftjsMentionItem
             params={props.params}
+            characters={props.characters}
+            locations={props.locations}
             className={mentionProps.className}
             // eslint-disable-next-line no-alert
             content={mentionProps.children}
@@ -72,7 +104,8 @@ export default function DraftjsMentions(props) {
     // eslint-disable-next-line no-shadow
     const plugins = [mentionPlugin];
     return { plugins, MentionSuggestions };
-  }, [props.params]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onOpenChange = useCallback((_open) => {
     setOpen(_open);
@@ -107,7 +140,7 @@ export default function DraftjsMentions(props) {
         onOpenChange={onOpenChange}
         suggestions={suggestions}
         onSearchChange={onSearchChange}
-        renderEmptyPopup={true}
+        //renderEmptyPopup={true}
         // onAddMention={() => {
         //   // get the mention object selected
         // }}

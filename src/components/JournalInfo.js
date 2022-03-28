@@ -36,6 +36,9 @@ function JournalInfo(props) {
   const [descriptionEditorState, setDescriptionEditorState] = useState(() =>
     getEditorStateFromStringOrRaw(description)
   );
+  // const [descriptionEditorState, setDescriptionEditorState] = useState(
+  //   EditorState.createEmpty()
+  // );
   const [color, setColor] = useState(
     props.session.color
       ? props.session.color
