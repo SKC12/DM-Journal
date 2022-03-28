@@ -45,6 +45,15 @@ function App() {
   const [locations, setLocations, loadingLocations, hasLocationError] =
     useLocationState(params.user, currentCampaign.name);
   const [currentLocation, setCurrentLocation] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (loadingLocations || loadingSessions || loadingCharacters) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [loadingCharacters, loadingLocations, loadingSessions]);
 
   useEffect(() => {
     if (hasSessionError || hasCharacterError || hasLocationError) {
@@ -147,6 +156,7 @@ function App() {
             element={
               <Journal
                 params={params}
+                loading={loading}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
@@ -168,6 +178,7 @@ function App() {
             element={
               <Characters
                 params={params}
+                loading={loading}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 charactersState={[characters, setCharacters, loadingCharacters]}
@@ -187,6 +198,7 @@ function App() {
             element={
               <Locations
                 params={params}
+                loading={loading}
                 campaignsState={[campaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 locationsState={[locations, setLocations, loadingLocations]}
@@ -206,6 +218,7 @@ function App() {
             element={
               <Stats
                 campaignsState={[campaigns]}
+                loading={loading}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
                 sideBarHidden={sideBarHidden}

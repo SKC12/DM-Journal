@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar";
 import "../style/main.css";
 
 function Journal(props) {
+  const loading = props.loading;
   const setCurrentTab = props.setCurrentTab;
   const params = props.params;
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
@@ -130,7 +131,7 @@ function Journal(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      {isPrivate(currentCampaign) ? null : (
+      {isPrivate(currentCampaign) ? null : loading ? null : (
         <JournalInfo
           params={params}
           campaign={currentCampaign}

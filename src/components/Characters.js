@@ -10,6 +10,7 @@ import CharacterCard from "./CharacterCard";
 import Accordion from "./Accordion";
 
 function Characters(props) {
+  const loading = props.loading;
   const setCurrentTab = props.setCurrentTab;
   const params = props.params;
   const navigate = useNavigate();
@@ -162,7 +163,7 @@ function Characters(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      {isPrivate(currentCampaign) ? null : (
+      {isPrivate(currentCampaign) ? null : loading ? null : (
         <CharacterInfo
           campaign={currentCampaign}
           character={currentCharacter}

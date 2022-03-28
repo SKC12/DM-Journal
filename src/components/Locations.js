@@ -10,6 +10,7 @@ import Accordion from "./Accordion";
 import LocationCard from "./LocationCard";
 
 function Locations(props) {
+  const loading = props.loading;
   const setCurrentTab = props.setCurrentTab;
   const params = props.params;
   const navigate = useNavigate();
@@ -164,7 +165,7 @@ function Locations(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      {isPrivate(currentCampaign) ? null : (
+      {isPrivate(currentCampaign) ? null : loading ? null : (
         <LocationInfo
           campaign={currentCampaign}
           location={currentLocation}

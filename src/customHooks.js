@@ -17,8 +17,8 @@ export const useSessionState = (userID, campaignName) => {
       try {
         let sessions = await loadFromFirebase("sessions", userID, campaignName);
         sortSessionsByDate(sessions);
-        setLoadingSessions(false);
         setSessions(sessions);
+        setLoadingSessions(false);
       } catch (e) {
         setHasError(true);
         throw e;
@@ -53,8 +53,8 @@ export const useCharacterState = (userID, campaignName) => {
           userID,
           campaignName
         );
-        setLoadingCharacters(false);
         setCharacters(characters);
+        setLoadingCharacters(false);
       } catch (e) {
         setHasError(true);
         throw e;
@@ -87,8 +87,8 @@ export const useLocationState = (userID, campaignName) => {
           userID,
           campaignName
         );
-        setLoadingLocations(false);
         setLocations(locations);
+        setLoadingLocations(false);
       } catch (e) {
         setHasError(true);
         throw e;
