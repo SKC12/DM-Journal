@@ -251,7 +251,7 @@ function JournalInfo(props) {
   };
 
   const buttons = (entry) => (
-    <div className="flex justify-center h-10 items-stretch gap-3">
+    <div className="generic__buttons-container">
       {entry === "new" ? (
         <button
           className="generic__buttons"
@@ -311,7 +311,7 @@ function JournalInfo(props) {
       return null;
     } else {
       return (
-        <div className="animate__animated animate__fadeIn">
+        <div className="animate__animated animate__fadeIn h-full">
           <form className="generic__main-form">
             <div className="md:flex">
               <div className="JournalInfo__input-container">

@@ -33,6 +33,9 @@
   padding-right: 8px;
   background-color: var(--very-light-bg-color);
   height: 7vh;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+  position: relative;
+  z-index: 50;
 }
 
 .header__nav-item-container {

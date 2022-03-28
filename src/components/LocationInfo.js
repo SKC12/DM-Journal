@@ -296,7 +296,7 @@ function LocationInfo(props) {
               genericImage={genericImage}
             />
           )}
-          <div className="animate__animated animate__fadeIn">
+          <div className="animate__animated animate__fadeIn h-full">
             <form className="generic__main-form">
               <div
                 className={`ChaLocInfo__top-container ${
