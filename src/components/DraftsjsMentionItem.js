@@ -30,25 +30,14 @@ export default function DraftjsMentionItem(props) {
 
   function getItem(itemID) {
     if (props.characters) {
-      //console.log(props.characters);
       let char = props.characters.find((item) => item.uid === itemID);
-      //console.log(char);
       if (char) return char;
     }
     if (props.locations) {
       let loc = props.locations.find((item) => item.uid === itemID);
-      //console.log(loc);
 
       if (loc) return loc;
     }
-
-    // if (props.item.item) {
-    //   // let item = props.item.item.find((item) => item.uid === itemID);
-    //   console.log("ITEM", props.item.item);
-    //   return props.item.item;
-    // }
-
-    //console.log("NOPE");
 
     return null;
   }
@@ -102,10 +91,9 @@ export default function DraftjsMentionItem(props) {
         {...attributes.popper}
       >
         <div className="popper__top">
-          <img className="popper__img" alt="" src={props.item.avatar}></img>
-          <p className="popper__name">{props.item.name}</p>
+          <img className="popper__img" alt="" src={item ? item.img : ""}></img>
+          <p className="popper__name">{item ? item.name : "Not found"}</p>
         </div>
-        <p className="popper__folder">{props.item.folder}</p>
         <p className="popper__folder">{item ? item.location : "Not found"}</p>
       </div>
     </>

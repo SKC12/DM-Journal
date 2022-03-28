@@ -155,6 +155,7 @@ function JournalInfo(props) {
           return entry.uid === uid ? session : entry;
         });
         props.setSessions(sortSessionsByDate(newArr));
+        props.setSession(session);
       } else {
         setErrorMsg(true);
       }
@@ -177,6 +178,8 @@ function JournalInfo(props) {
           return entry.name !== name;
         })
       );
+      props.setSession("");
+
       //TODO: ERROR
     } catch (e) {
       console.log(e);
@@ -283,7 +286,7 @@ function JournalInfo(props) {
                 returnToInitialValues();
                 setIsEditable(false);
               } else {
-                sessionDeleteAlert();
+                sessionDeleteAlert(e);
               }
             }}
           >

@@ -120,6 +120,7 @@ function CharacterInfo(props) {
           return entry.uid === uid ? character : entry;
         });
         props.setCharacters(newArr);
+        props.setCharacter(character);
       } else {
         setErrorMsg(true);
       }
@@ -142,6 +143,8 @@ function CharacterInfo(props) {
           return entry.name !== name;
         })
       );
+      props.setCharacter("");
+
       //TODO: ERROR
     } catch (e) {
       console.log(e);
@@ -261,11 +264,11 @@ function CharacterInfo(props) {
                 returnToInitialValues();
                 setIsEditable(false);
               } else {
-                characterDeleteAlert();
+                characterDeleteAlert(e);
               }
             }}
           >
-            {isEditable ? "Cancel" : "Delete Session"}
+            {isEditable ? "Cancel" : "Delete Character"}
           </button>
         </>
       )}

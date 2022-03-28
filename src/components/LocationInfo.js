@@ -127,6 +127,7 @@ function LocationInfo(props) {
           return entry.uid === uid ? location : entry;
         });
         props.setLocations(newArr);
+        props.setLocation(location);
       } else {
         setErrorMsg(true);
       }
@@ -149,6 +150,8 @@ function LocationInfo(props) {
           return entry.name !== name;
         })
       );
+      props.setLocation("");
+
       //TODO: ERROR
     } catch (e) {
       console.log(e);
@@ -270,11 +273,11 @@ function LocationInfo(props) {
                 returnToInitialValues();
                 setIsEditable(false);
               } else {
-                locationDeleteAlert();
+                locationDeleteAlert(e);
               }
             }}
           >
-            {isEditable ? "Cancel" : "Delete Session"}
+            {isEditable ? "Cancel" : "Delete Location"}
           </button>
         </>
       )}

@@ -21,7 +21,6 @@ export default function DraftjsMentions(props) {
   const [editorState, setEditorState] = props.editorStateArray;
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState(mentions);
-  console.log(props.characters);
 
   useEffect(() => {
     setSuggestions(getMentions(props.characters, props.locations));
@@ -54,38 +53,9 @@ export default function DraftjsMentions(props) {
     return mentions;
   }
 
-  // //const { MentionSuggestions, plugins } = useMemo(() => {
-  // let mentionPlugin = createMentionPlugin({
-  //   mentionComponent(mentionProps) {
-  //     console.log("AAAAA", props.characters);
-  //     console.log(mentionProps);
-  //     return (
-  //       <DraftjsMentionItem
-  //         params={props.params}
-  //         characters={props.characters}
-  //         locations={props.locations}
-  //         className={mentionProps.className}
-  //         // eslint-disable-next-line no-alert
-  //         content={mentionProps.children}
-  //         item={mentionProps.mention}
-  //       />
-  //     );
-  //   },
-  // });
-  // // eslint-disable-next-line no-shadow
-  // let { MentionSuggestions } = mentionPlugin;
-  // // eslint-disable-next-line no-shadow
-  // let plugins = [mentionPlugin];
-  // //return { plugins, MentionSuggestions };
-  // //eslint-disable-next-line react-hooks/exhaustive-deps
-  // //}, []);
-
-  // console.log(mentionPlugin);
-
   const { MentionSuggestions, plugins } = useMemo(() => {
     const mentionPlugin = createMentionPlugin({
       mentionComponent(mentionProps) {
-        console.log(mentionProps);
         return (
           <DraftjsMentionItem
             params={props.params}
