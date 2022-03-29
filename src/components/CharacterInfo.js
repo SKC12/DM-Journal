@@ -283,7 +283,7 @@ function CharacterInfo(props) {
   return (
     <div className="grow overflow-auto">
       {props.character === "" || props.campaign === "" ? null : (
-        <div>
+        <>
           {isImgPopup && (
             <CharacterImagePopup
               setImg={setImg}
@@ -394,7 +394,7 @@ function CharacterInfo(props) {
               {isOwner() ? buttons(props.character) : null}
             </form>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

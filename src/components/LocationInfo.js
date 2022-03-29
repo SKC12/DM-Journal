@@ -288,7 +288,7 @@ function LocationInfo(props) {
   return (
     <div className="grow overflow-auto">
       {props.location === "" || props.campaign === "" ? null : (
-        <div>
+        <>
           {isImgPopup && (
             <CharacterImagePopup
               setImg={setImg}
@@ -415,7 +415,7 @@ function LocationInfo(props) {
               {isOwner() ? buttons(props.location) : null}
             </form>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

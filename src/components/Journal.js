@@ -12,7 +12,8 @@ function Journal(props) {
   const loading = props.loading;
   const setCurrentTab = props.setCurrentTab;
   const params = props.params;
-  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
+  const paramsUser = params.user;
+  // ? params.user : params["*"].replace("/", "");
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [currentSession, setCurrentSession] = props.currentSessionState;

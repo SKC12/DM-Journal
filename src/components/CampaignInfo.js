@@ -21,11 +21,18 @@ function CampaignInfo(props) {
     props.campaign.private ? props.campaign.private : false
   );
   const [errorMsg, setErrorMsg] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
 
   //Error msg initially not displayed
   useEffect(() => {
     setErrorMsg(false);
   }, [name]);
+
+  useEffect(() => {
+    if (props.campaign === "new") {
+      setIsEditable(true);
+    }
+  }, [props.campaign]);
 
   async function createCampaign(e) {
     e.preventDefault();
@@ -43,7 +50,9 @@ function CampaignInfo(props) {
 
         //If it doesn't exists, writes to DB
         await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
-        window.location.reload();
+        let newCamps = props.campaigns.concat(campaign);
+        props.setCampaigns(newCamps);
+        props.setCampaign(campaign);
       } else {
         //If not, displays error msg
         setErrorMsg(true);
@@ -53,21 +62,34 @@ function CampaignInfo(props) {
     }
   }
 
-  async function editCampaign(e) {
-    e.preventDefault();
+  async function editCampaign() {
     let campaign = {
       name: name,
       description: description,
       private: isPrivate,
     };
     await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
-    window.location.reload();
+    let newArr = props.campaigns.map((entry) => {
+      return entry.name === name ? campaign : entry;
+    });
+    props.setCampaigns(newArr);
+    props.setCampaign(campaign);
   }
 
   async function deleteCampaign(e) {
     e.preventDefault();
-    await deleteCampaignFromFirebase(props.user.uid, name);
-    window.location.reload();
+    try {
+      await deleteCampaignFromFirebase(props.user.uid, name);
+      props.setCampaigns(
+        props.campaigns.filter((entry) => {
+          return entry.name !== name;
+        })
+      );
+      props.setCampaign("");
+    } catch (e) {
+      console.log(e);
+      alert(e);
+    }
   }
 
   let errorMessage = () => {
@@ -117,13 +139,19 @@ function CampaignInfo(props) {
     });
   };
 
+  function returnToInitialValues() {
+    setName(props.campaign.name);
+    setDescription(props.campaign.description);
+    setIsPrivate(props.campaign.private);
+  }
+
   function populate(campaign) {
     if (campaign === "") {
       return null;
     } else {
       return (
-        <div className="animate__animated animate__fadeIn">
-          <form className="md:pl-20 md:pt-12 md:max-w-4xl">
+        <div className="animate__animated animate__fadeIn h-full">
+          <form className="generic__main-form">
             <div className="flex-col items-center md:pb-6">
               <label className="generic__label" htmlFor="info-campaign-name">
                 Campaign name{" "}
@@ -152,6 +180,7 @@ function CampaignInfo(props) {
                 id="info-campaign-description"
                 maxLength="1500"
                 value={description}
+                disabled={!isEditable}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
@@ -167,6 +196,7 @@ function CampaignInfo(props) {
                 id="info-campaign-private"
                 className="form-checkbox ml-4 h-4 w-4 accent-gray-700"
                 type="checkbox"
+                disabled={!isEditable}
                 checked={isPrivate}
                 onChange={() => setIsPrivate(!isPrivate)}
               />
@@ -184,15 +214,31 @@ function CampaignInfo(props) {
                 <>
                   <button
                     className="generic__buttons"
-                    onClick={(e) => editCampaign(e)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (isEditable) {
+                        editCampaign();
+                        setIsEditable(false);
+                      } else {
+                        setIsEditable(true);
+                      }
+                    }}
                   >
-                    Edit
+                    {isEditable ? "Save" : "Edit Campaign"}
                   </button>
                   <button
                     className="generic__buttons"
-                    onClick={(e) => campaignDeleteAlert(e)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (isEditable) {
+                        returnToInitialValues();
+                        setIsEditable(false);
+                      } else {
+                        campaignDeleteAlert(e);
+                      }
+                    }}
                   >
-                    Delete
+                    {isEditable ? "Cancel" : "Delete Campaign"}
                   </button>
                 </>
               )}
