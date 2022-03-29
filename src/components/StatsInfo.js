@@ -2,6 +2,7 @@ import StatsLeveling from "./StatsLevelling";
 import StatsTime from "./StatsTime";
 import StatsIngameTime from "./StatsIngameTime";
 import "../style/StatsInfo.css";
+import StatsArc from "./StatsArc";
 
 function StatsInfo(props) {
   let component = null;
@@ -14,6 +15,9 @@ function StatsInfo(props) {
       break;
     case "ingameTime":
       component = <StatsIngameTime {...props} />;
+      break;
+    case "arc":
+      component = <StatsArc {...props} />;
       break;
     default:
       component = null;

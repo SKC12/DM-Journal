@@ -76,6 +76,14 @@ function Stats(props) {
         >
           Ingame Time
         </li>
+        <li
+          className={`Stats__sidebar-item ${
+            stat === "ingameTime" ? "Stats__selected" : ""
+          }`}
+          onClick={() => setStat("arc")}
+        >
+          Campaign Arcs
+        </li>
       </ul>
     </div>
   );
