@@ -50,6 +50,13 @@ function JournalInfo(props) {
       ? props.sessions[props.sessions.length - 1].partyLevel
       : 1
   );
+  const [arc, setArc] = useState(
+    props.session.arc
+      ? props.session.arc
+      : props.session.length > 0
+      ? props.session[props.session.length - 1].arc
+      : ""
+  );
   const [errorMsg, setErrorMsg] = useState(false);
   const [dateErrorMsg, setDateErrorMsg] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
@@ -88,6 +95,7 @@ function JournalInfo(props) {
       name: name,
       color: color,
       date: date,
+      arc: arc,
       ingameTime: ingameTime,
       partyLevel: partyLevel,
       description: convertToRaw(descriptionEditorState.getCurrentContent()),
@@ -135,6 +143,7 @@ function JournalInfo(props) {
       name: name,
       color: color,
       date: date,
+      arc: arc,
       ingameTime: ingameTime,
       partyLevel: partyLevel,
       description: convertToRaw(descriptionEditorState.getCurrentContent()),
@@ -234,6 +243,7 @@ function JournalInfo(props) {
     setDescriptionEditorState(
       getEditorStateFromStringOrRaw(props.session.description)
     );
+    setArc(props.session.arc);
   }
 
   let titleErrorMessage = () => {
@@ -322,7 +332,7 @@ function JournalInfo(props) {
 
                 <input
                   disabled={!isOwner() || !isEditable}
-                  className="generic__input md:w-96 mr-8"
+                  className="generic__input md:w-96"
                   id="info-session-name"
                   value={name}
                   maxLength="50"
@@ -348,7 +358,7 @@ function JournalInfo(props) {
 
             {titleErrorMessage()}
 
-            <div className="md:flex md:pt-6">
+            <div className="md:flex flex-wrap gap-2 md:pt-6">
               <div className="JournalInfo__input-container mr-4">
                 <label className="generic__label" htmlFor="info-session-date">
                   Session date{" "}
@@ -364,42 +374,65 @@ function JournalInfo(props) {
                 ></input>
               </div>
 
-              <div className="JournalInfo__input-container">
-                <label className="generic__label" htmlFor="info-session-time">
-                  Ingame duration{" "}
-                </label>
+              {!props.campaign.options.ingameTime ? null : (
+                <div className="JournalInfo__input-container">
+                  <label className="generic__label" htmlFor="info-session-time">
+                    Ingame duration{" "}
+                  </label>
 
-                <span>
+                  <span>
+                    <input
+                      disabled={!isOwner() || !isEditable}
+                      type="number"
+                      className={`generic__input text-right w-16 mr-2`}
+                      id="info-session-time"
+                      value={ingameTime}
+                      min="0"
+                      max="9999"
+                      onChange={(e) => setIngameTime(e.target.value)}
+                    ></input>
+                    days
+                  </span>
+                </div>
+              )}
+              {!props.campaign.options.level ? null : (
+                <div className="JournalInfo__input-container">
+                  <label
+                    className="generic__label"
+                    htmlFor="info-session-level"
+                  >
+                    Party level{" "}
+                  </label>
+
                   <input
                     disabled={!isOwner() || !isEditable}
                     type="number"
-                    className={`generic__input text-right w-16 mr-2`}
-                    id="info-session-time"
-                    value={ingameTime}
+                    className="generic__input w-16 text-right"
+                    id="info-session-level"
+                    value={partyLevel}
                     min="0"
-                    max="9999"
-                    onChange={(e) => setIngameTime(e.target.value)}
+                    max="99"
+                    onChange={(e) => setPartyLevel(e.target.value)}
                   ></input>
-                  days
-                </span>
-              </div>
+                </div>
+              )}
 
-              <div className="JournalInfo__input-container">
-                <label className="generic__label" htmlFor="info-session-level">
-                  Party level{" "}
-                </label>
+              {!props.campaign.options.arc ? null : (
+                <div className="JournalInfo__input-container">
+                  <label className="generic__label" htmlFor="info-session-arc">
+                    Campaign Arc{" "}
+                  </label>
 
-                <input
-                  disabled={!isOwner() || !isEditable}
-                  type="number"
-                  className="generic__input w-16 text-right"
-                  id="info-session-level"
-                  value={partyLevel}
-                  min="0"
-                  max="99"
-                  onChange={(e) => setPartyLevel(e.target.value)}
-                ></input>
-              </div>
+                  <input
+                    disabled={!isOwner() || !isEditable}
+                    className="generic__input w-50"
+                    id="info-session-arc"
+                    value={arc}
+                    maxLength="25"
+                    onChange={(e) => setArc(e.target.value)}
+                  ></input>
+                </div>
+              )}
             </div>
             {dateErrorMessage()}
 

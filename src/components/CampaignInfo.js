@@ -22,6 +22,15 @@ function CampaignInfo(props) {
   );
   const [errorMsg, setErrorMsg] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
+  const [options, setOptions] = useState(
+    props.campaign.options
+      ? props.campaign.options
+      : {
+          ingameTime: true,
+          level: true,
+          arc: true,
+        }
+  );
 
   //Error msg initially not displayed
   useEffect(() => {
@@ -46,6 +55,7 @@ function CampaignInfo(props) {
           name: name,
           description: description,
           private: isPrivate,
+          options: options,
         };
 
         //If it doesn't exists, writes to DB
@@ -67,6 +77,7 @@ function CampaignInfo(props) {
       name: name,
       description: description,
       private: isPrivate,
+      options: options,
     };
     await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
     let newArr = props.campaigns.map((entry) => {
@@ -143,6 +154,7 @@ function CampaignInfo(props) {
     setName(props.campaign.name);
     setDescription(props.campaign.description);
     setIsPrivate(props.campaign.private);
+    setOptions(props.campaign.options);
   }
 
   function populate(campaign) {
@@ -200,6 +212,75 @@ function CampaignInfo(props) {
                 checked={isPrivate}
                 onChange={() => setIsPrivate(!isPrivate)}
               />
+            </div>
+
+            <div className="flex-col items-center md:pb-3 md:pr-6">
+              <label className="generic__label">Compaign tracked data</label>
+              <div className="CampaignInfo__nested-table">
+                <div className="flex items-center">
+                  <label
+                    className="CampaignInfo__nested-lable"
+                    htmlFor="info-campaign-ingameTime"
+                  >
+                    Ingame time
+                  </label>
+                  <input
+                    id="info-campaign-ingameTime"
+                    className="form-checkbox ml-4 h-4 w-4 accent-gray-700"
+                    type="checkbox"
+                    disabled={!isEditable}
+                    checked={options.ingameTime}
+                    onChange={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        ingameTime: !options.ingameTime,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex items-center">
+                  <label
+                    className="CampaignInfo__nested-lable"
+                    htmlFor="info-campaign-level"
+                  >
+                    Levels
+                  </label>
+                  <input
+                    id="info-campaign-level"
+                    className="form-checkbox ml-4 h-4 w-4 accent-gray-700"
+                    type="checkbox"
+                    disabled={!isEditable}
+                    checked={options.level}
+                    onChange={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        level: !options.level,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="flex items-center">
+                  <label
+                    className="CampaignInfo__nested-lable"
+                    htmlFor="info-campaign-arc"
+                  >
+                    Arcs
+                  </label>
+                  <input
+                    id="info-campaign-arc"
+                    className="form-checkbox ml-4 h-4 w-4 accent-gray-700"
+                    type="checkbox"
+                    disabled={!isEditable}
+                    checked={options.arc}
+                    onChange={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        arc: !options.arc,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-center h-10 items-stretch gap-3">
