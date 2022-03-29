@@ -111,7 +111,7 @@ function StatsTime(props) {
       <h2 className="StatsInfo__label">Sessions:</h2>
       <div className="StatsInfo__graph-container">
         <HeatMap
-          className="h-[140px] bg-gray-200"
+          className="h-[140px]"
           rectSize={14}
           value={heatMapData}
           legendCellSize={0}

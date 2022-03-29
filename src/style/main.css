@@ -99,6 +99,7 @@
   width: 100%;
   box-sizing: border-box;
   position: relative;
+  z-index: 0;
 }
 
 @media (min-width: 768px) {
