@@ -59,6 +59,7 @@
 .generic__input-disabledBg:disabled {
   background-color: var(--main-bg-color);
   box-shadow: none;
+  width: fit-content;
 }
 
 .generic__input:focus {
@@ -98,7 +99,6 @@
   display: flex;
   width: 100%;
   box-sizing: border-box;
-  position: relative;
   z-index: 40;
 }
 
