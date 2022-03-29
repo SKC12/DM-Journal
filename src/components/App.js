@@ -106,11 +106,11 @@ function App() {
     return { user: "", route: "", campaign: "", item: "" };
   }
 
-  // useEffect(() => {
-  //   setCurrentSession("");
-  //   setCurrentLocation("");
-  //   setCurrentCharacter("");
-  // }, [currentCampaign.name]);
+  useEffect(() => {
+    setCurrentSession("");
+    setCurrentLocation("");
+    setCurrentCharacter("");
+  }, [currentCampaign.name]);
 
   //Updates current IDs on parent main element
   useEffect(() => {

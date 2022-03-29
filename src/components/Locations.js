@@ -62,14 +62,16 @@ function Locations(props) {
     }
 
     if (!currentLocation && !params.item) {
-      let random = Math.floor(Math.random() * locations.length);
       if (locations && locations.length > 0) {
+        let random = Math.floor(Math.random() * locations.length);
         setCurrentLocation(locations[random]);
       } else {
         setCurrentLocation("");
       }
     }
-  }, [locations, currentLocation, setCurrentLocation, params.item]);
+    //Disabling exhaustive-deps because the hook shouldn't fire after every current item change
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.item, locations]);
 
   const sideBarContent = (
     <div>

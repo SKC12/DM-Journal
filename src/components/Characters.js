@@ -60,14 +60,16 @@ function Characters(props) {
       }
     }
     if (!currentCharacter && !params.item) {
-      let random = Math.floor(Math.random() * characters.length);
       if (characters && characters.length > 0) {
+        let random = Math.floor(Math.random() * characters.length);
         setCurrentCharacter(characters[random]);
       } else {
         setCurrentCharacter("");
       }
     }
-  }, [characters, currentCharacter, setCurrentCharacter, params.item]);
+    //Disabling exhaustive-deps because the hook shouldn't fire after every current item change
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.item, characters]);
 
   const sideBarContent = (
     <div>

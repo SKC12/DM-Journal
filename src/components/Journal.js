@@ -51,7 +51,9 @@ function Journal(props) {
         setCurrentSession("");
       }
     }
-  }, [sessions, currentSession, params.item, setCurrentSession]);
+    //Disabling exhaustive-deps because the hook shouldn't fire after every current item change
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessions, params.item]);
 
   //Updates currentTab on parent main element
   useEffect(() => {
