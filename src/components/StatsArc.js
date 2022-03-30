@@ -54,7 +54,7 @@ export default function StatsArc(props) {
     return arr;
   }
   const ingameTimePieChart = (
-    <ResponsiveContainer height={250} minWidth={450}>
+    <ResponsiveContainer height={250} minWidth={550}>
       <PieChart>
         <Pie
           data={ingameTimeData}
@@ -108,7 +108,7 @@ export default function StatsArc(props) {
   );
 
   const sessionsPieChart = (
-    <ResponsiveContainer height={250} minWidth={450}>
+    <ResponsiveContainer height={250} minWidth={550}>
       <PieChart>
         <Pie
           data={sessionData}
@@ -144,7 +144,7 @@ export default function StatsArc(props) {
                 dominantBaseline="central"
               >
                 {`${sessionData[index].name}
-                 (${value} sessions)`}
+                 (${value} s.)`}
               </text>
             );
           }}

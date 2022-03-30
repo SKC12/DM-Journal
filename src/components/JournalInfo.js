@@ -428,7 +428,7 @@ function JournalInfo(props) {
                     className="generic__input w-50"
                     id="info-session-arc"
                     value={arc}
-                    maxLength="25"
+                    maxLength="15"
                     onChange={(e) => setArc(e.target.value)}
                   ></input>
                 </div>
