@@ -25,7 +25,13 @@ function StatsInfo(props) {
 
   return (
     <div className="StatsInfo__container">
-      {props.sessions.length > 0 ? component : null}
+      {props.sessions.length > 0 ? (
+        component
+      ) : (
+        <h2 className="generic__label  Stats__label m-8">
+          You must create sessions first.
+        </h2>
+      )}
     </div>
   );
 }

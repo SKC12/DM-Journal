@@ -219,6 +219,7 @@ function App() {
             path="/stats/*"
             element={
               <Stats
+                params={params}
                 campaignsState={[campaigns]}
                 loading={loading}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}

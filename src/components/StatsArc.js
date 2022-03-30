@@ -3,17 +3,38 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 export default function StatsArc(props) {
   let colorsArray = getColors(props.sessions);
   let ingameTimeData = getIngameTimeData(props.sessions);
-  console.log(ingameTimeData);
-  console.log(colorsArray);
+  let sessionData = getSessionData(props.sessions);
 
   function getIngameTimeData(array) {
     let dataObj = {};
     for (let i = 0; i < array.length; i++) {
+      if (!array[i].arc) {
+        return [];
+      }
       if (!dataObj[array[i].arc]) {
         dataObj[array[i].arc] = parseInt(array[i].ingameTime);
       } else {
         dataObj[array[i].arc] =
           parseInt(dataObj[array[i].arc]) + parseInt(array[i].ingameTime);
+      }
+    }
+    let dataArr = [];
+    for (const [key, value] of Object.entries(dataObj)) {
+      dataArr.push({ name: key, value: value });
+    }
+    return dataArr;
+  }
+
+  function getSessionData(array) {
+    let dataObj = {};
+    for (let i = 0; i < array.length; i++) {
+      if (!array[i].arc) {
+        return [];
+      }
+      if (!dataObj[array[i].arc]) {
+        dataObj[array[i].arc] = 1;
+      } else {
+        dataObj[array[i].arc] = dataObj[array[i].arc] + 1;
       }
     }
     let dataArr = [];
@@ -33,7 +54,7 @@ export default function StatsArc(props) {
     return arr;
   }
   const ingameTimePieChart = (
-    <ResponsiveContainer width={500} height={200}>
+    <ResponsiveContainer height={250} minWidth={450}>
       <PieChart>
         <Pie
           data={ingameTimeData}
@@ -50,10 +71,9 @@ export default function StatsArc(props) {
             value,
             index,
           }) => {
-            console.log("handling label?");
             const RADIAN = Math.PI / 180;
             // eslint-disable-next-line
-            const radius = 25 + innerRadius + (outerRadius - innerRadius);
+            const radius = 20 + innerRadius + (outerRadius - innerRadius);
             // eslint-disable-next-line
             const x = cx + radius * Math.cos(-midAngle * RADIAN);
             // eslint-disable-next-line
@@ -64,7 +84,7 @@ export default function StatsArc(props) {
                 x={x}
                 y={y}
                 style={{
-                  fontSize: "0.85rem",
+                  fontSize: "0.8rem",
                 }}
                 fill="#374151"
                 textAnchor={x > cx ? "start" : "end"}
@@ -87,13 +107,83 @@ export default function StatsArc(props) {
     </ResponsiveContainer>
   );
 
+  const sessionsPieChart = (
+    <ResponsiveContainer height={250} minWidth={400}>
+      <PieChart>
+        <Pie
+          data={sessionData}
+          cx="50%"
+          cy="50%"
+          dataKey="value"
+          label={({
+            cx,
+            cy,
+            midAngle,
+            innerRadius,
+            outerRadius,
+            value,
+            index,
+          }) => {
+            const RADIAN = Math.PI / 180;
+            // eslint-disable-next-line
+            const radius = 20 + innerRadius + (outerRadius - innerRadius);
+            // eslint-disable-next-line
+            const x = cx + radius * Math.cos(-midAngle * RADIAN);
+            // eslint-disable-next-line
+            const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+            return (
+              <text
+                x={x}
+                y={y}
+                style={{
+                  fontSize: "0.8rem",
+                }}
+                fill="#374151"
+                textAnchor={x > cx ? "start" : "end"}
+                dominantBaseline="central"
+              >
+                {`${sessionData[index].name}
+                 (${value} days)`}
+              </text>
+            );
+          }}
+        >
+          {sessionData.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={colorsArray[index % colorsArray.length]}
+            />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+  );
+
   return (
     <div className="StatsInfo__element-container animate__animated animate__fadeIn">
-      <h2 className="generic__label  Stats__label">Campaign Arcs:</h2>
-      <div className="m-4">
-        <h2 className="generic__label  Stats__label">Ingame time</h2>
-        {ingameTimePieChart}
-      </div>
+      {ingameTimeData.length === 0 ? (
+        <h2 className="generic__label  Stats__label">
+          There was an error in your data. Make sure all your sessions contain
+          Campaign Arc information.
+        </h2>
+      ) : (
+        <>
+          <h2 className="generic__label  Stats__label">Campaign Arcs:</h2>
+          <div className="m-4">
+            <h2 className="generic__label  Stats__label">Ingame time</h2>
+            <div className="StatsInfo__Piechart-container">
+              {ingameTimePieChart}
+            </div>
+          </div>
+          <div className="m-4">
+            <h2 className="generic__label  Stats__label">Sessions</h2>
+            <div className="StatsInfo__Piechart-container">
+              {sessionsPieChart}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

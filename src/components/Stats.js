@@ -2,14 +2,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import React, { useEffect, useState } from "react";
 import StatsInfo from "./StatsInfo";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import "../style/main.css";
 
 function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
   const navigate = useNavigate();
-  const params = useParams();
+  const params = props.params;
   const paramsUser = params.user ? params.user : params["*"].replace("/", "");
   const [user] = useAuthState(auth);
   const [campaigns] = props.campaignsState;
@@ -60,30 +60,38 @@ function Stats(props) {
         >
           Sessions
         </li>
-        <li
-          className={`Stats__sidebar-item ${
-            stat === "leveling" ? "Stats__selected" : ""
-          }`}
-          onClick={() => setStat("leveling")}
-        >
-          Levels
-        </li>
-        <li
-          className={`Stats__sidebar-item ${
-            stat === "ingameTime" ? "Stats__selected" : ""
-          }`}
-          onClick={() => setStat("ingameTime")}
-        >
-          Ingame Time
-        </li>
-        <li
-          className={`Stats__sidebar-item ${
-            stat === "ingameTime" ? "Stats__selected" : ""
-          }`}
-          onClick={() => setStat("arc")}
-        >
-          Campaign Arcs
-        </li>
+        {currentCampaign && currentCampaign.options.level ? (
+          <li
+            className={`Stats__sidebar-item ${
+              stat === "leveling" ? "Stats__selected" : ""
+            }`}
+            onClick={() => setStat("leveling")}
+          >
+            Levels
+          </li>
+        ) : null}
+
+        {currentCampaign && currentCampaign.options.ingameTime ? (
+          <li
+            className={`Stats__sidebar-item ${
+              stat === "ingameTime" ? "Stats__selected" : ""
+            }`}
+            onClick={() => setStat("ingameTime")}
+          >
+            Ingame Time
+          </li>
+        ) : null}
+
+        {currentCampaign && currentCampaign.options.arc ? (
+          <li
+            className={`Stats__sidebar-item ${
+              stat === "arc" ? "Stats__selected" : ""
+            }`}
+            onClick={() => setStat("arc")}
+          >
+            Campaign Arcs
+          </li>
+        ) : null}
       </ul>
     </div>
   );

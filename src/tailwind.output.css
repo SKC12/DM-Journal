@@ -500,6 +500,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
