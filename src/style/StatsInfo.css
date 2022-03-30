@@ -11,6 +11,24 @@
 .StatsInfo__element-container {
   display: flex;
   flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+.StatsInfo__element-container::after {
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /* background-color: red; */
+  z-index: -1;
+  background-image: url(../img/d20.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70vh;
+  opacity: 0.05;
 }
 
 .StatsInfo__graph-container {
@@ -98,6 +116,10 @@
     padding-top: 48px;
     padding-right: 48px;
   }
+  .StatsInfo__element-container::after {
+    left: 96px;
+    max-width: 752px;
+  }
   .StatsInfo__stat-container {
     display: flex;
     margin-bottom: 8px;
@@ -115,5 +137,9 @@
   .StatsInfo__element-container {
     padding-left: 120px;
     padding-right: 120px;
+  }
+  .StatsInfo__element-container::after {
+    left: 120px;
+    max-width: 868px;
   }
 }
