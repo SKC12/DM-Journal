@@ -108,7 +108,7 @@ export default function StatsArc(props) {
   );
 
   const sessionsPieChart = (
-    <ResponsiveContainer height={250} minWidth={400}>
+    <ResponsiveContainer height={250} minWidth={450}>
       <PieChart>
         <Pie
           data={sessionData}
@@ -144,7 +144,7 @@ export default function StatsArc(props) {
                 dominantBaseline="central"
               >
                 {`${sessionData[index].name}
-                 (${value} days)`}
+                 (${value} sessions)`}
               </text>
             );
           }}
