@@ -53,8 +53,8 @@ function JournalInfo(props) {
   const [arc, setArc] = useState(
     props.session.arc
       ? props.session.arc
-      : props.session.length > 0
-      ? props.session[props.session.length - 1].arc
+      : props.sessions.length > 0
+      ? props.sessions[props.sessions.length - 1].arc
       : ""
   );
   const [errorMsg, setErrorMsg] = useState(false);
