@@ -7,6 +7,7 @@ import Sidebar from "./Sidebar";
 import "../style/main.css";
 
 function Stats(props) {
+  const loading = props.loading;
   const setCurrentTab = props.setCurrentTab;
   const navigate = useNavigate();
   const params = props.params;
@@ -120,7 +121,7 @@ function Stats(props) {
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
       />
-      {isPrivate(currentCampaign) ? null : (
+      {isPrivate(currentCampaign) ? null : loading ? null : (
         <StatsInfo
           campaign={currentCampaign}
           sessions={sessions}

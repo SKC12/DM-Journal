@@ -1,4 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { nanoid } from "nanoid";
 
 export default function StatsArc(props) {
   let colorsArray = getColors(props.sessions);
@@ -54,7 +55,7 @@ export default function StatsArc(props) {
     return arr;
   }
   const ingameTimePieChart = (
-    <ResponsiveContainer height={250} minWidth={550}>
+    <ResponsiveContainer height={250} minWidth={550} key={nanoid()}>
       <PieChart>
         <Pie
           data={ingameTimeData}
@@ -108,7 +109,7 @@ export default function StatsArc(props) {
   );
 
   const sessionsPieChart = (
-    <ResponsiveContainer height={250} minWidth={550}>
+    <ResponsiveContainer height={250} minWidth={550} key={nanoid()}>
       <PieChart>
         <Pie
           data={sessionData}
