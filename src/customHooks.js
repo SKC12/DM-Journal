@@ -4,6 +4,7 @@ import {
   loadCampaignsFromDatabase,
   sortSessionsByDate,
 } from "./helpers.js";
+import { Campaign } from "./models/Campaign.js";
 
 export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
@@ -137,7 +138,13 @@ export const useCampaignsState = (userID) => {
     async function loadCampaigns(userID) {
       if (!hasLoaded) {
         try {
-          let campArray = await loadCampaignsFromDatabase(userID);
+          // let campArray = await loadCampaignsFromDatabase(userID);
+          // setCampaigns(campArray);
+          // console.log("PREV", campArray);
+          // setHasLoaded(true);
+
+          let campArray = await Campaign.loadCampaignsFromDB(userID);
+          console.log("CLASS", campArray);
           setCampaigns(campArray);
           setHasLoaded(true);
         } catch (e) {

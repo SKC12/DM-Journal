@@ -1,4 +1,4 @@
-import { db } from "./firebase";
+import { db } from "../firebase";
 import {
   collection,
   doc,
@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 export class Campaign {
-  constructor({ name, description, isPrivate = true, options }, userID) {
+  constructor({ name, description, isPrivate = true, options = {} }, userID) {
     this.userID = userID;
     this.name = name;
     this.description = description;
@@ -73,5 +73,26 @@ export class Campaign {
       console.log(e);
       throw e;
     }
+  }
+
+  static async loadCampaignsFromDB(userID) {
+    let campArray = [];
+    try {
+      const query = await getDocs(
+        collection(db, "users/" + userID + "/campaigns")
+      );
+      query.forEach((doc) => {
+        //console.log(doc.data());
+        //console.log(new Campaign(doc.data(), userID));
+        campArray.push(new Campaign(doc.data(), userID));
+      });
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+
+    //console.log("LOADING CAMPAIGNS FROM DB");
+
+    return campArray;
   }
 }
