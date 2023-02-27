@@ -43,7 +43,8 @@ export class Campaign {
         where("name", "==", this.name)
       );
       const docs = await getDocs(q);
-      return !docs.docs.length === 0;
+      //console.log(docs.docs.length);
+      return docs.docs.length > 0;
     } catch (e) {
       console.log(e);
       throw e;

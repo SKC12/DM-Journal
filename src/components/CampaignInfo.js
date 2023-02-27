@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
-import {
-  searchFirebaseForCampaignName,
-  writeCampaignToFirebase,
-  deleteCampaignFromFirebase,
-  containsInvalidCharacters,
-} from "../helpers";
+import { containsInvalidCharacters } from "../helpers";
+import { Campaign } from "../models/Campaign";
 import "../confirmCSS.css";
 import "animate.css";
 import "../style/CampaignInfo.css";
@@ -48,24 +44,19 @@ function CampaignInfo(props) {
 
     //Checks for invalid characters
     if (!containsInvalidCharacters(name)) {
+      let campaign = new Campaign(
+        { name, description, isPrivate, options },
+        props.user.uid
+      );
       //Queries if campaign already exists
-      const docs = await searchFirebaseForCampaignName(props.user.uid, name);
-      if (docs.docs.length === 0) {
-        let campaign = {
-          name: name,
-          description: description,
-          private: isPrivate,
-          options: options,
-        };
-
-        //If it doesn't exists, writes to DB
-        await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
+      if (await campaign.existsInDB()) {
+        setErrorMsg(true);
+        // Saves to DB and inserts into campaign array
+      } else {
+        await campaign.saveToDB();
         let newCamps = props.campaigns.concat(campaign);
         props.setCampaigns(newCamps);
         props.setCampaign(campaign);
-      } else {
-        //If not, displays error msg
-        setErrorMsg(true);
       }
     } else {
       setErrorMsg(true);
@@ -73,13 +64,12 @@ function CampaignInfo(props) {
   }
 
   async function editCampaign() {
-    let campaign = {
-      name: name,
-      description: description,
-      private: isPrivate,
-      options: options,
-    };
-    await writeCampaignToFirebase(props.user.uid, campaign.name, campaign);
+    let campaign = new Campaign(
+      { name, description, isPrivate, options },
+      props.user.uid
+    );
+
+    await campaign.saveToDB();
     let newArr = props.campaigns.map((entry) => {
       return entry.name === name ? campaign : entry;
     });
@@ -90,7 +80,7 @@ function CampaignInfo(props) {
   async function deleteCampaign(e) {
     e.preventDefault();
     try {
-      await deleteCampaignFromFirebase(props.user.uid, name);
+      await props.campaign.deleteFromDB();
       props.setCampaigns(
         props.campaigns.filter((entry) => {
           return entry.name !== name;
