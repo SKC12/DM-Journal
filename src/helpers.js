@@ -157,10 +157,10 @@ function isOwner(user, currentUserID) {
 }
 
 export {
-  searchFirebaseForCampaignName,
-  writeCampaignToFirebase,
-  loadCampaignsFromDatabase,
-  deleteCampaignFromFirebase,
+  //searchFirebaseForCampaignName,
+  //writeCampaignToFirebase,
+  //loadCampaignsFromDatabase,
+  //deleteCampaignFromFirebase,
   writeToFirebase,
   loadFromFirebase,
   deleteFromFirebase,

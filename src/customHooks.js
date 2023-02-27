@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  loadFromFirebase,
-  loadCampaignsFromDatabase,
-  sortSessionsByDate,
-} from "./helpers.js";
+import { loadFromFirebase, sortSessionsByDate } from "./helpers.js";
 import { Campaign } from "./models/Campaign.js";
+import { Character } from "./models/Character.js";
 
 export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
@@ -49,8 +46,7 @@ export const useCharacterState = (userID, campaignName) => {
     if (campaignName) {
       setLoadingCharacters(true);
       try {
-        let characters = await loadFromFirebase(
-          "characters",
+        let characters = await Character.loadCharactersFromDB(
           userID,
           campaignName
         );
@@ -138,13 +134,7 @@ export const useCampaignsState = (userID) => {
     async function loadCampaigns(userID) {
       if (!hasLoaded) {
         try {
-          // let campArray = await loadCampaignsFromDatabase(userID);
-          // setCampaigns(campArray);
-          // console.log("PREV", campArray);
-          // setHasLoaded(true);
-
           let campArray = await Campaign.loadCampaignsFromDB(userID);
-          console.log("CLASS", campArray);
           setCampaigns(campArray);
           setHasLoaded(true);
         } catch (e) {

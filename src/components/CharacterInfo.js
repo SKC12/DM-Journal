@@ -2,11 +2,6 @@ import { useEffect, useState } from "react";
 import "../style/ChaLocInfo.css";
 import genericImage from "../img/bxs-face.svg";
 import { nanoid } from "nanoid";
-import {
-  writeToFirebase,
-  deleteFromFirebase,
-  containsInvalidCharacters,
-} from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
 import {
@@ -16,6 +11,7 @@ import {
   EditorState,
 } from "draft-js";
 import DraftjsMentions from "./DraftjsMentions";
+import { Character } from "../models/Character";
 
 function CharacterInfo(props) {
   const [img, setImg] = useState(
@@ -66,16 +62,20 @@ function CharacterInfo(props) {
 
   //Adds character to Database
   async function createCharacter() {
-    let character = {
-      name: name,
-      img: img,
-      location: location,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      privateDescription: privateDescription,
-      uid: nanoid(),
-    };
+    let character = new Character(
+      {
+        name: name,
+        img: img,
+        location: location,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+        privateDescription: privateDescription,
+        uid: nanoid(),
+      },
+      props.user.uid,
+      props.campaign.name
+    );
 
-    if (isValidCharacter(character)) {
+    if (character.isValid()) {
       if (
         props.characters.filter(
           (e) =>
@@ -83,43 +83,39 @@ function CharacterInfo(props) {
             character.name.replace(/[\^?]/g, "")
         ).length === 0
       ) {
-        await writeToFirebase(
-          "characters",
-          props.user.uid,
-          props.campaign.name,
-          character
-        );
+        await character.saveToDB();
         let newCharacters = props.characters.concat(character);
         props.setCharacters(newCharacters);
         props.setCharacter(character);
       } else {
         setErrorMsg(true);
       }
+    } else {
+      setErrorMsg(true);
     }
   }
 
   //Edits character
   async function editCharacter() {
-    let character = {
-      name: name,
-      img: img,
-      location: location,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      privateDescription: privateDescription,
-      uid: uid,
-    };
-    if (isValidCharacter(character)) {
+    let character = new Character(
+      {
+        name: name,
+        img: img,
+        location: location,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+        privateDescription: privateDescription,
+        uid: nanoid(),
+      },
+      props.user.uid,
+      props.campaign.name
+    );
+    if (character.isValid()) {
       if (
         name === props.character.name ||
         character.name === "createnew" ||
         props.characters.filter((e) => e.name === character.name).length === 0
       ) {
-        await writeToFirebase(
-          "characters",
-          props.user.uid,
-          props.campaign.name,
-          character
-        );
+        await character.saveToDB();
         let newArr = props.characters.map((entry) => {
           return entry.uid === uid ? character : entry;
         });
@@ -128,19 +124,15 @@ function CharacterInfo(props) {
       } else {
         setErrorMsg(true);
       }
+    } else {
+      setErrorMsg(true);
     }
   }
 
   //Deletes character
   async function deleteCharacter() {
     try {
-      await deleteFromFirebase(
-        "characters",
-        props.user.uid,
-        props.campaign.name,
-        uid
-      );
-
+      await props.character.deleteFromDB();
       //Removes character from state
       props.setCharacters(
         props.characters.filter((entry) => {
@@ -213,15 +205,6 @@ function CharacterInfo(props) {
     setDescriptionEditorState(
       getEditorStateFromStringOrRaw(props.character.description)
     );
-  }
-
-  function isValidCharacter(character) {
-    if (character.name === "" || containsInvalidCharacters(character.name)) {
-      setErrorMsg(true);
-      return false;
-    }
-
-    return true;
   }
 
   function isOwner() {
