@@ -47,7 +47,7 @@ export class Character {
           location: this.location,
           description: this.description,
           privateDescription: this.privateDescription,
-          uid: nanoid(),
+          uid: this.uid,
         }
       );
     } catch (e) {

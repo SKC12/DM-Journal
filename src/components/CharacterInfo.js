@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "../style/ChaLocInfo.css";
 import genericImage from "../img/bxs-face.svg";
-import { nanoid } from "nanoid";
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
 import {
@@ -69,7 +68,6 @@ function CharacterInfo(props) {
         location: location,
         description: convertToRaw(descriptionEditorState.getCurrentContent()),
         privateDescription: privateDescription,
-        uid: nanoid(),
       },
       props.user.uid,
       props.campaign.name
@@ -104,7 +102,6 @@ function CharacterInfo(props) {
         location: location,
         description: convertToRaw(descriptionEditorState.getCurrentContent()),
         privateDescription: privateDescription,
-        uid: nanoid(),
       },
       props.user.uid,
       props.campaign.name

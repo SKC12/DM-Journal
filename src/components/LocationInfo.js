@@ -3,12 +3,6 @@ import "../style/ChaLocInfo.css";
 import genericImage from "../img/bx-image.svg";
 import zoomInImage from "../img/bx-zoom-in.svg";
 import zoomOutImage from "../img/bx-zoom-out.svg";
-import { nanoid } from "nanoid";
-import {
-  writeToFirebase,
-  deleteFromFirebase,
-  containsInvalidCharacters,
-} from "../helpers.js";
 import { confirmAlert } from "react-confirm-alert";
 import CharacterImagePopup from "./CharacterImgPopup";
 import {
@@ -18,6 +12,7 @@ import {
   EditorState,
 } from "draft-js";
 import DraftjsMentions from "./DraftjsMentions";
+import { Location } from "../models/Location";
 
 function LocationInfo(props) {
   const [img, setImg] = useState(
@@ -74,55 +69,53 @@ function LocationInfo(props) {
 
   //Adds character to Database
   async function createLocation() {
-    let location = {
-      name: name,
-      img: img,
-      location: folder,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      privateDescription: privateDescription,
-      uid: nanoid(),
-    };
+    let location = new Location(
+      {
+        name: name,
+        img: img,
+        location: folder,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+        privateDescription: privateDescription,
+      },
+      props.user.uid,
+      props.campaign.name
+    );
 
-    if (isValidLocation(location)) {
+    if (location.isValid()) {
       if (
         props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await writeToFirebase(
-          "locations",
-          props.user.uid,
-          props.campaign.name,
-          location
-        );
+        await location.saveToDB();
         let newLocations = props.locations.concat(location);
         props.setLocations(newLocations);
         props.setLocation(location);
       } else {
         setErrorMsg(true);
       }
+    } else {
+      setErrorMsg(true);
     }
   }
 
   //Edits character
   async function editLocation() {
-    let location = {
-      name: name,
-      img: img,
-      location: folder,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      privateDescription: privateDescription,
-      uid: uid,
-    };
-    if (isValidLocation(location)) {
+    let location = new Location(
+      {
+        name: name,
+        img: img,
+        location: folder,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+        privateDescription: privateDescription,
+      },
+      props.user.uid,
+      props.campaign.name
+    );
+    if (location.isValid()) {
       if (
         name === props.location.name ||
         props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await writeToFirebase(
-          "locations",
-          props.user.uid,
-          props.campaign.name,
-          location
-        );
+        await location.saveToDB();
         let newArr = props.locations.map((entry) => {
           return entry.uid === uid ? location : entry;
         });
@@ -137,12 +130,7 @@ function LocationInfo(props) {
   //Deletes location
   async function deleteLocation() {
     try {
-      await deleteFromFirebase(
-        "locations",
-        props.user.uid,
-        props.campaign.name,
-        uid
-      );
+      await props.location.deleteFromDB();
 
       //Removes location from state
       props.setLocations(
@@ -214,19 +202,6 @@ function LocationInfo(props) {
     setDescriptionEditorState(
       getEditorStateFromStringOrRaw(props.location.description)
     );
-  }
-
-  function isValidLocation(location) {
-    if (
-      location.name === "" ||
-      location.name === "createnew" ||
-      containsInvalidCharacters(location.name)
-    ) {
-      setErrorMsg(true);
-      return false;
-    }
-
-    return true;
   }
 
   function isOwner() {
