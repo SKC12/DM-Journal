@@ -4,7 +4,7 @@ import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
 import Reset from "./Login/Reset";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Login/Dashboard";
 import Header from "./Header";
 import Main from "./Main";
 import Campaign from "./Campaigns/Campaign";
