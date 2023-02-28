@@ -1,12 +1,12 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isOwner } from "../helpers";
-import Sidebar from "./Sidebar";
-import "../style/main.css";
+import { isOwner } from "../../helpers";
+import Sidebar from "../Sidebar";
+import "../../style/main.css";
 import LocationInfo from "./LocationInfo";
-import Accordion from "./Accordion";
+import Accordion from "../Accordion";
 import LocationCard from "./LocationCard";
 
 function Locations(props) {

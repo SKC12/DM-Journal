@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
-import { containsInvalidCharacters } from "../helpers";
-import { Campaign } from "../models/Campaign";
-import "../confirmCSS.css";
+import { containsInvalidCharacters } from "../../helpers";
+import { Campaign } from "../../models/Campaign";
+import "../../confirmCSS.css";
 import "animate.css";
-import "../style/CampaignInfo.css";
+import "../../style/CampaignInfo.css";
 
 function CampaignInfo(props) {
   const [name, setName] = useState(

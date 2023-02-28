@@ -1,12 +1,12 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import JournalInfo from "./JournalInfo";
 import JounalCard from "./JournalCard";
-import { isOwner } from "../helpers";
-import Sidebar from "./Sidebar";
-import "../style/main.css";
+import { isOwner } from "../../helpers";
+import Sidebar from "../Sidebar";
+import "../../style/main.css";
 
 function Journal(props) {
   const loading = props.loading;

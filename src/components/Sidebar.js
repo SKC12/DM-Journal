@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { isOwner } from "../helpers";
-import CampaignSelector from "./CampaignSelector";
+import CampaignSelector from "./Campaigns/CampaignSelector";
 import "../style/Sidebar.css";
 
 function Sidebar(props) {

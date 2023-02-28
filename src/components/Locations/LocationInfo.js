@@ -1,42 +1,46 @@
 import { useEffect, useState } from "react";
-import "../style/ChaLocInfo.css";
-import genericImage from "../img/bxs-face.svg";
+import "../../style/ChaLocInfo.css";
+import genericImage from "../../img/bx-image.svg";
+import zoomInImage from "../../img/bx-zoom-in.svg";
+import zoomOutImage from "../../img/bx-zoom-out.svg";
 import { confirmAlert } from "react-confirm-alert";
-import CharacterImagePopup from "./CharacterImgPopup";
+import CharacterImagePopup from "../Characters/CharacterImgPopup";
 import {
   ContentState,
   convertFromRaw,
   convertToRaw,
   EditorState,
 } from "draft-js";
-import DraftjsMentions from "./DraftjsMentions";
-import { Character } from "../models/Character";
+import DraftjsMentions from "../DraftjsMentions";
+import { Location } from "../../models/Location";
 
-function CharacterInfo(props) {
+function LocationInfo(props) {
   const [img, setImg] = useState(
-    props.character.img ? props.character.img : genericImage
+    props.location.img ? props.location.img : genericImage
   );
   const [name, setName] = useState(
-    props.character.name ? props.character.name : ""
+    props.location.name ? props.location.name : ""
   );
-  const [location, setLocation] = useState(
-    props.character.location ? props.character.location : ""
+  const [folder, setFolder] = useState(
+    props.location.location ? props.location.location : ""
   );
   const [description, setDescription] = useState(
-    props.character.description ? props.character.description : ""
+    props.location.description ? props.location.description : ""
   );
   const [descriptionEditorState, setDescriptionEditorState] = useState(() =>
     getEditorStateFromStringOrRaw(description)
   );
   const [privateDescription, setPrivateDescription] = useState(
-    props.character.privateDescription ? props.character.privateDescription : ""
+    props.location.privateDescription ? props.location.privateDescription : ""
   );
-  const params = props.params;
+  const [isBigImage, setIsBigImage] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   const [isImgPopup, setIsImgPopup] = useState(false);
+  const [zoomImg, setZoomImg] = useState(zoomInImage);
   const [isEditable, setIsEditable] = useState(false);
+  const params = props.params;
 
-  const uid = props.character.uid;
+  const uid = props.location.uid;
 
   //Allows the Editor to accept descripts both in String and Raw Draftjs format
   function getEditorStateFromStringOrRaw(description) {
@@ -50,22 +54,26 @@ function CharacterInfo(props) {
   }
 
   useEffect(() => {
-    if (props.character === "new") {
+    if (props.location === "new") {
       setIsEditable(true);
     }
-  }, [props.character]);
+  }, [props.location]);
+
+  useEffect(() => {
+    isBigImage ? setZoomImg(zoomOutImage) : setZoomImg(zoomInImage);
+  }, [isBigImage]);
 
   useEffect(() => {
     setErrorMsg(false);
   }, [name]);
 
   //Adds character to Database
-  async function createCharacter() {
-    let character = new Character(
+  async function createLocation() {
+    let location = new Location(
       {
         name: name,
         img: img,
-        location: location,
+        location: folder,
         description: convertToRaw(descriptionEditorState.getCurrentContent()),
         privateDescription: privateDescription,
       },
@@ -73,18 +81,14 @@ function CharacterInfo(props) {
       props.campaign.name
     );
 
-    if (character.isValid()) {
+    if (location.isValid()) {
       if (
-        props.characters.filter(
-          (e) =>
-            e.name.replace(/[\^?]/g, "") ===
-            character.name.replace(/[\^?]/g, "")
-        ).length === 0
+        props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await character.saveToDB();
-        let newCharacters = props.characters.concat(character);
-        props.setCharacters(newCharacters);
-        props.setCharacter(character);
+        await location.saveToDB();
+        let newLocations = props.locations.concat(location);
+        props.setLocations(newLocations);
+        props.setLocation(location);
       } else {
         setErrorMsg(true);
       }
@@ -94,12 +98,12 @@ function CharacterInfo(props) {
   }
 
   //Edits character
-  async function editCharacter() {
-    let character = new Character(
+  async function editLocation() {
+    let location = new Location(
       {
         name: name,
         img: img,
-        location: location,
+        location: folder,
         description: convertToRaw(descriptionEditorState.getCurrentContent()),
         privateDescription: privateDescription,
         uid: uid,
@@ -107,37 +111,35 @@ function CharacterInfo(props) {
       props.user.uid,
       props.campaign.name
     );
-    if (character.isValid()) {
+    if (location.isValid()) {
       if (
-        name === props.character.name ||
-        character.name === "createnew" ||
-        props.characters.filter((e) => e.name === character.name).length === 0
+        name === props.location.name ||
+        props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await character.saveToDB();
-        let newArr = props.characters.map((entry) => {
-          return entry.uid === uid ? character : entry;
+        await location.saveToDB();
+        let newArr = props.locations.map((entry) => {
+          return entry.uid === uid ? location : entry;
         });
-        props.setCharacters(newArr);
-        props.setCharacter(character);
+        props.setLocations(newArr);
+        props.setLocation(location);
       } else {
         setErrorMsg(true);
       }
-    } else {
-      setErrorMsg(true);
     }
   }
 
-  //Deletes character
-  async function deleteCharacter() {
+  //Deletes location
+  async function deleteLocation() {
     try {
-      await props.character.deleteFromDB();
-      //Removes character from state
-      props.setCharacters(
-        props.characters.filter((entry) => {
+      await props.location.deleteFromDB();
+
+      //Removes location from state
+      props.setLocations(
+        props.locations.filter((entry) => {
           return entry.name !== name;
         })
       );
-      props.setCharacter("");
+      props.setLocation("");
 
       //TODO: ERROR
     } catch (e) {
@@ -147,23 +149,21 @@ function CharacterInfo(props) {
   }
 
   //Alert for deletion confirmation
-  const characterDeleteAlert = (e) => {
+  const locationDeleteAlert = (e) => {
     e.preventDefault();
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui JournalInfo__delete-alert-container">
             <div className="JournalInfo__delete-alert-text-container">
-              <p className="">
-                Are you sure you want to delete this character?
-              </p>
+              <p className="">Are you sure you want to delete this location?</p>
               <p className="">The process is irreversible.</p>
             </div>
 
             <div className="JournalInfo__delete-alert-button-container">
               <button
                 onClick={() => {
-                  deleteCharacter();
+                  deleteLocation(e);
                   onClose();
                 }}
                 className="flex-1 bg-red-800"
@@ -188,20 +188,20 @@ function CharacterInfo(props) {
   let nameErrorMessage = () => {
     return errorMsg ? (
       <p className="generic__alert-text">
-        Character names must be unique and cannot contain forward slashes ("/")
+        Location names must be unique and cannot contain forward slashes ("/")
         or carets ("^")
       </p>
     ) : null;
   };
 
   function returnToInitialValues() {
-    setImg(props.character.img);
-    setName(props.character.name);
-    setLocation(props.character.location);
-    setDescription(props.character.description);
-    setPrivateDescription(props.character.privateDescription);
+    setImg(props.location.img);
+    setName(props.location.name);
+    setFolder(props.location.folder);
+    setDescription(props.location.description);
+    setPrivateDescription(props.location.privateDescription);
     setDescriptionEditorState(
-      getEditorStateFromStringOrRaw(props.character.description)
+      getEditorStateFromStringOrRaw(props.location.description)
     );
   }
 
@@ -221,10 +221,10 @@ function CharacterInfo(props) {
           className="generic__buttons"
           onClick={(e) => {
             e.preventDefault();
-            createCharacter();
+            createLocation();
           }}
         >
-          Create Character
+          Create Location
         </button>
       ) : (
         <>
@@ -233,14 +233,14 @@ function CharacterInfo(props) {
             onClick={(e) => {
               e.preventDefault();
               if (isEditable) {
-                editCharacter();
+                editLocation();
                 setIsEditable(false);
               } else {
                 setIsEditable(true);
               }
             }}
           >
-            {isEditable ? "Save" : "Edit Character"}
+            {isEditable ? "Save" : "Edit Location"}
           </button>
           <button
             className="generic__buttons"
@@ -250,11 +250,11 @@ function CharacterInfo(props) {
                 returnToInitialValues();
                 setIsEditable(false);
               } else {
-                characterDeleteAlert(e);
+                locationDeleteAlert(e);
               }
             }}
           >
-            {isEditable ? "Cancel" : "Delete Character"}
+            {isEditable ? "Cancel" : "Delete Location"}
           </button>
         </>
       )}
@@ -263,7 +263,7 @@ function CharacterInfo(props) {
 
   return (
     <div className="grow overflow-auto">
-      {props.character === "" || props.campaign === "" ? null : (
+      {props.location === "" || props.campaign === "" ? null : (
         <>
           {isImgPopup && (
             <CharacterImagePopup
@@ -275,7 +275,11 @@ function CharacterInfo(props) {
           )}
           <div className="animate__animated animate__fadeIn h-full">
             <form className="generic__main-form">
-              <div className="ChaLocInfo__top-container">
+              <div
+                className={`ChaLocInfo__top-container ${
+                  isBigImage ? "ChaLocInfo__big-img-container" : ""
+                }`}
+              >
                 <div
                   className={`ChaLocInfo__img-container ${
                     isOwner() && isEditable ? "cursor-pointer" : ""
@@ -289,23 +293,36 @@ function CharacterInfo(props) {
                     className={`${
                       img === genericImage
                         ? "ChaLocInfo__genericImg"
+                        : isBigImage
+                        ? "ChaLocInfo__big-img"
                         : "ChaLocInfo__img"
-                    } `}
-                    alt="Character"
+                    }  `}
+                    alt="Location"
                   />
+                  {img === genericImage ? null : (
+                    <div
+                      className="ChaLocInfo__img-zoom"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsBigImage(!isBigImage);
+                      }}
+                    >
+                      <img alt="" src={zoomImg} />
+                    </div>
+                  )}
                 </div>
                 <div className="ChaLocInfo__data-container">
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-character-name"
+                      htmlFor="info-location-name"
                     >
                       Name
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
                       disabled={!isOwner() || !isEditable}
-                      id="info-character-name"
+                      id="info-location-name"
                       value={name}
                       maxLength="25"
                       onChange={(e) => setName(e.target.value)}
@@ -315,17 +332,17 @@ function CharacterInfo(props) {
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-character-location"
+                      htmlFor="info-location-folder"
                     >
-                      Location
+                      Folder
                     </label>
                     <input
                       className="generic__input ChaLoc__input"
                       disabled={!isOwner() || !isEditable}
-                      id="info-character-location"
-                      value={location}
+                      id="info-location-folder"
+                      value={folder}
                       maxLength="25"
-                      onChange={(e) => setLocation(e.target.value)}
+                      onChange={(e) => setFolder(e.target.value)}
                     ></input>
                   </div>
                 </div>
@@ -334,13 +351,13 @@ function CharacterInfo(props) {
                 <div className="ChaLocInfo__input-container">
                   <label
                     className="generic__label"
-                    htmlFor="info-character-description"
+                    htmlFor="info-location-description"
                   >
-                    Character description
+                    Location description
                   </label>
                   <DraftjsMentions
                     readOnly={!isOwner() || !isEditable}
-                    id="info-character-description"
+                    id="info-location-description"
                     editorStateArray={[
                       descriptionEditorState,
                       setDescriptionEditorState,
@@ -356,15 +373,14 @@ function CharacterInfo(props) {
                   <div className="ChaLocInfo__input-container">
                     <label
                       className="generic__label"
-                      htmlFor="info-private-description"
+                      htmlFor="info-location-private-description"
                     >
                       Private description
                     </label>
-
                     <textarea
                       disabled={!isOwner() || !isEditable}
                       className="generic__input ChaLocInfo__input-large "
-                      id="info-private-description"
+                      id="info-location-private-description"
                       value={privateDescription}
                       maxLength="3000"
                       onChange={(e) => setPrivateDescription(e.target.value)}
@@ -372,7 +388,7 @@ function CharacterInfo(props) {
                   </div>
                 ) : null}
               </div>
-              {isOwner() ? buttons(props.character) : null}
+              {isOwner() ? buttons(props.location) : null}
             </form>
           </div>
         </>
@@ -381,4 +397,4 @@ function CharacterInfo(props) {
   );
 }
 
-export default CharacterInfo;
+export default LocationInfo;

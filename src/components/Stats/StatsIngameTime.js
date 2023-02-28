@@ -8,7 +8,7 @@ import {
   Label,
 } from "recharts";
 import "animate.css";
-import "../style/StatsInfo.css";
+import "../../style/StatsInfo.css";
 
 function StatsIngameTime(props) {
   const ingameTimeData = prepData(props.sessions);

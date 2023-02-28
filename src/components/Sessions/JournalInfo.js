@@ -8,11 +8,11 @@ import {
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import "animate.css";
-import "../style/JournalInfo.css";
-import "../style/Draftjs.css";
-import { Session } from "../models/Session";
-import { sortSessionsByDate } from "../helpers.js";
-import DraftjsMentions from "./DraftjsMentions";
+import "../../style/JournalInfo.css";
+import "../../style/Draftjs.css";
+import { Session } from "../../models/Session";
+import { sortSessionsByDate } from "../../helpers.js";
+import DraftjsMentions from "../DraftjsMentions";
 
 function JournalInfo(props) {
   const [name, setName] = useState(

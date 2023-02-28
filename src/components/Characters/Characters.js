@@ -1,13 +1,13 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isOwner } from "../helpers";
-import Sidebar from "./Sidebar";
-import "../style/main.css";
+import { isOwner } from "../../helpers";
+import Sidebar from "../Sidebar";
+import "../../style/main.css";
 import CharacterInfo from "./CharacterInfo";
 import CharacterCard from "./CharacterCard";
-import Accordion from "./Accordion";
+import Accordion from "../Accordion";
 
 function Characters(props) {
   const loading = props.loading;

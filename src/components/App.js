@@ -1,19 +1,19 @@
 import "../index.css";
 //import SignIn from "./SignIn";
 import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
-import Reset from "./Reset";
+import Login from "./Login/Login";
+import Register from "./Login/Register";
+import Reset from "./Login/Reset";
 import Dashboard from "./Dashboard";
 import Header from "./Header";
 import Main from "./Main";
-import Campaign from "./Campaign";
-import Journal from "./Journal";
-import Stats from "./Stats";
+import Campaign from "./Campaigns/Campaign";
+import Journal from "./Sessions/Journal";
+import Stats from "./Stats/Stats";
 import { useEffect, useState } from "react";
 import ErrorPage from "./ErrorPage";
-import Characters from "./Characters";
-import Locations from "./Locations";
+import Characters from "./Characters/Characters";
+import Locations from "./Locations/Locations";
 import {
   useCampaignsState,
   useCharacterState,

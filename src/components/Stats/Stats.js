@@ -1,10 +1,10 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import React, { useEffect, useState } from "react";
 import StatsInfo from "./StatsInfo";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import "../style/main.css";
+import Sidebar from "../Sidebar";
+import "../../style/main.css";
 
 function Stats(props) {
   const loading = props.loading;

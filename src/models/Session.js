@@ -111,7 +111,6 @@ export class Session {
         )
       );
       query.forEach((doc) => {
-        console.log(doc.data());
         sessionArray.push(new Session(doc.data(), userID, campaignName));
       });
     } catch (e) {

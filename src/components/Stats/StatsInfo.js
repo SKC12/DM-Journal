@@ -1,7 +1,7 @@
 import StatsLeveling from "./StatsLevelling";
 import StatsTime from "./StatsTime";
 import StatsIngameTime from "./StatsIngameTime";
-import "../style/StatsInfo.css";
+import "../../style/StatsInfo.css";
 import StatsArc from "./StatsArc";
 
 function StatsInfo(props) {

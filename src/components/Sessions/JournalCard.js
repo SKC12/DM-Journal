@@ -1,4 +1,4 @@
-import "../style/JournalInfo.css";
+import "../../style/JournalInfo.css";
 
 function JounalCard(props) {
   const SELECT_COLOR = "bg-gray-200";

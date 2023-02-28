@@ -1,8 +1,8 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import React, { useEffect } from "react";
 import CampaignInfo from "./CampaignInfo";
-import "../style/main.css";
+import "../../style/main.css";
 
 function Campaign(props) {
   const [user] = useAuthState(auth);
