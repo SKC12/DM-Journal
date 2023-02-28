@@ -11,7 +11,7 @@ import { containsInvalidCharacters } from "../helpers";
 
 export class Character {
   constructor(
-    { name, img, description, location, privateDescription },
+    { name, img, description, location, privateDescription, uid = nanoid() },
     userID,
     campaignName
   ) {
@@ -22,7 +22,7 @@ export class Character {
     this.location = location;
     this.description = description;
     this.privateDescription = privateDescription;
-    this.uid = nanoid();
+    this.uid = uid;
   }
 
   isValid() {

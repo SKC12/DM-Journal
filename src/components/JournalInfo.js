@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
 import { confirmAlert } from "react-confirm-alert";
 import {
   ContentState,
@@ -11,13 +10,8 @@ import "draft-js/dist/Draft.css";
 import "animate.css";
 import "../style/JournalInfo.css";
 import "../style/Draftjs.css";
-
-import {
-  writeToFirebase,
-  sortSessionsByDate,
-  deleteFromFirebase,
-  containsInvalidCharacters,
-} from "../helpers.js";
+import { Session } from "../models/Session";
+import { sortSessionsByDate } from "../helpers.js";
 import DraftjsMentions from "./DraftjsMentions";
 
 function JournalInfo(props) {
@@ -91,75 +85,62 @@ function JournalInfo(props) {
 
   //Adds session to Database
   async function createSession() {
-    let session = {
-      name: name,
-      color: color,
-      date: date,
-      arc: arc,
-      ingameTime: ingameTime,
-      partyLevel: partyLevel,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      uid: nanoid(),
-    };
+    let session = new Session(
+      {
+        name: name,
+        color: color,
+        date: date,
+        arc: arc,
+        ingameTime: ingameTime,
+        partyLevel: partyLevel,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+      },
+      props.user.uid,
+      props.campaign.name
+    );
 
-    if (isValidSession(session)) {
+    if (session.isValidName() && session.isValidDate()) {
       if (props.sessions.filter((e) => e.name === session.name).length === 0) {
-        await writeToFirebase(
-          "sessions",
-          props.user.uid,
-          props.campaign.name,
-          session
-        );
+        await session.saveToDB();
         let newSessions = sortSessionsByDate(props.sessions.concat(session));
         props.setSessions(newSessions);
         props.setSession(session);
       } else {
         setErrorMsg(true);
       }
+    } else {
+      if (!session.isValidName) {
+        setErrorMsg(true);
+      }
+      if (!session.isValidDate()) {
+        setDateErrorMsg(true);
+      }
     }
-  }
-
-  function isValidSession(session) {
-    if (
-      session.name === "" ||
-      session.name === "createnew" ||
-      containsInvalidCharacters(session.name)
-    ) {
-      setErrorMsg(true);
-      return false;
-    }
-    let date = new Date(session.date);
-    if (!(date instanceof Date && !isNaN(date.valueOf()))) {
-      setDateErrorMsg(true);
-      return false;
-    }
-
-    return true;
   }
 
   //Edits session
   async function editSession() {
-    let session = {
-      name: name,
-      color: color,
-      date: date,
-      arc: arc,
-      ingameTime: ingameTime,
-      partyLevel: partyLevel,
-      description: convertToRaw(descriptionEditorState.getCurrentContent()),
-      uid: uid,
-    };
-    if (isValidSession(session)) {
+    let session = new Session(
+      {
+        name: name,
+        color: color,
+        date: date,
+        arc: arc,
+        ingameTime: ingameTime,
+        partyLevel: partyLevel,
+        description: convertToRaw(descriptionEditorState.getCurrentContent()),
+        uid: uid,
+      },
+      props.user.uid,
+      props.campaign.name
+    );
+
+    if (session.isValidName() && session.isValidDate()) {
       if (
         name === props.session.name ||
         props.sessions.filter((e) => e.name === session.name).length === 0
       ) {
-        await writeToFirebase(
-          "sessions",
-          props.user.uid,
-          props.campaign.name,
-          session
-        );
+        session.saveToDB();
         let newArr = props.sessions.map((entry) => {
           return entry.uid === uid ? session : entry;
         });
@@ -168,18 +149,20 @@ function JournalInfo(props) {
       } else {
         setErrorMsg(true);
       }
+    } else {
+      if (!session.isValidName) {
+        setErrorMsg(true);
+      }
+      if (!session.isValidDate()) {
+        setDateErrorMsg(true);
+      }
     }
   }
 
   //Deletes session
   async function deleteSession() {
     try {
-      await deleteFromFirebase(
-        "sessions",
-        props.user.uid,
-        props.campaign.name,
-        uid
-      );
+      await props.session.deleteFromDB();
 
       //Removes session from state
       props.setSessions(

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { loadFromFirebase, sortSessionsByDate } from "./helpers.js";
 import { Campaign } from "./models/Campaign.js";
 import { Character } from "./models/Character.js";
 import { Location } from "./models/Location.js";
+import { Session } from "./models/Session.js";
 
 export const useSessionState = (userID, campaignName) => {
   const [sessions, setSessions] = useState([]);
@@ -14,8 +14,7 @@ export const useSessionState = (userID, campaignName) => {
     if (campaignName) {
       setLoadingSessions(true);
       try {
-        let sessions = await loadFromFirebase("sessions", userID, campaignName);
-        sortSessionsByDate(sessions);
+        let sessions = await Session.loadSessionsFromDB(userID, campaignName);
         setSessions(sessions);
         setLoadingSessions(false);
       } catch (e) {

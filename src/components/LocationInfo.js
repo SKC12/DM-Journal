@@ -106,6 +106,7 @@ function LocationInfo(props) {
         location: folder,
         description: convertToRaw(descriptionEditorState.getCurrentContent()),
         privateDescription: privateDescription,
+        uid: uid,
       },
       props.user.uid,
       props.campaign.name
