@@ -134,7 +134,7 @@ export const useCampaignsState = (userID) => {
   useEffect(() => {
     async function loadCampaigns(userID) {
       if (userID !== loadedID) {
-        console.log("LOADING", userID);
+        //console.log("LOADING", userID);
         setLoadingCampaigns(true);
         try {
           let campArray = await Campaign.loadCampaignsFromDB(userID);
@@ -149,15 +149,11 @@ export const useCampaignsState = (userID) => {
       }
     }
     if (userID && userID !== loadedID) {
-      // if (userID !== loadedID) {
-      //   setCampaigns([]);
-      //   setHasLoaded(false);
-      // }
       loadCampaigns(userID);
     }
   }, [userID, loadedID]);
 
-  console.log("FIRE", userID, loadedID);
+  //console.log("FIRE", userID, loadedID);
 
   return [campaigns, setCampaigns, loadingCampaigns, hasError];
 };

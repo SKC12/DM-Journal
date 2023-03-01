@@ -10,16 +10,12 @@ import {
 } from "firebase/firestore";
 
 export class Campaign {
-  constructor({ name, description, isPrivate = true, options = {} }, userID) {
+  constructor(data, userID) {
     this.userID = userID;
-    this.name = name;
-    this.description = description;
-    this.private = isPrivate;
-    this.options = {
-      ingameTime: options.ingameTime || true,
-      level: options.level || true,
-      arc: options.arc || true,
-    };
+    this.name = data.name;
+    this.description = data.description;
+    this.private = data.private;
+    this.options = data.options || { ingameTime: true, level: true, arc: true };
   }
 
   async saveToDB() {
@@ -83,17 +79,14 @@ export class Campaign {
         collection(db, "users/" + userID + "/campaigns")
       );
       query.forEach((doc) => {
-        //console.log(doc.data());
-        //console.log(new Campaign(doc.data(), userID));
+        //console.log("DATA", doc.data());
+        //console.log("CAMP", new Campaign(doc.data(), userID));
         campArray.push(new Campaign(doc.data(), userID));
       });
     } catch (e) {
       console.log(e);
       throw e;
     }
-
-    //console.log("LOADING CAMPAIGNS FROM DB");
-
     return campArray;
   }
 }
