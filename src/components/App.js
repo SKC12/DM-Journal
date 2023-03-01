@@ -30,7 +30,9 @@ function App() {
   const [currentCampaignID, setCurrentCampaignID] = useState("");
   const [currentTab, setCurrentTab] = useState("");
   const [sideBarHidden, setSideBarHidden] = useState("true");
-  const [campaigns, setCampaigns] = useCampaignsState(params.user);
+  const [campaigns, setCampaigns, loadingCampaigns] = useCampaignsState(
+    params.user
+  );
   const [currentCampaign, setCurrentCampaign] = useCurrentCampaignState(
     campaigns,
     params.campaign
@@ -142,10 +144,11 @@ function App() {
           <Route exact path="/" element={<Main />} />
           <Route
             exact
-            path="/campaign/*"
+            path="/campaigns/*"
             element={
               <Campaign
-                campaignsState={[campaigns, setCampaigns]}
+                params={params}
+                campaignsState={[campaigns, setCampaigns, loadingCampaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sideBarHidden={sideBarHidden}
                 setCurrentTab={setCurrentTab}

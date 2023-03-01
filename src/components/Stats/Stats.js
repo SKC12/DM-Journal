@@ -11,7 +11,9 @@ function Stats(props) {
   const setCurrentTab = props.setCurrentTab;
   const navigate = useNavigate();
   const params = props.params;
-  const paramsUser = params.user ? params.user : params["*"].replace("/", "");
+  //console.log(params);
+  const paramsUser = params.user ? params.user : "";
+  //params["*"].replace("/", "");
   const [user] = useAuthState(auth);
   const [campaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;

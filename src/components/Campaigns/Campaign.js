@@ -3,12 +3,22 @@ import { auth } from "../../firebase";
 import React, { useEffect } from "react";
 import CampaignInfo from "./CampaignInfo";
 import "../../style/main.css";
+import { useNavigate } from "react-router-dom";
 
 function Campaign(props) {
+  const navigate = useNavigate();
+  const params = props.params;
   const [user] = useAuthState(auth);
-  const [campaigns, setCampaigns] = props.campaignsState;
+  const [campaigns, setCampaigns, loadingCampaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
   const setCurrentTab = props.setCurrentTab;
+
+  //Navigates to link containing User params
+  useEffect(() => {
+    if (!params.user && user) {
+      navigate("/campaigns/" + user.uid);
+    }
+  }, [params.user, user, navigate]);
 
   useEffect(() => {
     setCurrentTab("Campaign");
@@ -40,7 +50,13 @@ function Campaign(props) {
     <div>
       <h2 className="select-none pb-4">Campaigns:</h2>
       <ul className="generic__Sidebar">
-        {populateCampaigns}
+        {loadingCampaigns ? (
+          <p className="text-gray-500 h-12 flex items-center justify-center">
+            LOADING...
+          </p>
+        ) : (
+          populateCampaigns
+        )}
         <li
           className="text-blue-400 cursor-pointer p-2"
           onClick={() => setCurrentCampaign("new")}

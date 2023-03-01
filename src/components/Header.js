@@ -91,7 +91,7 @@ function Header(props) {
             className={`header__nav-item ${
               currentTab === "Campaign" ? "header__selected" : ""
             }`}
-            onClick={() => navigate(`/campaign`)}
+            onClick={() => navigate(`/campaigns`)}
           >
             Campaign
           </li>

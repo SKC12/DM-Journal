@@ -125,27 +125,39 @@ export const useCurrentCampaignState = (campaigns, campaignName) => {
 
 export const useCampaignsState = (userID) => {
   const [campaigns, setCampaigns] = useState([]);
-  const [hasLoaded, setHasLoaded] = useState(false);
+  //const [hasLoaded, setHasLoaded] = useState(false);
+  const [loadingCampaigns, setLoadingCampaigns] = useState(false);
+  const [loadedID, setLoadedID] = useState(null);
   const [hasError, setHasError] = useState(false);
 
   //Loads campaign list based on params
   useEffect(() => {
     async function loadCampaigns(userID) {
-      if (!hasLoaded) {
+      if (userID !== loadedID) {
+        console.log("LOADING", userID);
+        setLoadingCampaigns(true);
         try {
           let campArray = await Campaign.loadCampaignsFromDB(userID);
           setCampaigns(campArray);
-          setHasLoaded(true);
+          //setHasLoaded(true);
+          setLoadedID(userID);
+          setLoadingCampaigns(false);
         } catch (e) {
           setHasError(true);
           throw e;
         }
       }
     }
-    if (userID) {
+    if (userID && userID !== loadedID) {
+      // if (userID !== loadedID) {
+      //   setCampaigns([]);
+      //   setHasLoaded(false);
+      // }
       loadCampaigns(userID);
     }
-  }, [hasLoaded, userID]);
+  }, [userID, loadedID]);
 
-  return [campaigns, setCampaigns, hasError];
+  console.log("FIRE", userID, loadedID);
+
+  return [campaigns, setCampaigns, loadingCampaigns, hasError];
 };
