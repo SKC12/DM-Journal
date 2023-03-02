@@ -12,6 +12,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (error) return;
     if (loading) {
@@ -38,6 +39,11 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              logInWithEmailAndPassword(email, password);
+            }
+          }}
         />
         <button
           className="p-2 text-lg mb-3 border-0 text-white bg-gray-700"
