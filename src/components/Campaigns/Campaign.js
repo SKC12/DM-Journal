@@ -82,6 +82,7 @@ function Campaign(props) {
         campaigns={campaigns}
         setCampaigns={setCampaigns}
         user={user}
+        navigate={navigate}
         key={"CI" + currentCampaign.name}
       />
     </div>

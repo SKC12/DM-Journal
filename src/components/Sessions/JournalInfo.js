@@ -103,18 +103,23 @@ function JournalInfo(props) {
 
     if (session.isValidName() && session.isValidDate()) {
       if (props.sessions.filter((e) => e.name === session.name).length === 0) {
-        await session.saveToDB();
-        let newSessions = sortSessionsByDate(props.sessions.concat(session));
-        props.setSessions(newSessions);
-        props.setSession(session);
-        navigate(
-          "/journal/" +
-            user.uid +
-            "/" +
-            props.campaign.name +
-            "/" +
-            session.name
-        );
+        try {
+          await session.saveToDB();
+          let newSessions = sortSessionsByDate(props.sessions.concat(session));
+          props.setSessions(newSessions);
+          props.setSession(session);
+          navigate(
+            "/journal/" +
+              user.uid +
+              "/" +
+              props.campaign.name +
+              "/" +
+              session.name
+          );
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -150,12 +155,17 @@ function JournalInfo(props) {
         name === props.session.name ||
         props.sessions.filter((e) => e.name === session.name).length === 0
       ) {
-        session.saveToDB();
-        let newArr = props.sessions.map((entry) => {
-          return entry.uid === uid ? session : entry;
-        });
-        props.setSessions(sortSessionsByDate(newArr));
-        props.setSession(session);
+        try {
+          await session.saveToDB();
+          let newArr = props.sessions.map((entry) => {
+            return entry.uid === uid ? session : entry;
+          });
+          props.setSessions(sortSessionsByDate(newArr));
+          props.setSession(session);
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -181,11 +191,9 @@ function JournalInfo(props) {
         })
       );
       props.setSession("");
-
-      //TODO: ERROR
     } catch (e) {
       console.log(e);
-      alert(e);
+      navigate("/error");
     }
   }
 

@@ -27,6 +27,7 @@ function CampaignInfo(props) {
           arc: true,
         }
   );
+  const navigate = props.navigate;
 
   //Error msg initially not displayed
   useEffect(() => {
@@ -53,10 +54,15 @@ function CampaignInfo(props) {
         setErrorMsg(true);
         // Saves to DB and inserts into campaign array
       } else {
-        await campaign.saveToDB();
-        let newCamps = props.campaigns.concat(campaign);
-        props.setCampaigns(newCamps);
-        props.setCampaign(campaign);
+        try {
+          await campaign.saveToDB();
+          let newCamps = props.campaigns.concat(campaign);
+          props.setCampaigns(newCamps);
+          props.setCampaign(campaign);
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       }
     } else {
       setErrorMsg(true);
@@ -68,13 +74,17 @@ function CampaignInfo(props) {
       { name, description, isPrivate, options },
       props.user.uid
     );
-
-    await campaign.saveToDB();
-    let newArr = props.campaigns.map((entry) => {
-      return entry.name === name ? campaign : entry;
-    });
-    props.setCampaigns(newArr);
-    props.setCampaign(campaign);
+    try {
+      await campaign.saveToDB();
+      let newArr = props.campaigns.map((entry) => {
+        return entry.name === name ? campaign : entry;
+      });
+      props.setCampaigns(newArr);
+      props.setCampaign(campaign);
+    } catch (e) {
+      console.log(e);
+      navigate("/error");
+    }
   }
 
   async function deleteCampaign(e) {
@@ -89,7 +99,7 @@ function CampaignInfo(props) {
       props.setCampaign("");
     } catch (e) {
       console.log(e);
-      alert(e);
+      navigate("/error");
     }
   }
 

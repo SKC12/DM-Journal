@@ -88,18 +88,23 @@ function LocationInfo(props) {
       if (
         props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await location.saveToDB();
-        let newLocations = props.locations.concat(location);
-        props.setLocations(newLocations);
-        props.setLocation(location);
-        navigate(
-          "/locations/" +
-            user.uid +
-            "/" +
-            props.campaign.name +
-            "/" +
-            location.name
-        );
+        try {
+          await location.saveToDB();
+          let newLocations = props.locations.concat(location);
+          props.setLocations(newLocations);
+          props.setLocation(location);
+          navigate(
+            "/locations/" +
+              user.uid +
+              "/" +
+              props.campaign.name +
+              "/" +
+              location.name
+          );
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -127,12 +132,17 @@ function LocationInfo(props) {
         name === props.location.name ||
         props.locations.filter((e) => e.name === location.name).length === 0
       ) {
-        await location.saveToDB();
-        let newArr = props.locations.map((entry) => {
-          return entry.uid === uid ? location : entry;
-        });
-        props.setLocations(newArr);
-        props.setLocation(location);
+        try {
+          await location.saveToDB();
+          let newArr = props.locations.map((entry) => {
+            return entry.uid === uid ? location : entry;
+          });
+          props.setLocations(newArr);
+          props.setLocation(location);
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -151,11 +161,9 @@ function LocationInfo(props) {
         })
       );
       props.setLocation("");
-
-      //TODO: ERROR
     } catch (e) {
       console.log(e);
-      alert(e);
+      navigate("/error");
     }
   }
 

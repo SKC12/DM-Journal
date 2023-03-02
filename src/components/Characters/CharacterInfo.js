@@ -84,18 +84,23 @@ function CharacterInfo(props) {
             character.name.replace(/[\^?]/g, "")
         ).length === 0
       ) {
-        await character.saveToDB();
-        let newCharacters = props.characters.concat(character);
-        props.setCharacters(newCharacters);
-        props.setCharacter(character);
-        navigate(
-          "/characters/" +
-            user.uid +
-            "/" +
-            props.campaign.name +
-            "/" +
-            character.name
-        );
+        try {
+          await character.saveToDB();
+          let newCharacters = props.characters.concat(character);
+          props.setCharacters(newCharacters);
+          props.setCharacter(character);
+          navigate(
+            "/characters/" +
+              user.uid +
+              "/" +
+              props.campaign.name +
+              "/" +
+              character.name
+          );
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -124,12 +129,17 @@ function CharacterInfo(props) {
         character.name === "createnew" ||
         props.characters.filter((e) => e.name === character.name).length === 0
       ) {
-        await character.saveToDB();
-        let newArr = props.characters.map((entry) => {
-          return entry.uid === uid ? character : entry;
-        });
-        props.setCharacters(newArr);
-        props.setCharacter(character);
+        try {
+          await character.saveToDB();
+          let newArr = props.characters.map((entry) => {
+            return entry.uid === uid ? character : entry;
+          });
+          props.setCharacters(newArr);
+          props.setCharacter(character);
+        } catch (e) {
+          console.log(e);
+          navigate("/error");
+        }
       } else {
         setErrorMsg(true);
       }
@@ -149,11 +159,9 @@ function CharacterInfo(props) {
         })
       );
       props.setCharacter("");
-
-      //TODO: ERROR
     } catch (e) {
       console.log(e);
-      alert(e);
+      navigate("/error");
     }
   }
 
