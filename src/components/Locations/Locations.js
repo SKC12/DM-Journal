@@ -181,6 +181,7 @@ function Locations(props) {
           params={props.params}
           characters={props.characters}
           user={user}
+          navigate={navigate}
           key={"LI" + currentLocation.name}
         />
       )}

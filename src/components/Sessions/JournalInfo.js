@@ -55,6 +55,8 @@ function JournalInfo(props) {
   const [dateErrorMsg, setDateErrorMsg] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const params = props.params;
+  const navigate = props.navigate;
+  const user = props.user;
 
   const uid = props.session.uid;
 
@@ -105,6 +107,14 @@ function JournalInfo(props) {
         let newSessions = sortSessionsByDate(props.sessions.concat(session));
         props.setSessions(newSessions);
         props.setSession(session);
+        navigate(
+          "/journal/" +
+            user.uid +
+            "/" +
+            props.campaign.name +
+            "/" +
+            session.name
+        );
       } else {
         setErrorMsg(true);
       }

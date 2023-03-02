@@ -179,6 +179,7 @@ function Characters(props) {
           setCharacters={setCharacters}
           user={user}
           params={props.params}
+          navigate={navigate}
           key={"CI" + currentCharacter.name}
         />
       )}

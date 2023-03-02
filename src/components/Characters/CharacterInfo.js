@@ -36,6 +36,9 @@ function CharacterInfo(props) {
   const [isImgPopup, setIsImgPopup] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
 
+  const navigate = props.navigate;
+  const user = props.user;
+
   const uid = props.character.uid;
 
   //Allows the Editor to accept descripts both in String and Raw Draftjs format
@@ -85,6 +88,14 @@ function CharacterInfo(props) {
         let newCharacters = props.characters.concat(character);
         props.setCharacters(newCharacters);
         props.setCharacter(character);
+        navigate(
+          "/characters/" +
+            user.uid +
+            "/" +
+            props.campaign.name +
+            "/" +
+            character.name
+        );
       } else {
         setErrorMsg(true);
       }

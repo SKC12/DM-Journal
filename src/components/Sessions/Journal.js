@@ -141,6 +141,7 @@ function Journal(props) {
       {isPrivate(currentCampaign) ? null : loading ? null : (
         <JournalInfo
           params={params}
+          navigate={navigate}
           campaign={currentCampaign}
           session={currentSession}
           setSession={setCurrentSession}

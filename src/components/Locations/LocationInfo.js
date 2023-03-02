@@ -40,6 +40,9 @@ function LocationInfo(props) {
   const [isEditable, setIsEditable] = useState(false);
   const params = props.params;
 
+  const user = props.user;
+  const navigate = props.navigate;
+
   const uid = props.location.uid;
 
   //Allows the Editor to accept descripts both in String and Raw Draftjs format
@@ -89,6 +92,14 @@ function LocationInfo(props) {
         let newLocations = props.locations.concat(location);
         props.setLocations(newLocations);
         props.setLocation(location);
+        navigate(
+          "/locations/" +
+            user.uid +
+            "/" +
+            props.campaign.name +
+            "/" +
+            location.name
+        );
       } else {
         setErrorMsg(true);
       }
