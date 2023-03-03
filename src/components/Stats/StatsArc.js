@@ -6,6 +6,7 @@ export default function StatsArc(props) {
   let ingameTimeData = getIngameTimeData(props.sessions);
   let sessionData = getSessionData(props.sessions);
 
+  //Gets array of Arc:IngameTime objects for reacharts pie chart.
   function getIngameTimeData(array) {
     let dataObj = {};
     for (let i = 0; i < array.length; i++) {
@@ -26,6 +27,8 @@ export default function StatsArc(props) {
     return dataArr;
   }
 
+  //Gets array of Arc:Session objects for reacharts pie chart.
+
   function getSessionData(array) {
     let dataObj = {};
     for (let i = 0; i < array.length; i++) {
@@ -45,15 +48,19 @@ export default function StatsArc(props) {
     return dataArr;
   }
 
+  //Gets array of colors that represent each first session of each arc.
   function getColors(array) {
-    let arr = [];
-    array.forEach((entry) => {
-      if (arr[arr.length - 1] !== entry.color) {
-        arr.push(entry.color);
+    let colorArr = [];
+    let arcArr = [];
+    array.forEach((entry, i) => {
+      if (!arcArr.includes(entry.arc)) {
+        arcArr.push(entry.arc);
+        colorArr.push(entry.color);
       }
     });
-    return arr;
+    return colorArr;
   }
+
   const ingameTimePieChart = (
     <ResponsiveContainer height={250} minWidth={550} key={nanoid()}>
       <PieChart>
