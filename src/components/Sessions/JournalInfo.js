@@ -13,6 +13,7 @@ import "../../style/Draftjs.css";
 import { Session } from "../../models/Session";
 import { sortSessionsByDate } from "../../helpers.js";
 import DraftjsMentions from "../DraftjsMentions";
+import Info from "../InfoIcon";
 
 function JournalInfo(props) {
   const [name, setName] = useState(
@@ -346,14 +347,21 @@ function JournalInfo(props) {
                   Color{" "}
                 </label>
 
-                <input
-                  disabled={!isOwner() || !isEditable}
-                  type="color"
-                  className="generic__input w-12"
-                  id="info-session-color"
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                ></input>
+                <div className="md:flex">
+                  <input
+                    disabled={!isOwner() || !isEditable}
+                    type="color"
+                    className="generic__input w-12"
+                    id="info-session-color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                  ></input>
+                  <Info
+                    content={
+                      "Color may be used to indentify the entry on graphs"
+                    }
+                  />
+                </div>
               </div>
             </div>
 
@@ -438,12 +446,19 @@ function JournalInfo(props) {
             {dateErrorMessage()}
 
             <div className="JournalInfo__input-container pb-6 md:pt-6 md:pr-6">
-              <label
-                className="generic__label"
-                htmlFor="info-session-description"
-              >
-                Session description{" "}
-              </label>
+              <div className="md:flex">
+                <label
+                  className="generic__label"
+                  htmlFor="info-session-description"
+                >
+                  Session description{" "}
+                </label>
+                <Info
+                  content={
+                    "You may use the @ keyword to reference other items in the Journal"
+                  }
+                />
+              </div>
               <DraftjsMentions
                 readOnly={!isOwner() || !isEditable}
                 id="info-session-description"

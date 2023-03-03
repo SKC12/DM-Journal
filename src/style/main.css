@@ -101,6 +101,12 @@
   z-index: 40;
 }
 
+.generic__infoIcon {
+  height: 17px;
+  align-self: center;
+  margin-left: 3px;
+}
+
 @media (min-width: 768px) {
   .generic__main-form {
     padding-left: 80px;

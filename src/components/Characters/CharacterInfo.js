@@ -11,6 +11,7 @@ import {
 } from "draft-js";
 import DraftjsMentions from "../DraftjsMentions";
 import { Character } from "../../models/Character";
+import Info from "../InfoIcon";
 
 function CharacterInfo(props) {
   const [img, setImg] = useState(
@@ -351,12 +352,20 @@ function CharacterInfo(props) {
               </div>
               <div className="ChaLocInfo__bot-container">
                 <div className="ChaLocInfo__input-container">
-                  <label
-                    className="generic__label"
-                    htmlFor="info-character-description"
-                  >
-                    Character description
-                  </label>
+                  <div className="md:flex">
+                    <label
+                      className="generic__label"
+                      htmlFor="info-character-description"
+                    >
+                      Character description
+                    </label>
+                    <Info
+                      content={
+                        "You may use the @ keyword to reference other items in the Journal"
+                      }
+                    />
+                  </div>
+
                   <DraftjsMentions
                     readOnly={!isOwner() || !isEditable}
                     id="info-character-description"

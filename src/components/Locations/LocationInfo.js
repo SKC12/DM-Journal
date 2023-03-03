@@ -13,6 +13,7 @@ import {
 } from "draft-js";
 import DraftjsMentions from "../DraftjsMentions";
 import { Location } from "../../models/Location";
+import Info from "../InfoIcon";
 
 function LocationInfo(props) {
   const [img, setImg] = useState(
@@ -368,12 +369,20 @@ function LocationInfo(props) {
               </div>
               <div className="ChaLocInfo__bot-container">
                 <div className="ChaLocInfo__input-container">
-                  <label
-                    className="generic__label"
-                    htmlFor="info-location-description"
-                  >
-                    Location description
-                  </label>
+                  <div className="md:flex">
+                    <label
+                      className="generic__label"
+                      htmlFor="info-location-description"
+                    >
+                      Location description
+                    </label>
+                    <Info
+                      content={
+                        "You may use the @ keyword to reference other items in the Journal"
+                      }
+                    />
+                  </div>
+
                   <DraftjsMentions
                     readOnly={!isOwner() || !isEditable}
                     id="info-location-description"
