@@ -369,7 +369,7 @@ function LocationInfo(props) {
               </div>
               <div className="ChaLocInfo__bot-container">
                 <div className="ChaLocInfo__input-container">
-                  <div className="md:flex">
+                  <div className="flex">
                     <label
                       className="generic__label"
                       htmlFor="info-location-description"

@@ -347,7 +347,7 @@ function JournalInfo(props) {
                   Color{" "}
                 </label>
 
-                <div className="md:flex">
+                <div className="flex">
                   <input
                     disabled={!isOwner() || !isEditable}
                     type="color"
@@ -357,9 +357,7 @@ function JournalInfo(props) {
                     onChange={(e) => setColor(e.target.value)}
                   ></input>
                   <Info
-                    content={
-                      "Color may be used to indentify the entry on graphs"
-                    }
+                    content={"Color identifies journal entries on charts"}
                   />
                 </div>
               </div>
@@ -446,7 +444,7 @@ function JournalInfo(props) {
             {dateErrorMessage()}
 
             <div className="JournalInfo__input-container pb-6 md:pt-6 md:pr-6">
-              <div className="md:flex">
+              <div className="flex">
                 <label
                   className="generic__label"
                   htmlFor="info-session-description"
