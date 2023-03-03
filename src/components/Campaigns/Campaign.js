@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import CampaignInfo from "./CampaignInfo";
 import "../../style/main.css";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,9 @@ function Campaign(props) {
   const [campaigns, setCampaigns, loadingCampaigns] = props.campaignsState;
   const [currentCampaign, setCurrentCampaign] = props.currentCampaignState;
   const setCurrentTab = props.setCurrentTab;
+  const sideBarHidden = props.sideBarHidden;
+  const setSideBarHidden = props.setSideBarHidden;
+  const ref = useRef(null);
 
   //Navigates to link containing User params
   useEffect(() => {
@@ -31,6 +34,21 @@ function Campaign(props) {
       setCurrentCampaign("");
     }
   }, [campaigns, setCurrentCampaign]);
+
+  //Hook for closing sidebard on click outside element
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        if (!sideBarHidden) {
+          setSideBarHidden(true);
+        }
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [sideBarHidden, setSideBarHidden]);
 
   let populateCampaigns = campaigns.map((camp, index) => {
     return (
@@ -70,9 +88,8 @@ function Campaign(props) {
   return (
     <div className="main__container">
       <div
-        className={`${
-          props.sideBarHidden ? "hidden" : "block"
-        } Sidebar__sidebar `}
+        ref={ref}
+        className={`${sideBarHidden ? "hidden" : "block"} Sidebar__sidebar `}
       >
         {sideBarContent}
       </div>

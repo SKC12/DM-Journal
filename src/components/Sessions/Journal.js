@@ -137,6 +137,7 @@ function Journal(props) {
         user={user}
         currentUserID={props.currentUserID}
         sideBarHidden={props.sideBarHidden}
+        setSideBarHidden={props.setSideBarHidden}
       />
       {isPrivate(currentCampaign) ? null : loading ? null : (
         <JournalInfo

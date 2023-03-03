@@ -28,8 +28,10 @@ function Header(props) {
     );
   }, [props.currentCampaignID, props.currentUserID]);
 
-  function toggleSidebar() {
-    props.setSideBarHidden(!props.sideBarHidden);
+  function openSidebar() {
+    if (props.sideBarHidden) {
+      props.setSideBarHidden(false);
+    }
   }
 
   return (
@@ -41,7 +43,7 @@ function Header(props) {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          onClick={toggleSidebar}
+          onClick={openSidebar}
         >
           <path
             strokeLinecap="round"

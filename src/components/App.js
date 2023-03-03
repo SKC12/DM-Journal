@@ -151,6 +151,7 @@ function App() {
                 campaignsState={[campaigns, setCampaigns, loadingCampaigns]}
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sideBarHidden={sideBarHidden}
+                setSideBarHidden={setSideBarHidden}
                 setCurrentTab={setCurrentTab}
               />
             }
@@ -171,6 +172,7 @@ function App() {
                 locations={locations}
                 currentLocationState={[currentLocation, setCurrentLocation]}
                 sideBarHidden={sideBarHidden}
+                setSideBarHidden={setSideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentTab={setCurrentTab}
@@ -191,6 +193,7 @@ function App() {
                 currentLocationState={[currentLocation, setCurrentLocation]}
                 locations={locations}
                 sideBarHidden={sideBarHidden}
+                setSideBarHidden={setSideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentTab={setCurrentTab}
@@ -211,6 +214,7 @@ function App() {
                 currentLocationState={[currentLocation, setCurrentLocation]}
                 characters={characters}
                 sideBarHidden={sideBarHidden}
+                setSideBarHidden={setSideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentTab={setCurrentTab}
@@ -228,6 +232,7 @@ function App() {
                 currentCampaignState={[currentCampaign, setCurrentCampaign]}
                 sessionsState={[sessions, setSessions, loadingSessions]}
                 sideBarHidden={sideBarHidden}
+                setSideBarHidden={setSideBarHidden}
                 currentUserID={currentUserID}
                 currentCampaignID={currentCampaignID}
                 setCurrentTab={setCurrentTab}
