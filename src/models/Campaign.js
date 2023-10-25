@@ -19,7 +19,6 @@ export class Campaign {
   }
 
   async saveToDB() {
-    console.log(this);
     try {
       await setDoc(doc(db, "users/" + this.userID + "/campaigns", this.name), {
         name: this.name,
