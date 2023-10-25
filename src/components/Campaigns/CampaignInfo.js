@@ -49,6 +49,7 @@ function CampaignInfo(props) {
         { name, description, isPrivate, options },
         props.user.uid
       );
+      console.log(campaign, isPrivate);
       //Queries if campaign already exists
       if (await campaign.existsInDB()) {
         setErrorMsg(true);

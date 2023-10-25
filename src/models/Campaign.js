@@ -14,11 +14,12 @@ export class Campaign {
     this.userID = userID;
     this.name = data.name;
     this.description = data.description;
-    this.private = data.private;
+    this.private = data.isPrivate;
     this.options = data.options || { ingameTime: true, level: true, arc: true };
   }
 
   async saveToDB() {
+    console.log(this);
     try {
       await setDoc(doc(db, "users/" + this.userID + "/campaigns", this.name), {
         name: this.name,
