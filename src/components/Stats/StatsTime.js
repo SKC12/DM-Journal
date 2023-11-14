@@ -163,7 +163,10 @@ function StatsTime(props) {
             Average time between sessions:
           </h2>
           <p className="shrink-0">
-            {(campaignLength / numberOfSessions).toFixed(2)} days
+            {campaignLength / (numberOfSessions - 1)
+              ? (campaignLength / (numberOfSessions - 1)).toFixed(2)
+              : 0}{" "}
+            days
           </p>
         </div>
       </div>
